@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Mark
+      changes:
+        - createTable:
+            tableName: rates
+            columns:
+              - column:
+                  name: student_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+              - column:
+                  name: last_name
+                  type: varchar(50)
+              - column:
+                  name: login
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: final_work_id
+                  type: float
