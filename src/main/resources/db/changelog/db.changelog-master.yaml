@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Mark
       changes:
         - createTable:
-            tableName: student
+            tableName: students
             columns:
               - column:
                   name: student_id
@@ -25,9 +25,190 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: password
-                  type: varchar(50)
+                  type: varchar(100)
                   constraints:
                     nullable: false
               - column:
                   name: final_work_id
-                  type: float
+                  type: int
+
+  - changeSet:
+      id: 2
+      author: Mark
+      changes:
+        - createTable:
+            tableName: final_works
+            columns:
+              - column:
+                  name: final_work_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: theme
+                  type: varchar(120)
+              - column:
+                  name: annotation
+                  type: varchar(1000)
+              - column:
+                  name: file
+                  type: blob
+              - column:
+                  name: promotor_review_id
+                  type: int
+              - column:
+                  name: reviewer_review_id
+                  type: int
+              - column:
+                  name: reviewer_id
+                  type: int
+              - column:
+                  name: promotor_id
+                  type: int
+
+        - addForeignKeyConstraint:
+            baseColumnNames: final_work_id
+            baseTableName: students
+            constraintName: fk_final_work
+            referencedColumnNames: final_work_id
+            referencedTableName: final_works
+
+  - changeSet:
+      id: 3
+      author: Mark
+      changes:
+        - createTable:
+            tableName: teachers
+            columns:
+              - column:
+                  name: teacher_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+              - column:
+                  name: last_name
+                  type: varchar(50)
+              - column:
+                  name: login
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: academic_title
+                  type: varchar(50)
+              - column:
+                  name: role
+                  type: varchar(50)
+
+        - addForeignKeyConstraint:
+            baseColumnNames: promotor_id
+            baseTableName: final_works
+            constraintName: fk_review_promotor
+            referencedColumnNames: teacher_id
+            referencedTableName: teachers
+
+        - addForeignKeyConstraint:
+            baseColumnNames: reviewer_id
+            baseTableName: final_works
+            constraintName: fk_review_reviewer
+            referencedColumnNames: teacher_id
+            referencedTableName: teachers
+
+  - changeSet:
+      id: 4
+      author: Mark
+      changes:
+        - createTable:
+            tableName: work_defenses
+            columns:
+              - column:
+                  name: defense_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: evaluation
+                  type: varchar(50)
+              - column:
+                  name: date
+                  type: timestamp
+              - column:
+                  name: final_work_id
+                  type: int
+              - column:
+                  name: promotor_id
+                  type: int
+
+        - addForeignKeyConstraint:
+            baseColumnNames: final_work_id
+            baseTableName: work_defenses
+            constraintName: fk_review_work_id
+            referencedColumnNames: final_work_id
+            referencedTableName:  final_works
+
+        - addForeignKeyConstraint:
+            baseColumnNames: promotor_id
+            baseTableName: work_defenses
+            constraintName: fk_promotor_id_teacher_id
+            referencedColumnNames: teacher_id
+            referencedTableName:  teachers
+
+  - changeSet:
+      id: 5
+      author: Mark
+      changes:
+        - createTable:
+            tableName: reviews
+            columns:
+              - column:
+                  name: review_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: evaluation
+                  type: varchar(50)
+              - column:
+                  name: description
+                  type: varchar(1000)
+              - column:
+                  name: final_work_id
+                  type: int
+              - column:
+                  name: reviewer_review_id
+                  type: int
+
+        - addForeignKeyConstraint:
+            baseColumnNames: reviewer_review_id
+            baseTableName: reviews
+            constraintName: fk_review
+            referencedColumnNames: teacher_id
+            referencedTableName: teachers
+
+        - addForeignKeyConstraint:
+            baseColumnNames: final_work_id
+            baseTableName: reviews
+            constraintName: fk_final_work_id_final_work_id
+            referencedColumnNames: final_work_id
+            referencedTableName:  final_works
+
+        - addForeignKeyConstraint:
+            baseColumnNames: reviewer_review_id
+            baseTableName: final_works
+            constraintName: fk_reviewer_review_id_review_id
+            referencedColumnNames: review_id
+            referencedTableName:  reviews
+
+
