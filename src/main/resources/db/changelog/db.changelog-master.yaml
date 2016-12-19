@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Mark
       changes:
         - createTable:
-            tableName: rates
+            tableName: student
             columns:
               - column:
                   name: student_id
