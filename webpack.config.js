@@ -2,10 +2,12 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require("webpack");
 
 module.exports = {
-     entry: './src/main/frontend/app.js',
+     entry: {
+         homepage: './src/main/frontend/entries/homepage.js',
+     },
      output: {
          path: './target/classes/static/',
-         filename: 'app.bundle.js'
+         filename: '[name].bundle.js'
      },
      module: {
          loaders: [
@@ -15,7 +17,12 @@ module.exports = {
              { test: /\.(woff|woff2)$/, loader:"url?prefix=font/&limit=5000" },
              { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
              { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
-             { test: /\.html$/, loaders: ['ngtemplate', 'html'] }
+             { test: /\.html$/, loaders: ['ngtemplate', 'html'] },
+             {
+                 test: /\.jsx?$/,
+                 exclude: /node_modules/,
+                 loader: 'babel'
+             }
          ]
      },
      plugins: [
@@ -25,7 +32,7 @@ module.exports = {
      ],
      resolve: {
         root: __dirname,
-        extensions: ['', '.js'],
+        extensions: ['', '.js', '.jsx'],
         modulesDirectories: [
             'node_modules', '.'
         ],
