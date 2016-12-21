@@ -1,1 +1,0 @@
-exports.default = console.log('test test');

@@ -2,31 +2,27 @@
 
 const React = require('react');
 const {Component, PropTypes} = React;
+const style = require('../scss/navigation.scss');
 
-class HomePage extends Component {
+class Navigation extends Component {
 
     render() {
+
+        const array = ['UWB final works', 'Home', 'About', 'Blog', 'Bacom'];
         return (
-            <div>
-                <ul className='top-nav'>
-                    <li className='item'>
-                        <a href='#' className='logo'>
-                            <i className='fa fa-bars'></i> UWB final works
-                        </a>
-                    </li>
-                    <li className='item'><a href='#'>Home</a></li>
-                    <li className='item'><a href='#'>About</a></li>
-                    <li className='item'><a href='#'>Blog</a></li>
-                    <li className='item'><a href='#'>Bacon</a></li>
-                </ul>
-            </div>
+            <ul className={style.nav}>
+                {array.map(title => {
+                        return <li className={style.listItem}><a href='#'>{title}</a></li>
+                })}
+
+            </ul>
         );
     }
 }
 
-HomePage.propTypes = {
-    title: PropTypes.string.isRequired,
-};
+// Navigation.propTypes = {
+//     title: PropTypes.string.isRequired,
+// };
 
 
-module.exports = HomePage;
+module.exports = Navigation;

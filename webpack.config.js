@@ -11,7 +11,7 @@ module.exports = {
      },
      module: {
          loaders: [
-             { test: /\.scss$/, loader:  ExtractTextPlugin.extract("style","css!sass") },
+             //{ test: /\.scss$/, loader:  ExtractTextPlugin.extract("style","css!sass") },
              { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
              { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
              { test: /\.(woff|woff2)$/, loader:"url?prefix=font/&limit=5000" },
@@ -22,6 +22,10 @@ module.exports = {
                  test: /\.jsx?$/,
                  exclude: /node_modules/,
                  loader: 'babel'
+             },
+             {
+                 test: /\.scss$/,
+                 loader: ExtractTextPlugin.extract("style", "css?localIdentName=[name]__[local]___[hash:base64:5]!sass")
              }
          ]
      },
@@ -31,8 +35,8 @@ module.exports = {
          })
      ],
      resolve: {
-        root: __dirname,
-        extensions: ['', '.js', '.jsx'],
+        root: __dirname+'src/main/frontend',
+        extensions: ['', '.js', '.jsx', '.css', 'scss'],
         modulesDirectories: [
             'node_modules', '.'
         ],
