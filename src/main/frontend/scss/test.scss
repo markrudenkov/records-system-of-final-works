@@ -1,0 +1,10 @@
+:local {
+    .wrapper {
+        display: inline-block;
+        color: red;
+        .inside {
+            font-size: 20px;
+            font-family: verdana;
+        }
+    }
+}
