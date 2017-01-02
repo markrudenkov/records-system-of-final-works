@@ -8,13 +8,14 @@ class Navigation extends Component {
 
     render() {
 
-        const array = ['UWB final works', 'Home', 'About', 'Blog', 'Bacom'];
+        const array = ['UWB final works', 'Home', 'About', 'Blog', 'Bacone'];
         return (
             <ul className={style.nav}>
                 {array.map(title => {
-                        return <li className={style.listItem}><a href='#'>{title}</a></li>
+                    let look = style.listItem;
+                    if (title === 'Bacone')  look = style.specialItem;
+                    return <li key={title} className={look}><a href='#'>{title}</a></li>
                 })}
-
             </ul>
         );
     }

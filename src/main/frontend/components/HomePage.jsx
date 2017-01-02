@@ -2,7 +2,8 @@
 
 const React = require('react');
 const {Component, PropTypes} = React;
-const style = require('../scss/test.scss');
+const Login = require('Login');
+//const style = require('../scss/test.scss');
 
 class HomePage extends Component {
 
@@ -10,12 +11,9 @@ class HomePage extends Component {
         const {title} = this.props;
 
         return (
-            <div className={style.wrapper}>
-                <p className={style.inner} >HOME PAGE Component {title}</p>
-                <ul>
-                    <li>Hello</li>
-                    <li>World</li>
-                </ul>
+            <div>
+                <p >HOME PAGE Component {title}</p>
+                <Login />
             </div>
         );
     }
