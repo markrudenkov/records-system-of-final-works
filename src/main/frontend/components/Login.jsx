@@ -13,22 +13,20 @@ class Login extends Component {
     }
 
     onClick(event) {
-        console.log('button clicked!');
+        console.log('button clicked! Username: '+this.refs.username.value + ' Passwrod: '+this.refs.password.value);
         event.preventDefault();
     }
 
     render() {
-        //const {title} = this.props;
-        console.log(fStyle);
         return (
             <form className={fStyle.form}>
                 <div className={fStyle.formRow}>
                     <label><b>Username</b></label>
-                    <input type='text' placeholder='Enter Username' name='uname'> </input>
+                    <input type='text' placeholder='Enter Username' ref='username' />
                 </div>
                 <div className={fStyle.formRow}>
                     <label><b>Password</b></label>
-                    <input type='password' placeholder='Enter Password' name='psw'> </input>
+                    <input type='password' placeholder='Enter Password' ref='password' />
                 </div>
                 <button className={`${bStyle.buttonSuccess} ${fStyle.button}`} onClick={this.onClick}>Login</button>
             </form>

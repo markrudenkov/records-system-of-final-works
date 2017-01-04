@@ -11,9 +11,9 @@
 		@extend .notification;
 		background-color: $success;
 	}
-	.warning {
+	.danger {
 		@extend .notification;
-		background-color: $warning;
+		background-color: $danger;
 	}
 	.info {
 		@extend .notification;

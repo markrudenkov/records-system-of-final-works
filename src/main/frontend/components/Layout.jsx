@@ -1,19 +1,31 @@
 'use strict';
 
 const React = require('react');
-const Navigation = require('Navigation');
+const Navigation = require('./Navigation');
 const Notification = require('./Notification');
+
+const { bindActionCreators } = require('redux');
+const { connect } = require('react-redux');
 
 class Layout extends React.Component {
     render() {
+        const {color, message, hidden} = this.props.notification;
         return (
             <div>
                 <Navigation />
-                <Notification success={true} message={'Wait for it!'} />
+                <Notification color={color} message={message} hidden={hidden} />
                 {this.props.children}
             </div>
         );
     }
 }
 
-module.exports = Layout;
+function mapStateToProps(state) {
+    return {
+        notification: state.communication.notification
+    }
+}
+
+
+
+module.exports = connect(mapStateToProps)(Layout);

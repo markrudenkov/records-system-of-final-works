@@ -3,7 +3,7 @@ var webpack = require("webpack");
 
 module.exports = {
      entry: {
-         homepage: './src/main/frontend/entries/homepage.js',
+         app: './src/main/frontend/entries/app.js',
      },
      output: {
          path: './target/classes/static/',
