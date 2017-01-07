@@ -1,18 +1,20 @@
 const fetch = require('isomorphic-fetch');
 const { showNotification } = require('notificationActions');
-const { hashHistory } = require('react-router');
+// const { hashHistory } = require('react-router');
 
-function fetchReq(method, url, body, successCallback, errorCalback) {
+function fetchReq(method, url, body, successCallback, errorCalback=defaultError) {
     return (dispatch, getState) => {
         const state = getState();
         const token = state.session.user.token;
+
+        let contentType = method !== 'GET' ? 'application/x-www-form-urlencoded; charset=utf-8': 'application/json; charset=utf-8';
 
         const request = {
             credentials: 'include', //pass cookies, for authentication
             method: method, // get, post, put, delete
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-                'x-access-token': token,
+                'Content-Type': contentType,
+                'Authorization': 'Basic '+token,
             }, // x-access-token, stuff like that
             body: body
         };
@@ -21,8 +23,8 @@ function fetchReq(method, url, body, successCallback, errorCalback) {
         return fetch(url, request)
         .then((response) => {
             if (response.status >= 400) {
-                console.error('Bad response from server ' + response.status);
                 dispatch(errorCalback(response.status));
+                throw new Error("Bad response from server");
             }
             return response.json();
         })
@@ -33,25 +35,8 @@ function fetchReq(method, url, body, successCallback, errorCalback) {
     };
 }
 
-function fetchTest() {
-    let url = 'https://jsonplaceholder.typicode.com/posts/1';
-
-    const success = (data) => {
-        console.log('SUCCESS!');
-        console.log(data);
-        return {
-            type: 'SUCCESS'
-        }
-    }
-    const error = (data) => {
-        console.log('error!');
-        console.log(data);
-        return {
-            type: 'ERROR'
-        }
-    }
-
-    return fetchReq('get', url, {}, success, error);
+function defaultError(status) {
+    return showNotification('Error fetching. Status: '+status, 'danger');
 }
 
 // fetch(url, {
@@ -67,5 +52,5 @@ function fetchTest() {
 
 module.exports = {
     fetchReq,
-    fetchTest
+    defaultError
 };
