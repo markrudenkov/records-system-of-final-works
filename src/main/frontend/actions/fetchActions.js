@@ -2,15 +2,21 @@ const fetch = require('isomorphic-fetch');
 const { showNotification } = require('notificationActions');
 const { hashHistory } = require('react-router');
 
-function fetchReq(method, url, headers, body, successCallback, errorCalback) {
-    const request = {
-        credentials: 'include', //pass cookies, for authentication
-        method: method, // get, post, put, delete
-        headers: headers, // x-access-token, stuff like that
-        body: body
-    };
+function fetchReq(method, url, body, successCallback, errorCalback) {
     return (dispatch, getState) => {
         const state = getState();
+        const token = state.session.user.token;
+
+        const request = {
+            credentials: 'include', //pass cookies, for authentication
+            method: method, // get, post, put, delete
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                'x-access-token': token,
+            }, // x-access-token, stuff like that
+            body: body
+        };
+        //async fetch here
 
         return fetch(url, request)
         .then((response) => {
@@ -24,7 +30,6 @@ function fetchReq(method, url, headers, body, successCallback, errorCalback) {
             console.log(data);
             dispatch(successCallback(data));
         });
-        //async fetch here
     };
 }
 
@@ -46,7 +51,7 @@ function fetchTest() {
         }
     }
 
-    return fetchReq('get', url, {}, {}, success, error);
+    return fetchReq('get', url, {}, success, error);
 }
 
 // fetch(url, {
