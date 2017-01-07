@@ -16,37 +16,42 @@ class HomePage extends Component {
 
     constructor(props) {
         super(props);
-        this.onClick = this.onClick.bind(this);
+        this.loggedIn = this.loggedIn.bind(this);
+        this.notloggedIn = this.notloggedIn.bind(this);
     }
 
-    onClick() {
-        //this.props.router.push('login');
-        this.props.toggleNotification();
+    loggedIn() {
+        return (
+            <div className={style.row}>
+                <h1>You are loggedin as {this.props.username} [{this.props.permission}]</h1>
+            </div>
+        );
+    }
+
+    notloggedIn() {
+        return (
+            <div className={style.row}>
+                <h1>Welcome to UWB app! Pleace login for access</h1>
+            </div>
+        );
     }
 
     render() {
-        //const {title} = this.props;
+        let screen = this.props.userIsLoggedIn ? this.loggedIn() : this.notloggedIn();
 
         return (
-            <div className={`${style.row} ${style.center}`}>
-                <button className={styleButtons.buttonSuccess} onClick={this.onClick}>Notification is hidden: {`${this.props.hidden}`}</button>
-                <button className={styleButtons.buttonInfo} onClick={() => {this.props.showNotification('Info message', 'info')}}>Show info!</button>
-                <button className={styleButtons.buttonSuccess} onClick={() => {this.props.showNotification('Success message', 'success')}}>Show success!</button>
-                <button className={styleButtons.buttonDanger} onClick={() => {this.props.showNotification('Danger message', 'danger')}}>Show danger!</button>
-                <button className={styleButtons.buttonSuccess} onClick={() => {this.props.hideNotification()}}>Hide notification</button>
+            <div className={style.center}>
+                {screen}
             </div>
         );
     }
 }
 
-HomePage.propTypes = {
-    title: PropTypes.string,
-};
-
-
 function mapStateToProps(state) {
     return {
-        hidden: state.communication.notification.hidden
+        userIsLoggedIn: state.session.user.isLoggedIn,
+        userName: state.session.user.username,
+        permission: state.session.user.permission,
     }
 }
 

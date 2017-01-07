@@ -24,6 +24,12 @@
 	.buttonInfo {
 		@include button($info);
 	}
+	.buttonPrimary {
+		@include button($primary-light);
+	}
+	.buttonSecondary {
+		@include button($secondary);
+	}
 }
 
 //.button {

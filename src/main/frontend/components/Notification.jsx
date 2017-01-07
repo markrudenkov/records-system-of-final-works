@@ -9,13 +9,16 @@ class Notification extends Component {
 
     constructor(props) {
         super(props);
+        this.timeout;
     }
 
     render() {
-        const {color, message, hidden} = this.props;
+        const {color, message, hidden, hide} = this.props;
         if (hidden) {
             return null;
         }
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => { this.props.hide(); }, 5000);
 
         return (
             <div className={`${style[color]} ${mainStyle.center}`}>
@@ -27,8 +30,8 @@ class Notification extends Component {
 
 Notification.propTypes = {
     message: PropTypes.string.isRequired,
-    hidden: PropTypes.bool,
-    color: PropTypes.string,
+    hidden: PropTypes.bool.isRequired,
+    color: PropTypes.string.isRequired,
 };
 
 Notification.defaultProps = {
