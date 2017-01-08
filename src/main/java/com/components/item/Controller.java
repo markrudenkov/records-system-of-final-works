@@ -16,7 +16,7 @@ public class Controller {
     private static final String template = "Hello, World!";
 
 
-    @RequestMapping("/item")
+    @RequestMapping("api/item")
     public
     @ResponseBody
     String hello() {

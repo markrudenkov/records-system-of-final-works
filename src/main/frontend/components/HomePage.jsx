@@ -50,7 +50,7 @@ class HomePage extends Component {
 function mapStateToProps(state) {
     return {
         userIsLoggedIn: state.session.user.isLoggedIn,
-        userName: state.session.user.username,
+        username: state.session.user.username,
         permission: state.session.user.permission,
     }
 }

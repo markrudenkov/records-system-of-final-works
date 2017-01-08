@@ -1,6 +1,8 @@
 const { showNotification } = require('notificationActions');
 const { fetchReq } = require('fetchActions');
 const { hashHistory } = require('react-router');
+const { serialize } = require('queryfetch');
+const jwt_decode = require('jwt-decode');
 
 function userLoginClick(user) {
     return (dispatch, getState) => {
@@ -8,11 +10,22 @@ function userLoginClick(user) {
 
         dispatch(requestLogin(user)); // spinner, notify, stuff like that
         dispatch(showNotification('['+user.username+'] login in progress..', 'info'));
+        let data = { grant_type:'password', username: user.username, password: user.password, client_id: 'web-ui' };
 
-        dispatch(fetchReq('POST','/oauth/token', user, receiveLogin));
+        let encoded = btoa("web-ui:");
 
-        //return setTimeout(() => {return dispatch(receiveLogin({permission: 'STUDENT'}))},3000);
-        //async fetch here
+        const request = {
+            credentials: 'include', //pass cookies, for authentication
+            method: 'POST', // get, post, put, delete
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                'Authorization': 'Basic '+encoded,
+            }, // x-access-token, stuff like that
+            body: serialize(data)
+        };
+
+        dispatch(fetchReq('/oauth/token', request, receiveLogin));  ///oauth/token
+
     };
 }
 
@@ -23,11 +36,13 @@ function requestLogin(user) {
     };
 }
 
-function receiveLogin(user) { //fetch success
+function receiveLogin(data) { //fetch success
+    data.decoded = jwt_decode(data.access_token);
+    console.log(data);
     const func = () => {
         return {
             type: 'RECEIVE_LOGIN',
-            user: user
+            user: data
         };
     };
     return (dispatch) => {

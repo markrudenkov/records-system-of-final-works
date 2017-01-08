@@ -56,16 +56,16 @@ const initialState = {
 function navigationReducer(state=initialState, action) {
     switch(action.type) {
         case 'RECEIVE_LOGIN':
-            const {permission} = action.user;
+            const permission = action.user.decoded.authorities[0];
             let assignTo = guestLinks;
             switch(permission) {
-                case 'ADMIN':
+                case 'ROLE_ADMIN':
                     assignTo = adminLinks;
                 break;
-                case 'ACADEMIC':
+                case 'ROLE_ACADEMIC':
                     assignTo = academicLinks;
                 break;
-                case 'STUDENT':
+                case 'ROLE_STUDENT':
                     assignTo = studentLinks;
                 break;
             }

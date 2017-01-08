@@ -7,6 +7,7 @@ const { Router, Route, IndexRoute, hashHistory } = require('react-router');
 
 const { showNotification } = require('../actions/notificationActions');
 const { logout } = require('../actions/userActions');
+const { apiReq } = require('../actions/fetchActions');
 
 const HomePage = require('../components/HomePage');
 const Layout = require('../components/Layout');
@@ -24,6 +25,19 @@ const checkPermission = (nextState, pushState, permission) => {
     }
 };
 
+const req = () => {
+    const request = {
+        credentials: 'include', //pass cookies, for authentication
+        method: 'GET', // get, post, put, delete
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            //'Authorization': 'Basic '+encoded,
+        }, // x-access-token, stuff like that
+        //body: serialize(data)
+    };
+    store.dispatch(apiReq('api/item', request, ()=>{console.log('OK')}));
+};
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={hashHistory}>
@@ -32,7 +46,7 @@ ReactDOM.render(
                 <Route path='login' component={Login} />
                 <Route path='about' component={About} />
                 <Route path='admin' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'ADMIN')}}>
-                    <Route path='register_user' component={Login} />
+                    <Route path='register_user' onEnter={req} />
                 </Route>
                 <Route path='student' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'STUDENT')}}>
                     <Route path='diploma_list' component={Login} />
