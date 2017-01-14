@@ -16,8 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AcademicService {
 
-    @Autowired
+
     private BCryptPasswordEncoder encoder;
+
+    AcademicService() {
+        encoder = new BCryptPasswordEncoder();
+    }
 
     @Autowired
     private AcademicRepository repository;
