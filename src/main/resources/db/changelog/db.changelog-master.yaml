@@ -19,7 +19,7 @@ databaseChangeLog:
                   name: last_name
                   type: varchar(50)
               - column:
-                  name: login
+                  name: username
                   type: varchar(50)
                   constraints:
                     nullable: false
@@ -91,10 +91,10 @@ databaseChangeLog:
                   name: name
                   type: varchar(50)
               - column:
-                  name: last_name
+                  name: surname
                   type: varchar(50)
               - column:
-                  name: login
+                  name: username
                   type: varchar(50)
                   constraints:
                     nullable: false
@@ -280,17 +280,8 @@ databaseChangeLog:
                   name: password
                   type: varchar(60)
               - column:
-                  name: enabled
-                  type: boolean
-              - column:
                   name: name
-                  type: nvarchar(60)
-              - column:
-                  name: email
-                  type: nvarchar(60)
-              - column:
-                  name: phone
-                  type: nvarchar(60)
+                  type: varchar(60)
         - addUniqueConstraint:
             columnNames: username
             constraintName: unique_usr_usrname
@@ -333,7 +324,6 @@ databaseChangeLog:
                   type: varchar(45)
                   constraints:
                     nullable: false
-
         - addForeignKeyConstraint:
             baseColumnNames: user_id
             baseTableName: authorities
@@ -366,17 +356,8 @@ databaseChangeLog:
                 name: password
                 value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
             - column:
-                name: enabled
-                valueBoolean: true
-            - column:
                 name: name
                 value: 'admin'
-            - column:
-                name: email
-                value: 'admin@gmail.com'
-            - column:
-                name: phone
-                value: '+37060303003'
             tableName: users
 
   - changeSet:
@@ -395,4 +376,6 @@ databaseChangeLog:
                 name: authority
                 value: 'ROLE_ADMIN'
             tableName: authorities
+
+
 

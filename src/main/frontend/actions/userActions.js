@@ -1,14 +1,17 @@
 const { showNotification } = require('notificationActions');
-const { fetchTest } = require('fetchActions');
+const { fetchReq } = require('fetchActions');
 const { hashHistory } = require('react-router');
 
 function userLoginClick(user) {
     return (dispatch, getState) => {
         const state = getState();
-        dispatch(fetchTest());
+
         dispatch(requestLogin(user)); // spinner, notify, stuff like that
         dispatch(showNotification('['+user.username+'] login in progress..', 'info'));
-        return setTimeout(() => {return dispatch(receiveLogin({permission: 'STUDENT'}))},3000);
+
+        dispatch(fetchReq('POST','/oauth/token', user, receiveLogin));
+
+        //return setTimeout(() => {return dispatch(receiveLogin({permission: 'STUDENT'}))},3000);
         //async fetch here
     };
 }
