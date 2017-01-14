@@ -20,7 +20,7 @@ public class AcademicRepository extends BaseRepository<AcademicDb> {
 
     private static final RowMapper<AcademicDb> ROW_MAPPER = (rs, rowNum) -> {
         AcademicDb academic = new AcademicDb();
-        academic.setId(rs.getLong("id"));
+        academic.setId(rs.getLong("teacher_id"));
         academic.setUsername(rs.getString("username"));
         academic.setPassword(rs.getString("password"));
         academic.setName(rs.getString("name"));
@@ -30,7 +30,7 @@ public class AcademicRepository extends BaseRepository<AcademicDb> {
     };
 
     private static final RowUnmapper<AcademicDb> ROW_UNMAPPER = academicDb -> mapOf(
-            "id", academicDb.getId(),
+            "teacher_id", academicDb.getId(),
             "username", academicDb.getUsername(),
             "password", academicDb.getPassword(),
             "name", academicDb.getName(),

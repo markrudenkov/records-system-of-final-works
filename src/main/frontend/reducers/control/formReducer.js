@@ -50,7 +50,7 @@ const studentFormData = [
         props: {
             type: 'text',
             placeholder: 'Enter Login',
-            ref: 'login'
+            ref: 'username'
         },
         label: 'Login',
         validate: loginValidator

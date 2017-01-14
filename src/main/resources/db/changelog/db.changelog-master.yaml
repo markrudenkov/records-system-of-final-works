@@ -37,6 +37,47 @@ databaseChangeLog:
       author: Mark
       changes:
         - createTable:
+            tableName: teachers
+            columns:
+              - column:
+                  name: teacher_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+              - column:
+                  name: surname
+                  type: varchar(50)
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: academic_title
+                  type: varchar(50)
+              - column:
+                  name: role
+                  type: varchar(50)
+        - addAutoIncrement:
+              columnDataType: int
+              columnName: teacher_id
+              incrementBy: 1
+              startWith: 1
+              tableName: teachers
+  - changeSet:
+      id: 3
+      author: Mark
+      changes:
+        - createTable:
             tableName: final_works
             columns:
               - column:
@@ -73,56 +114,22 @@ databaseChangeLog:
             constraintName: fk_final_work
             referencedColumnNames: final_work_id
             referencedTableName: final_works
-
-  - changeSet:
-      id: 3
-      author: Mark
-      changes:
-        - createTable:
-            tableName: teachers
-            columns:
-              - column:
-                  name: teacher_id
-                  type: int
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar(50)
-              - column:
-                  name: surname
-                  type: varchar(50)
-              - column:
-                  name: username
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: password
-                  type: varchar(100)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: academic_title
-                  type: varchar(50)
-              - column:
-                  name: role
-                  type: varchar(50)
-
         - addForeignKeyConstraint:
             baseColumnNames: promotor_id
             baseTableName: final_works
             constraintName: fk_review_promotor
             referencedColumnNames: teacher_id
             referencedTableName: teachers
-
         - addForeignKeyConstraint:
             baseColumnNames: reviewer_id
             baseTableName: final_works
             constraintName: fk_review_reviewer
             referencedColumnNames: teacher_id
             referencedTableName: teachers
+
+
+
+
 
   - changeSet:
       id: 4
