@@ -2,7 +2,9 @@
 
 const React = require('react');
 const {Component, PropTypes} = React;
-//const Login = require('Login');
+
+const UserListItem = require('UserListItem');
+
 const style = require('../scss/main.scss');
 const styleButtons = require('../scss/_buttons.scss');
 
@@ -42,6 +44,7 @@ class HomePage extends Component {
         return (
             <div className={style.center}>
                 {screen}
+                <UserListItem userForm={this.props.academicFormData} name={'Jacek'} surname={'Placek'} id={'abc123'} endPointURL={'api/admin/academic'} />
             </div>
         );
     }
@@ -50,8 +53,9 @@ class HomePage extends Component {
 function mapStateToProps(state) {
     return {
         userIsLoggedIn: state.session.user.isLoggedIn,
-        userName: state.session.user.username,
+        username: state.session.user.username,
         permission: state.session.user.permission,
+        academicFormData: state.control.forms.academicForm.formData
     }
 }
 

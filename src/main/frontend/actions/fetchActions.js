@@ -1,29 +1,15 @@
 const fetch = require('isomorphic-fetch');
 const { showNotification } = require('notificationActions');
-// const { hashHistory } = require('react-router');
 
-function fetchReq(method, url, body, successCallback, errorCalback=defaultError) {
+function fetchReq(url, request, successCallback=defaultSuccessCallback, errorCallback=defaultErrorCallback) {
     return (dispatch, getState) => {
         const state = getState();
-        const token = state.session.user.token;
-
-        let contentType = method !== 'POST' ? 'application/x-www-form-urlencoded; charset=utf-8': 'application/json; charset=utf-8';
-
-        const request = {
-            credentials: 'include', //pass cookies, for authentication
-            method: method, // get, post, put, delete
-            headers: {
-                'Content-Type': contentType,
-                'Authorization': 'Basic '+token,
-            }, // x-access-token, stuff like that
-            body: body
-        };
-        //async fetch here
 
         return fetch(url, request)
         .then((response) => {
             if (response.status >= 400) {
-                dispatch(errorCalback(response.status));
+                console.log(response);
+                dispatch(errorCallback(response.status));
                 throw new Error("Bad response from server");
             }
             return response.json();
@@ -35,8 +21,23 @@ function fetchReq(method, url, body, successCallback, errorCalback=defaultError)
     };
 }
 
-function defaultError(status) {
+function apiReq(url, req, successCallback, errorCalback) {
+    return (dispatch, getState) => {
+        const state = getState();
+        const { token, token_type } = state.session.user;
+
+        req.headers['Authorization'] = token_type+' '+token;
+
+        console.log(req);
+        dispatch(fetchReq(url, req, successCallback, errorCalback));
+    }
+}
+
+function defaultErrorCallback(status) {
     return showNotification('Error fetching. Status: '+status, 'danger');
+}
+function defaultSuccessCallback() {
+    return showNotification('Done!', 'success');
 }
 
 // fetch(url, {
@@ -52,5 +53,7 @@ function defaultError(status) {
 
 module.exports = {
     fetchReq,
-    defaultError
+    defaultErrorCallback,
+    defaultSuccessCallback,
+    apiReq
 };

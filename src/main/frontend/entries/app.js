@@ -7,12 +7,14 @@ const { Router, Route, IndexRoute, hashHistory } = require('react-router');
 
 const { showNotification } = require('../actions/notificationActions');
 const { logout } = require('../actions/userActions');
+const { apiReq } = require('../actions/fetchActions');
 
 const HomePage = require('../components/HomePage');
 const Layout = require('../components/Layout');
 const Login = require('../components/Login');
 const About = require('../components/About');
 const NotFound = require('../components/NotFound');
+const RegisterUser = require('../components/RegisterUser');
 
 const store = require('../store');
 
@@ -32,7 +34,7 @@ ReactDOM.render(
                 <Route path='login' component={Login} />
                 <Route path='about' component={About} />
                 <Route path='admin' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'ADMIN')}}>
-                    <Route path='register_user' component={Login} />
+                    <Route path='register_user' component={RegisterUser}/>
                 </Route>
                 <Route path='student' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'STUDENT')}}>
                     <Route path='diploma_list' component={Login} />
