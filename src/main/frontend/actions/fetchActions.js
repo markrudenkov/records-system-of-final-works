@@ -7,7 +7,7 @@ function fetchReq(method, url, body, successCallback, errorCalback=defaultError)
         const state = getState();
         const token = state.session.user.token;
 
-        let contentType = method !== 'GET' ? 'application/x-www-form-urlencoded; charset=utf-8': 'application/json; charset=utf-8';
+        let contentType = method !== 'POST' ? 'application/x-www-form-urlencoded; charset=utf-8': 'application/json; charset=utf-8';
 
         const request = {
             credentials: 'include', //pass cookies, for authentication
