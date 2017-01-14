@@ -9,7 +9,7 @@ function registerStudent(data) {
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
         },
-        body: serialize(data)
+        body: data
     };
 
     return (dispatch) => {
@@ -25,7 +25,7 @@ function registerAcademic(data) {
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
         },
-        body: serialize(data)
+        body: data
     };
 
     return (dispatch) => {

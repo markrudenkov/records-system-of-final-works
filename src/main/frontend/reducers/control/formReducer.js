@@ -71,7 +71,7 @@ const academicFormData = studentFormData.concat([{
     props: {
         type: 'text',
         placeholder: 'Enter Academic Title',
-        ref: 'academictitle'
+        ref: 'title'
     },
     label: 'Academic Title',
     validate: textValidator
