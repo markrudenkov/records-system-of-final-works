@@ -1,13 +1,15 @@
 const fetch = require('isomorphic-fetch');
 const { showNotification } = require('notificationActions');
 
-function fetchReq(url, request, successCallback=defaultSuccessCallback, errorCalback=defaultErrorCallback) {
+function fetchReq(url, request, successCallback=defaultSuccessCallback, errorCallback=defaultErrorCallback) {
     return (dispatch, getState) => {
+        const state = getState();
+
         return fetch(url, request)
         .then((response) => {
             if (response.status >= 400) {
                 console.log(response);
-                dispatch(errorCalback(response.status));
+                dispatch(errorCallback(response.status));
                 throw new Error("Bad response from server");
             }
             return response.json();
