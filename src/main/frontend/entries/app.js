@@ -14,6 +14,7 @@ const Layout = require('../components/Layout');
 const Login = require('../components/Login');
 const About = require('../components/About');
 const NotFound = require('../components/NotFound');
+const RegisterUser = require('../components/RegisterUser');
 
 const store = require('../store');
 
@@ -43,10 +44,10 @@ ReactDOM.render(
         <Router history={hashHistory}>
             <Route path='/' component={Layout}>
                 <IndexRoute component={HomePage} />
-                <Route path='login' component={Login} />
+                <Route path='login' component={RegisterUser} />
                 <Route path='about' component={About} />
                 <Route path='admin' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'ADMIN')}}>
-                    <Route path='register_user' onEnter={req} />
+                    <Route path='register_user' onEnter={req} component={RegisterUser}/>
                 </Route>
                 <Route path='student' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'STUDENT')}}>
                     <Route path='diploma_list' component={Login} />

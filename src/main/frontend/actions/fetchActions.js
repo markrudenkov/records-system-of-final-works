@@ -1,10 +1,8 @@
 const fetch = require('isomorphic-fetch');
 const { showNotification } = require('notificationActions');
-// const { hashHistory } = require('react-router');
 
-function fetchReq(url, request, successCallback, errorCalback=defaultError) {
+function fetchReq(url, request, successCallback=defaultSuccessCallback, errorCalback=defaultErrorCallback) {
     return (dispatch, getState) => {
-
         return fetch(url, request)
         .then((response) => {
             if (response.status >= 400) {
@@ -33,8 +31,11 @@ function apiReq(url, req, successCallback, errorCalback) {
     }
 }
 
-function defaultError(status) {
+function defaultErrorCallback(status) {
     return showNotification('Error fetching. Status: '+status, 'danger');
+}
+function defaultSuccessCallback() {
+    return showNotification('Done!', 'success');
 }
 
 // fetch(url, {
@@ -50,6 +51,7 @@ function defaultError(status) {
 
 module.exports = {
     fetchReq,
-    defaultError,
+    defaultErrorCallback,
+    defaultSuccessCallback,
     apiReq
 };

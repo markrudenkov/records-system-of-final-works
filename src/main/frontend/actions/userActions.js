@@ -12,7 +12,7 @@ function userLoginClick(user) {
         dispatch(showNotification('['+user.username+'] login in progress..', 'info'));
         let data = { grant_type:'password', username: user.username, password: user.password, client_id: 'web-ui' };
 
-        let encoded = btoa("web-ui:");
+        let encoded = btoa('web-ui:');
 
         const request = {
             credentials: 'include', //pass cookies, for authentication
