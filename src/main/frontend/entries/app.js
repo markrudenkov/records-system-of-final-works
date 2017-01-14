@@ -26,28 +26,15 @@ const checkPermission = (nextState, pushState, permission) => {
     }
 };
 
-const req = () => {
-    const request = {
-        credentials: 'include', //pass cookies, for authentication
-        method: 'GET', // get, post, put, delete
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            //'Authorization': 'Basic '+encoded,
-        }, // x-access-token, stuff like that
-        //body: serialize(data)
-    };
-    store.dispatch(apiReq('api/item', request, ()=>{console.log('OK')}));
-};
-
 ReactDOM.render(
     <Provider store={store}>
         <Router history={hashHistory}>
             <Route path='/' component={Layout}>
                 <IndexRoute component={HomePage} />
-                <Route path='login' component={RegisterUser} />
+                <Route path='login' component={Login} />
                 <Route path='about' component={About} />
                 <Route path='admin' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'ADMIN')}}>
-                    <Route path='register_user' onEnter={req} component={RegisterUser}/>
+                    <Route path='register_user' component={RegisterUser}/>
                 </Route>
                 <Route path='student' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'STUDENT')}}>
                     <Route path='diploma_list' component={Login} />
