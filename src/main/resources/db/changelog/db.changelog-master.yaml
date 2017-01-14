@@ -282,6 +282,9 @@ databaseChangeLog:
               - column:
                   name: name
                   type: varchar(60)
+              - column:
+                  name: enabled
+                  type: boolean
         - addUniqueConstraint:
             columnNames: username
             constraintName: unique_usr_usrname
@@ -358,6 +361,9 @@ databaseChangeLog:
             - column:
                 name: name
                 value: 'admin'
+            - column:
+                name: enabled
+                valueBoolean: true
             tableName: users
 
   - changeSet:
