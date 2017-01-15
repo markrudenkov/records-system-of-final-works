@@ -437,12 +437,12 @@ databaseChangeLog:
           - sql:
             dbms: MySQL
             sql:
-               CREATE TRIGGER delete_students
-               AFTER DELETE ON students FOR EACH ROW
-               DELETE FROM users WHERE username=OLD.username;
                CREATE TRIGGER delete_students_authority
                AFTER DELETE ON students FOR EACH ROW
                DELETE FROM authorities WHERE username=OLD.username;
+               CREATE TRIGGER delete_students
+               AFTER DELETE ON authorities FOR EACH ROW
+               DELETE FROM users WHERE username=OLD.username;
 
   - changeSet:
         id: 17
@@ -451,10 +451,10 @@ databaseChangeLog:
           - sql:
             dbms: MySQL
             sql:
-               CREATE TRIGGER update_students
-               AFTER UPDATE ON students FOR EACH ROW
-               UPDATE users SET username=NEW.username WHERE username=OLD.username;
                CREATE TRIGGER update_students_authority
                AFTER UPDATE ON students FOR EACH ROW
                UPDATE authorities SET username=NEW.username WHERE username=OLD.username;
+               CREATE TRIGGER update_students
+               AFTER UPDATE ON authorities FOR EACH ROW
+               UPDATE users SET username=NEW.username WHERE username=OLD.username;
 
