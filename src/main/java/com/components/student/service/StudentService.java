@@ -66,7 +66,7 @@ public class StudentService {
             StudentDb updated = repository.update(mapToStudentDb(id, student));
             return mapToStudent(updated);
         } else {
-            throw new DataNotFoundException("Mission results with id " + id + " not found");
+            throw new DataNotFoundException("Student with id " + id + " not found");
         }
     }
 

@@ -333,6 +333,8 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
+            onUpdate: CASCADE
+            onDelete: CASCADE
             baseColumnNames: username
             baseTableName: authorities
             constraintName: fk_username_auth
@@ -423,11 +425,8 @@ databaseChangeLog:
           - sql:
             dbms: MySQL
             sql:
-               CREATE TRIGGER delete_teacher_authority
-               AFTER DELETE ON teachers FOR EACH ROW
-               DELETE FROM authorities WHERE username=OLD.username;
                CREATE TRIGGER delete_teacher
-               AFTER DELETE ON authorities FOR EACH ROW
+               AFTER DELETE ON teachers FOR EACH ROW
                DELETE FROM users WHERE username=OLD.username;
 
   - changeSet:
@@ -437,11 +436,8 @@ databaseChangeLog:
           - sql:
             dbms: MySQL
             sql:
-               CREATE TRIGGER delete_students_authority
+               CREATE TRIGGER delete_student
                AFTER DELETE ON students FOR EACH ROW
-               DELETE FROM authorities WHERE username=OLD.username;
-               CREATE TRIGGER delete_students
-               AFTER DELETE ON authorities FOR EACH ROW
                DELETE FROM users WHERE username=OLD.username;
 
   - changeSet:
@@ -451,10 +447,17 @@ databaseChangeLog:
           - sql:
             dbms: MySQL
             sql:
-               CREATE TRIGGER update_students_authority
-               AFTER UPDATE ON students FOR EACH ROW
-               UPDATE authorities SET username=NEW.username WHERE username=OLD.username;
                CREATE TRIGGER update_students
-               AFTER UPDATE ON authorities FOR EACH ROW
+               AFTER UPDATE ON students FOR EACH ROW
                UPDATE users SET username=NEW.username WHERE username=OLD.username;
 
+  - changeSet:
+        id: 18
+        author: Mark
+        changes:
+          - sql:
+            dbms: MySQL
+            sql:
+               CREATE TRIGGER update_teachers
+               AFTER UPDATE ON teachers FOR EACH ROW
+               UPDATE users SET username=NEW.username WHERE username=OLD.username;

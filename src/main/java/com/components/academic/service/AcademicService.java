@@ -68,7 +68,7 @@ public class AcademicService {
             AcademicDb updated = repository.update(mapToAcademicDb(id, academic));
             return mapToAcademic(updated);
         } else {
-            throw new DataNotFoundException("Mission results with id " + id + " not found");
+            throw new DataNotFoundException("Academic with id " + id + " not found");
         }
     }
 
