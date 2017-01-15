@@ -430,5 +430,44 @@ databaseChangeLog:
                AFTER INSERT ON students FOR EACH ROW
                INSERT INTO authorities (username, authority) VALUES (NEW.username,'ROLE_STUDENT');
 
-
+  - changeSet:
+        id: 17
+        author: Mark
+        changes:
+          - sql:
+            dbms: MySQL
+            sql:
+               CREATE TRIGGER delete_teacher
+               AFTER DELETE ON teachers FOR EACH ROW
+               DELETE FROM users WHERE username=OLD.username;
+  - changeSet:
+        id: 18
+        author: Mark
+        changes:
+          - sql:
+            dbms: MySQL
+            sql:
+               CREATE TRIGGER delete_teacher_authority
+               AFTER DELETE ON teachers FOR EACH ROW
+               DELETE FROM authorities WHERE username=OLD.username;
+  - changeSet:
+        id: 19
+        author: Mark
+        changes:
+          - sql:
+            dbms: MySQL
+            sql:
+               CREATE TRIGGER delete_students
+               AFTER DELETE ON students FOR EACH ROW
+               DELETE FROM users WHERE username=OLD.username;
+  - changeSet:
+        id: 20
+        author: Mark
+        changes:
+          - sql:
+            dbms: MySQL
+            sql:
+               CREATE TRIGGER delete_students_authority
+               AFTER DELETE ON students FOR EACH ROW
+               DELETE FROM authorities WHERE username=OLD.username;
 
