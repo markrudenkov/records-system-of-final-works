@@ -24,7 +24,7 @@ const textValidator = (input) => {
     return '';
 };
 
-const studentFormData = [
+const studentListFormData = [
     {
         type: 'input',
         props: {
@@ -49,23 +49,36 @@ const studentFormData = [
         type: 'input',
         props: {
             type: 'text',
-            placeholder: 'Enter Login',
+            placeholder: 'Enter Username',
             ref: 'username'
         },
-        label: 'Login',
+        label: 'Username',
         validate: loginValidator
-    },
-    {
-        type: 'input',
-        props: {
-            type: 'password',
-            placeholder: 'Enter Password',
-            ref: 'password'
-        },
-        label: 'Password',
-        validate: passValidator
     }
 ];
+
+const academicListFormData = studentListFormData.concat([{
+    type: 'input',
+    props: {
+        type: 'text',
+        placeholder: 'Enter Academic Title',
+        ref: 'title'
+    },
+    label: 'Academic Title',
+    validate: textValidator
+}]);
+
+const studentFormData = studentListFormData.concat([{
+    type: 'input',
+    props: {
+        type: 'password',
+        placeholder: 'Enter Password',
+        ref: 'password'
+    },
+    label: 'Password',
+    validate: passValidator
+}]);
+
 const academicFormData = studentFormData.concat([{
     type: 'input',
     props: {
@@ -94,7 +107,9 @@ const initialState = {
     nameValidator: nameValidator,
     loginValidator: loginValidator,
     academicForm: academicForm,
-    studentForm: studentForm
+    studentForm: studentForm,
+    studentListFormData: studentListFormData,
+    academicListFormData: academicListFormData
 };
 
 function formReducer(state=initialState, action) {

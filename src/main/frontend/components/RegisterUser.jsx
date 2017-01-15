@@ -1,13 +1,13 @@
 'use strict';
 
 const React = require('react');
+
 const DynamicForm = require('./DynamicForm');
-const style = require('../scss/switch.scss');
+const Switch = require('./Switch');
 
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { hideNotification } = require('../actions/notificationActions');
 const { registerAcademic, registerStudent } = require('../actions/adminActions');
 
 class RegisterUser extends React.Component {
@@ -20,10 +20,8 @@ class RegisterUser extends React.Component {
         this.state = {isStudentOn: true};
     }
 
-    switchOnChange(isStudentClick) {
-        if ( (this.state.isStudentOn && !isStudentClick) || (!this.state.isStudentOn && isStudentClick) ) { // XOR
-            this.setState({isStudentOn: !this.state.isStudentOn});
-        }
+    switchOnChange(state) {
+        this.setState({isStudentOn: !this.state.isStudentOn});
     }
 
     registerClick(data) {
@@ -44,14 +42,7 @@ class RegisterUser extends React.Component {
 
         return (
             <div>
-                <div className={style.switch}>
-                    <input onChange={()=>{this.switchOnChange(true)}} type='radio' className={style.switchInput} name='view' value='student' id='student' />
-                    <label htmlFor='student' className={`${style.switchLabel} ${style.switchLabelOff}`}>Student</label>
-                    <input onChange={()=>{this.switchOnChange(false)}} type='radio' className={style.switchInput} name='view' value='academic' id='academic' />
-                    <label htmlFor='academic' className={`${style.switchLabel} ${style.switchLabelOn}`}>Academic</label>
-                    <span className={style.switchSelection}></span>
-                </div>
-
+                <Switch switchChange={this.switchOnChange}/>
                 <DynamicForm legend={legend} formData={formData} onClick={this.registerClick} buttonLabel={buttonLabel} />
             </div>
         );
@@ -67,7 +58,6 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        hideNotification: hideNotification,
         registerAcademic: registerAcademic,
         registerStudent: registerStudent
     }, dispatch);

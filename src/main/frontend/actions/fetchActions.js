@@ -3,8 +3,6 @@ const { showNotification } = require('notificationActions');
 
 function fetchReq(url, request, successCallback=defaultSuccessCallback, errorCallback=defaultErrorCallback) {
     return (dispatch, getState) => {
-        const state = getState();
-
         return fetch(url, request)
         .then((response) => {
             if (response.status >= 400) {

@@ -2,35 +2,31 @@ const { showNotification } = require('notificationActions');
 const { apiReq } = require('fetchActions');
 const { serialize } = require('queryfetch');
 
-function registerStudent(data) {
+function registerUser(data, user) {
     const req = {
         credentials: 'include',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
         },
-        body: data
+        body: JSON.stringify(data)
     };
 
     return (dispatch) => {
-        dispatch(showNotification('Sending student info...', 'info'));
-        dispatch(apiReq('api/admin/academic', req));
+        dispatch(showNotification('Sending '+user+' info...', 'info'));
+        dispatch(apiReq('api/admin/'+user, req));
+    };
+}
+
+function registerStudent(data) {
+    return (dispatch) => {
+        dispatch(registerUser(data, 'student'));
     };
 }
 
 function registerAcademic(data) {
-    const req = {
-        credentials: 'include',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: data
-    };
-
     return (dispatch) => {
-        dispatch(showNotification('Sending academic info...', 'info'));
-        dispatch(apiReq('api/admin/academic', req));
+        dispatch(registerUser(data, 'academic'));
     };
 }
 module.exports = {

@@ -15,6 +15,7 @@ const Login = require('../components/Login');
 const About = require('../components/About');
 const NotFound = require('../components/NotFound');
 const RegisterUser = require('../components/RegisterUser');
+const UserList = require('../components/UserList');
 
 const store = require('../store');
 
@@ -33,6 +34,7 @@ ReactDOM.render(
                 <IndexRoute component={HomePage} />
                 <Route path='login' component={Login} />
                 <Route path='about' component={About} />
+                <Route path='user_list' component={UserList} />
                 <Route path='admin' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'ADMIN')}}>
                     <Route path='register_user' component={RegisterUser}/>
                 </Route>
