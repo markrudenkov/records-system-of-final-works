@@ -2,7 +2,7 @@
 
 const React = require('react');
 const {Component, PropTypes} = React;
-const DynamicForm = require('DynamicForm');
+const DynamicListForm = require('DynamicListForm');
 const style = require('../scss/main.scss');
 const styleButtons = require('../scss/_buttons.scss');
 const styleListItem = require('../scss/userListItem.scss');
@@ -21,6 +21,7 @@ class UserListItem extends Component {
         this.saveClick = this.saveClick.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
         this.switchMode = this.switchMode.bind(this);
+        this.hideForm = this.hideForm.bind(this);
         this.state = {showForm: false};
     }
 
@@ -32,8 +33,13 @@ class UserListItem extends Component {
         console.log('delete data!');
     }
 
-    switchMode() {
+    switchMode(e) {
+        e.preventDefault();
         this.setState({showForm: !this.state.showForm});
+    }
+
+    hideForm() {
+        this.setState({showForm: false});
     }
 
     mode() {
@@ -41,9 +47,8 @@ class UserListItem extends Component {
 
         if (this.state.showForm) {
             return (
-                <div>
-                    <DynamicForm formData={userForm} legend={'Edit user'} buttonLabel={'Save'} onClick={this.saveClick} />
-                    <button className={styleButtons.buttonPrimary} onClick={this.switchMode}>Cancel</button>
+                <div className={styleListItem.formWrapper}>
+                    <DynamicListForm formData={userForm} legend={`Edit ${name} ${surname}`} buttonLabel={'Save'} onClick={this.saveClick} cancelClick={this.switchMode} />
                 </div>
             );
         } else {
@@ -52,7 +57,7 @@ class UserListItem extends Component {
                     <p className={styleListItem.itemText}>{name}</p>
                     <p className={styleListItem.itemText}>{surname}</p>
                     <button className={`${styleButtons.buttonPrimary} ${styleListItem.editButton}`} onClick={this.switchMode}>Edit</button>
-                    <button className={styleButtons.buttonDanger}>Delete</button>
+                    <button className={styleButtons.buttonDanger} onClick={this.deleteClick}>Delete</button>
                 </div>
             );
         }

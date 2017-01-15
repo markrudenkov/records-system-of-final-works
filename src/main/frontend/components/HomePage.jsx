@@ -3,8 +3,6 @@
 const React = require('react');
 const {Component, PropTypes} = React;
 
-const UserListItem = require('UserListItem');
-
 const style = require('../scss/main.scss');
 const styleButtons = require('../scss/_buttons.scss');
 
@@ -44,7 +42,6 @@ class HomePage extends Component {
         return (
             <div className={style.center}>
                 {screen}
-                <UserListItem userForm={this.props.academicFormData} name={'Jacek'} surname={'Placek'} id={'abc123'} endPointURL={'api/admin/academic'} />
             </div>
         );
     }

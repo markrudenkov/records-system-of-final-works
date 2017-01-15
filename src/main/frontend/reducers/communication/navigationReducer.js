@@ -6,6 +6,10 @@ const defaultLinks = [{
     {
         title: 'About',
         url: 'about'
+    },
+    {
+        title: 'User lists',
+        url: 'user_list'
     }
 ];
 
