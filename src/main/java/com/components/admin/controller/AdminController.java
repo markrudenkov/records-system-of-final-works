@@ -60,17 +60,17 @@ public class AdminController extends BaseController {
         return studentService.allStudents();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/api/admin/student{id}")
+    @RequestMapping(method = RequestMethod.GET, path = "/api/admin/student/{id}")
     public Student getStudent(@PathVariable Long id) throws IOException {
         return studentService.getStudent(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, path = "/api/admin/student{id}")
+    @RequestMapping(method = RequestMethod.PUT, path = "/api/admin/student/{id}")
     public Student updateAcademic(@PathVariable Long id, @Valid @RequestBody Student student) {
         return studentService.updateStudent(id, student);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/api/admin/student{id}")
+    @RequestMapping(method = RequestMethod.DELETE, path = "/api/admin/student/{id}")
     public void removeStudent(@PathVariable Long id) {
         studentService.remove(id);
     }
