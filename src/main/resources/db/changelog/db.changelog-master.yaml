@@ -416,7 +416,7 @@ databaseChangeLog:
           - sql:
             dbms: MySQL
             sql:
-               CREATE TRIGGER new_teacher
+               CREATE TRIGGER new_student
                AFTER INSERT ON students FOR EACH ROW
                INSERT INTO users (username, password,name,enabled) VALUES (NEW.username,NEW.password,NEW.name,true);
   - changeSet:
@@ -426,7 +426,7 @@ databaseChangeLog:
           - sql:
             dbms: MySQL
             sql:
-               CREATE TRIGGER new_teacher_authority
+               CREATE TRIGGER new_student_authority
                AFTER INSERT ON students FOR EACH ROW
                INSERT INTO authorities (username, authority) VALUES (NEW.username,'ROLE_STUDENT');
 
