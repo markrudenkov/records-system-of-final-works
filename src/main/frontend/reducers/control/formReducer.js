@@ -68,7 +68,16 @@ const academicListFormData = studentListFormData.concat([{
     validate: textValidator
 }]);
 
-const studentFormData = studentListFormData.concat([{
+const studentFormData = [{
+    type: 'input',
+    props: {
+        type: 'text',
+        placeholder: 'Enter UserId',
+        ref: 'id'
+    },
+    label: 'UserId',
+    validate: loginValidator
+}].concat(studentListFormData.concat([{
     type: 'input',
     props: {
         type: 'password',
@@ -77,7 +86,7 @@ const studentFormData = studentListFormData.concat([{
     },
     label: 'Password',
     validate: passValidator
-}]);
+}]));
 
 const academicFormData = studentFormData.concat([{
     type: 'input',

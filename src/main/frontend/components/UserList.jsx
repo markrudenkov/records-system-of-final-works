@@ -8,7 +8,7 @@ const Switch = require('./Switch');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { registerAcademic, registerStudent } = require('../actions/adminActions');
+const { getAcademics, getStudents } = require('../actions/apiActions');
 
 class UserList extends React.Component {
 
@@ -20,15 +20,15 @@ class UserList extends React.Component {
     }
 
     componentWillMount() {
-        //console.log('load students!!!');
+        this.props.getStudents();
     }
 
     switchOnChange(state) {
         this.setState({isStudentOn: state});
         if (state) {
-            //console.log('load students!!!');
+            this.props.getStudents();
         } else {
-            //console.log('load academics!!!');
+            this.props.getAcademics();
         }
     }
 
@@ -38,7 +38,7 @@ class UserList extends React.Component {
 
         const formData = isStudentOn ? studentFormData : academicFormData;
         const list = isStudentOn ? students : academics;
-        const endPointURL = isStudentOn ? 'api/admin/student' : 'api/admin/academic';
+        const url = isStudentOn ? 'student' : 'academic';
 
         return (
             <div>
@@ -46,7 +46,7 @@ class UserList extends React.Component {
                 {
                     list.map((user) => {
                         return (
-                            <UserListItem key={user.id} userForm={formData} name={user.name} surname={user.surname} id={user.id} endPointURL={endPointURL} />
+                            <UserListItem key={user.id} userForm={formData} user={user} url={url} />
                         )
                     })
                 }
@@ -67,8 +67,8 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        registerAcademic: registerAcademic,
-        registerStudent: registerStudent
+        getAcademics: getAcademics,
+        getStudents: getStudents
     }, dispatch);
 }
 

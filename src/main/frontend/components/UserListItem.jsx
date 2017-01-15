@@ -10,8 +10,7 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { toggleNotification } = require('../actions/notificationActions');
-
+const { deleteUser } = require('../actions/apiActions');
 
 class UserListItem extends Component {
 
@@ -21,7 +20,6 @@ class UserListItem extends Component {
         this.saveClick = this.saveClick.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
         this.switchMode = this.switchMode.bind(this);
-        this.hideForm = this.hideForm.bind(this);
         this.state = {showForm: false};
     }
 
@@ -29,8 +27,10 @@ class UserListItem extends Component {
         console.log('save data!');
     }
 
-    deleteClick(data) {
+    deleteClick() {
         console.log('delete data!');
+
+        this.props.deleteUser(this.props.url, this.props.user.id);
     }
 
     switchMode(e) {
@@ -38,24 +38,20 @@ class UserListItem extends Component {
         this.setState({showForm: !this.state.showForm});
     }
 
-    hideForm() {
-        this.setState({showForm: false});
-    }
-
     mode() {
-        const { name, surname, id, userForm, endPointURL } = this.props;
+        const { user, userForm } = this.props;
 
         if (this.state.showForm) {
             return (
                 <div className={styleListItem.formWrapper}>
-                    <DynamicListForm formData={userForm} legend={`Edit ${name} ${surname}`} buttonLabel={'Save'} onClick={this.saveClick} cancelClick={this.switchMode} />
+                    <DynamicListForm user={user} formData={userForm} legend={`Edit ${user.name} ${user.surname}`} buttonLabel={'Save'} onClick={this.saveClick} cancelClick={this.switchMode} />
                 </div>
             );
         } else {
             return (
                 <div className={styleListItem.wrapper}>
-                    <p className={styleListItem.itemText}>{name}</p>
-                    <p className={styleListItem.itemText}>{surname}</p>
+                    <p className={styleListItem.itemText}>{user.name}</p>
+                    <p className={styleListItem.itemText}>{user.surname}</p>
                     <button className={`${styleButtons.buttonPrimary} ${styleListItem.editButton}`} onClick={this.switchMode}>Edit</button>
                     <button className={styleButtons.buttonDanger} onClick={this.deleteClick}>Delete</button>
                 </div>
@@ -64,7 +60,6 @@ class UserListItem extends Component {
     }
 
     render() {
-        const { name, surname, id, userForm, endPointURL } = this.props;
         return (
             <div className={style.center}>
                 {this.mode()}
@@ -81,7 +76,7 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        toggleNotification: toggleNotification,
+        deleteUser: deleteUser,
     }, dispatch);
 }
 

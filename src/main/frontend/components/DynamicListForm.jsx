@@ -56,12 +56,13 @@ class DynamicListForm extends React.Component {
     }
 
     render() {
-        const { formData, buttonLabel, legend, cancelClick } = this.props;
+        const { formData, buttonLabel, legend, cancelClick, user } = this.props;
         return (
             <form className={fStyle.form}>
                 <legend><h3>{legend}</h3></legend>
                 {
                     formData.map((e)=>{
+                        e.props.defaultValue = user[e.props.ref];
                         return (
                             <div key={e.props.ref} className={fStyle.formRow}>
                                 <label><b>{e.label}</b></label>
