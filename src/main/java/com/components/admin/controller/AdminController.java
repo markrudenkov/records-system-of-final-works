@@ -2,6 +2,8 @@ package com.components.admin.controller;
 
 import com.components.academic.model.Academic;
 import com.components.academic.service.AcademicService;
+import com.components.student.model.Student;
+import com.components.student.service.StudentService;
 import com.components.utils.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,9 @@ public class AdminController extends BaseController {
 
     @Autowired
     AcademicService service;
+
+    @Autowired
+    StudentService studentService;
 
 
     @RequestMapping(method = RequestMethod.POST, path = "/api/admin/academic")
@@ -44,4 +49,29 @@ public class AdminController extends BaseController {
         service.remove(id);
     }
 
+    //Student
+    @RequestMapping(method = RequestMethod.POST, path = "/api/admin/student")
+    public Student createAcademic(@RequestBody @Valid Student student) throws ValidationException {
+        return studentService.createStudent(student);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/api/admin/student")
+    public List<Student> allStudents() {
+        return studentService.allStudents();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/api/admin/student{id}")
+    public Student getStudent(@PathVariable Long id) throws IOException {
+        return studentService.getStudent(id);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, path = "/api/admin/student{id}")
+    public Student updateAcademic(@PathVariable Long id, @Valid @RequestBody Student student) {
+        return studentService.updateStudent(id, student);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = "/api/admin/student{id}")
+    public void removeStudent(@PathVariable Long id) {
+        studentService.remove(id);
+    }
 }
