@@ -398,19 +398,12 @@ databaseChangeLog:
                CREATE TRIGGER new_teacher
                AFTER INSERT ON teachers FOR EACH ROW
                INSERT INTO users (username, password,name,enabled) VALUES (NEW.username,NEW.password,NEW.name,true);
-  - changeSet:
-        id: 14
-        author: Mark
-        changes:
-          - sql:
-            dbms: MySQL
-            sql:
                CREATE TRIGGER new_teacher_authority
                AFTER INSERT ON teachers FOR EACH ROW
                INSERT INTO authorities (username, authority) VALUES (NEW.username,'ROLE_TEACHER');
 
   - changeSet:
-        id: 15
+        id: 14
         author: Mark
         changes:
           - sql:
@@ -419,29 +412,12 @@ databaseChangeLog:
                CREATE TRIGGER new_student
                AFTER INSERT ON students FOR EACH ROW
                INSERT INTO users (username, password,name,enabled) VALUES (NEW.username,NEW.password,NEW.name,true);
-  - changeSet:
-        id: 16
-        author: Mark
-        changes:
-          - sql:
-            dbms: MySQL
-            sql:
                CREATE TRIGGER new_student_authority
                AFTER INSERT ON students FOR EACH ROW
                INSERT INTO authorities (username, authority) VALUES (NEW.username,'ROLE_STUDENT');
 
   - changeSet:
-        id: 17
-        author: Mark
-        changes:
-          - sql:
-            dbms: MySQL
-            sql:
-               CREATE TRIGGER delete_teacher
-               AFTER DELETE ON teachers FOR EACH ROW
-               DELETE FROM users WHERE username=OLD.username;
-  - changeSet:
-        id: 18
+        id: 15
         author: Mark
         changes:
           - sql:
@@ -450,8 +426,12 @@ databaseChangeLog:
                CREATE TRIGGER delete_teacher_authority
                AFTER DELETE ON teachers FOR EACH ROW
                DELETE FROM authorities WHERE username=OLD.username;
+               CREATE TRIGGER delete_teacher
+               AFTER DELETE ON authorities FOR EACH ROW
+               DELETE FROM users WHERE username=OLD.username;
+
   - changeSet:
-        id: 19
+        id: 16
         author: Mark
         changes:
           - sql:
@@ -460,14 +440,21 @@ databaseChangeLog:
                CREATE TRIGGER delete_students
                AFTER DELETE ON students FOR EACH ROW
                DELETE FROM users WHERE username=OLD.username;
+               CREATE TRIGGER delete_students_authority
+               AFTER DELETE ON students FOR EACH ROW
+               DELETE FROM authorities WHERE username=OLD.username;
+
   - changeSet:
-        id: 20
+        id: 17
         author: Mark
         changes:
           - sql:
             dbms: MySQL
             sql:
-               CREATE TRIGGER delete_students_authority
-               AFTER DELETE ON students FOR EACH ROW
-               DELETE FROM authorities WHERE username=OLD.username;
+               CREATE TRIGGER update_students
+               AFTER UPDATE ON students FOR EACH ROW
+               UPDATE users SET username=NEW.username WHERE username=OLD.username;
+               CREATE TRIGGER update_students_authority
+               AFTER UPDATE ON students FOR EACH ROW
+               UPDATE authorities SET username=NEW.username WHERE username=OLD.username;
 
