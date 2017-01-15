@@ -1,6 +1,5 @@
 const { showNotification } = require('notificationActions');
 const { apiReq } = require('fetchActions');
-const { serialize } = require('queryfetch');
 
 function registerUser(data, user) {
     const req = {
