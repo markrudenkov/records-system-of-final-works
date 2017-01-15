@@ -16,12 +16,8 @@ import javax.xml.bind.ValidationException;
 @RestController
 public class AcademicController extends BaseController {
 
-    @Autowired
-    AcademicService service;
 
 
-    @RequestMapping(method = RequestMethod.POST, path = "/api/admin/academic")
-    public Academic createAcademic(@RequestBody @Valid Academic academic) throws ValidationException {
-        return service.createAcademic(academic);
-    }
+
+
 }
