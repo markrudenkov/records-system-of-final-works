@@ -10,7 +10,7 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { deleteUser } = require('../actions/apiActions');
+const { deleteUser, updateUser } = require('../actions/apiActions');
 
 class UserListItem extends Component {
 
@@ -24,12 +24,11 @@ class UserListItem extends Component {
     }
 
     saveClick(data) {
-        console.log('save data!');
+        this.props.updateUser(this.props.url, data);
+        this.setState({showForm: false});
     }
 
     deleteClick() {
-        console.log('delete data!');
-
         this.props.deleteUser(this.props.url, this.props.user.id);
     }
 
@@ -77,6 +76,7 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         deleteUser: deleteUser,
+        updateUser: updateUser
     }, dispatch);
 }
 

@@ -24,11 +24,29 @@ function deleteUser(user, id) {
             'Content-Type': 'application/json; charset=utf-8',
         }
     };
-    let successCallback = user === 'student' ? studentDeleted : academicDeleted;
-
+    let successCallback = user == 'student' ? studentDeleted : academicDeleted;
     return (dispatch) => {
-        dispatch(showNotification('Deleting '+user+' info...', 'info'));
-        dispatch(apiReq('api/admin/'+user+'/'+id, req, successCallback));
+        dispatch(showNotification('Deleted '+user+' info...', 'info'));
+        dispatch(apiReq('api/admin/'+user+'/'+id, req));
+        dispatch(successCallback(id));
+    };
+}
+
+function updateUser(user, data) {
+    const req = {
+        credentials: 'include',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(data)
+    };
+    let successCallback = user == 'student' ? studentUpdated : academicUpdated;
+    return (dispatch) => {
+        dispatch(showNotification('Deleted '+user+' info...', 'info'));
+        dispatch(apiReq('api/admin/'+user+'/'+data.id, req));
+        console.log('api/admin/'+user+'/'+data.id);
+        dispatch(successCallback(data));
     };
 }
 
@@ -43,6 +61,20 @@ function academicDeleted(id) {
     return {
         type: 'ACADEMIC_DELETED',
         id: id
+    };
+}
+
+function studentUpdated(data) {
+    return {
+        type: 'STUDENT_UPDATED',
+        data: data
+    };
+}
+
+function academicUpdated(data) {
+    return {
+        type: 'ACADEMIC_UPDATED',
+        data: data
     };
 }
 
@@ -84,5 +116,6 @@ function receiveAcademics(data) {
 module.exports = {
     getAcademics,
     getStudents,
-    deleteUser
+    deleteUser,
+    updateUser
 };

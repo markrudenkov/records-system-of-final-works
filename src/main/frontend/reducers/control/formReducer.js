@@ -24,7 +24,58 @@ const textValidator = (input) => {
     return '';
 };
 
-const studentListFormData = [
+const studentListFormData = [{
+        type: 'input',
+        props: {
+            type: 'text',
+            placeholder: 'Enter Name',
+            ref: 'name'
+        },
+        label: 'Name',
+        validate: nameValidator
+    },
+    {
+        type: 'input',
+        props: {
+            type: 'text',
+            placeholder: 'Enter Surname',
+            ref: 'surname'
+        },
+        label: 'Surname',
+        validate: nameValidator
+    },
+    {
+        type: 'input',
+        props: {
+            type: 'text',
+            placeholder: 'Enter Username',
+            ref: 'username'
+        },
+        label: 'Username',
+        validate: loginValidator
+}];
+
+const academicListFormData = studentListFormData.concat([{
+    type: 'input',
+    props: {
+        type: 'text',
+        placeholder: 'Enter Academic Title',
+        ref: 'title'
+    },
+    label: 'Academic Title',
+    validate: textValidator
+}]);
+
+const studentFormData = [{
+        type: 'input',
+        props: {
+            type: 'text',
+            placeholder: 'Enter UserId',
+            ref: 'id'
+        },
+        label: 'UserId',
+        validate: loginValidator
+    },
     {
         type: 'input',
         props: {
@@ -54,39 +105,17 @@ const studentListFormData = [
         },
         label: 'Username',
         validate: loginValidator
-    }
-];
-
-const academicListFormData = studentListFormData.concat([{
-    type: 'input',
-    props: {
-        type: 'text',
-        placeholder: 'Enter Academic Title',
-        ref: 'title'
     },
-    label: 'Academic Title',
-    validate: textValidator
-}]);
-
-const studentFormData = [{
-    type: 'input',
-    props: {
-        type: 'text',
-        placeholder: 'Enter UserId',
-        ref: 'id'
-    },
-    label: 'UserId',
-    validate: loginValidator
-}].concat(studentListFormData.concat([{
-    type: 'input',
-    props: {
-        type: 'password',
-        placeholder: 'Enter Password',
-        ref: 'password'
-    },
-    label: 'Password',
-    validate: passValidator
-}]));
+    {
+        type: 'input',
+        props: {
+            type: 'password',
+            placeholder: 'Enter Password',
+            ref: 'password'
+        },
+        label: 'Password',
+        validate: passValidator
+}];
 
 const academicFormData = studentFormData.concat([{
     type: 'input',
