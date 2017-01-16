@@ -1,6 +1,9 @@
-package com.components.finalWork.model;
+package com.components.finalWork.repository.model;
 
-public class FinalWork {
+import com.components.utils.repository.model.DbModel;
+
+
+public class FinalWorkDb extends DbModel {
 
     private Long id;
     private String title;
@@ -11,10 +14,13 @@ public class FinalWork {
     private int ReviewerId;
     private int PromotorId;
 
+
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

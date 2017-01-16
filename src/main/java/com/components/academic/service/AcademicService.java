@@ -53,7 +53,7 @@ public class AcademicService {
         if (academicDb != null) {
             return mapToAcademic(academicDb);
         } else {
-            throw new DataNotFoundException("Mission results with id " + id + " not found");
+            throw new DataNotFoundException("Academic with id " + id + " not found");
         }
     }
 
@@ -75,7 +75,7 @@ public class AcademicService {
     @Transactional
     public void remove(Long id) {
         if (!repository.exists(id)) {
-            throw new DataNotFoundException("Item with id " + id + " doesn't exist");
+            throw new DataNotFoundException("Academic id " + id + " doesn't exist");
         }
         repository.delete(id);
     }

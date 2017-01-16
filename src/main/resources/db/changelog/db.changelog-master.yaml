@@ -89,7 +89,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: theme
+                  name: title
                   type: varchar(120)
               - column:
                   name: annotation
@@ -402,7 +402,7 @@ databaseChangeLog:
                INSERT INTO users (username, password,name,enabled) VALUES (NEW.username,NEW.password,NEW.name,true);
                CREATE TRIGGER new_teacher_authority
                AFTER INSERT ON teachers FOR EACH ROW
-               INSERT INTO authorities (username, authority) VALUES (NEW.username,'ROLE_TEACHER');
+               INSERT INTO authorities (username, authority) VALUES (NEW.username,'ROLE_ACADEMIC');
 
   - changeSet:
         id: 14
