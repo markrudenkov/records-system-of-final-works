@@ -3,19 +3,25 @@ package com.components.finalWork.service;
 import com.components.academic.model.Academic;
 import com.components.academic.repository.model.AcademicDb;
 import com.components.finalWork.model.FinalWork;
+import com.components.finalWork.model.FinalWorkStatus;
 import com.components.finalWork.repository.FinalWorkRepository;
 import com.components.finalWork.repository.model.FinalWorkDb;
 import com.components.utils.exception.ValidationException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FinalWorkService {
 
-    FinalWorkRepository repository;
+    @Autowired
+    private FinalWorkRepository repository;
 
     @Transactional
     public FinalWork createFinalWork (FinalWork finalWork) throws ValidationException {
+        finalWork.setStatus(FinalWorkStatus.REGISTERED);
         FinalWorkDb db = repository.create(mapToFinalWorkDb(finalWork));
         return mapToFinalWork(db);
     }
@@ -31,6 +37,7 @@ public class FinalWorkService {
         api.setId(db.getId());
         api.setTitle(db.getTitle());
         api.setAnnotation(db.getAnnotation());
+        api.setStatus(db.getStatus());
         api.setPromotorReviewId(db.getPromotorReviewId());
         api.setReviewerReviewId(db.getReviewerReviewId());
         api.setReviewerId(db.getReviewerId());
@@ -44,6 +51,7 @@ public class FinalWorkService {
         db.setId(id);
         db.setTitle(api.getTitle());
         db.setAnnotation(api.getAnnotation());
+        db.setStatus(api.getStatus());
         db.setPromotorReviewId(api.getPromotorReviewId());
         db.setPromotorReviewId(api.getPromotorReviewId());
         db.setReviewerId(api.getReviewerId());
