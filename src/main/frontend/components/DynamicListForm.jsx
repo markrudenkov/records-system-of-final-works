@@ -51,6 +51,8 @@ class DynamicListForm extends React.Component {
             data[ref] = this.refs[ref].value;
             this.refs[ref].value = '';
         });
+        data.id = this.props.user.id;
+        data.password = this.props.user.password;
 
         this.props.onClick(data);
     }

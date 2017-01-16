@@ -15,16 +15,34 @@ function userReducer(state=initialState, action) {
         case 'STUDENTS_DELETED':
             for(let i=0; i < state.students.length; i++) {
                 if(action.id === state.students[i].id) {
-                    state.students.splice(i, 1);
-                    return Object.assign({}, state, {students: state.students});
+                    let students = state.students.splice(i, 1);
+                    return Object.assign({}, state, {students: students});
                 }
             }
         break;
         case 'ACADEMIC_DELETED':
             for(let i=0; i < state.academics.length; i++) {
                 if(action.id === state.academics[i].id) {
-                    state.academics.splice(i, 1);
-                    return Object.assign({}, state, {academics: state.academics});
+                    let academics = state.academics.splice(i, 1);
+                    return Object.assign({}, state, {academics: academics});
+                }
+            }
+        break;
+        case 'STUDENTS_UPDATED':
+            for(let i=0; i < state.students.length; i++) {
+                if(action.data.id === state.students[i].id) {
+                    let students = state.students;
+                    students[i] = action.data;
+                    return Object.assign({}, state, {students: students});
+                }
+            }
+        break;
+        case 'ACADEMIC_UPDATED':
+            for(let i=0; i < state.academics.length; i++) {
+                if(action.data.id === state.academics[i].id) {
+                    let academics = state.academics;
+                    academics[i] = action.data;
+                    return Object.assign({}, state, {academics: academics});
                 }
             }
         break;
