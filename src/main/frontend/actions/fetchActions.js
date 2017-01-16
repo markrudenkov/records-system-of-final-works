@@ -10,7 +10,12 @@ function fetchReq(url, request, successCallback=defaultSuccessCallback, errorCal
                 dispatch(errorCallback(response.status));
                 throw new Error("Bad response from server");
             }
-            return response.json();
+
+            try {
+                return response.json();
+            } catch(e) {
+                console.log(e);
+            }
         })
         .then((data) => {
             console.log(data);

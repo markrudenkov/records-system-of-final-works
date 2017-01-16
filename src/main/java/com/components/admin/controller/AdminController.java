@@ -7,6 +7,7 @@ import com.components.student.service.StudentService;
 import com.components.utils.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin.javascript.JSObject;
 
 import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
@@ -71,7 +72,8 @@ public class AdminController extends BaseController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/api/admin/student/{id}")
-    public void removeStudent(@PathVariable Long id) {
+    public String removeStudent(@PathVariable Long id) {
         studentService.remove(id);
+        return "{\"message\": \"removed\"}";
     }
 }
