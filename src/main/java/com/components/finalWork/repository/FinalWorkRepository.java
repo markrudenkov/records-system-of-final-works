@@ -25,10 +25,11 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
         db.setId(rs.getLong("final_work_id"));
         db.setTitle(rs.getString("title"));
         db.setAnnotation(rs.getString("annotation"));
-        db.setPromotorReviewId(rs.getInt("promotor_review_id"));
-        db.setReviewerReviewId(rs.getInt("reviewer_review_id"));
-        db.setReviewerId(rs.getInt("reviewer_id"));
-        db.setPromotorId(rs.getInt("promotor_id"));
+        db.setStatus(rs.getString("status"));
+        db.setPromotorReviewId(rs.getLong("promotor_review_id"));
+        db.setReviewerReviewId(rs.getLong("reviewer_review_id"));
+        db.setReviewerId(rs.getLong("reviewer_id"));
+        db.setPromotorId(rs.getLong("promotor_id"));
         return db;
     };
 
@@ -36,6 +37,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
             "final_work_id", finalWorkDb.getId(),
             "title", finalWorkDb.getTitle(),
             "annotation", finalWorkDb.getAnnotation(),
+            "status", finalWorkDb.getStatus(),
             "promotor_review_id", finalWorkDb.getPromotorReviewId(),
             "reviewer_review_id", finalWorkDb.getReviewerReviewId(),
             "reviewer_id", finalWorkDb.getReviewerId(),

@@ -9,10 +9,10 @@ public class FinalWorkDb extends DbModel {
     private String title;
     private String annotation;
     private String status;
-    private int PromotorReviewId;
-    private int ReviewerReviewId;
-    private int ReviewerId;
-    private int PromotorId;
+    private Long PromotorReviewId;
+    private Long ReviewerReviewId;
+    private Long ReviewerId;
+    private Long PromotorId;
 
 
     @Override
@@ -49,35 +49,35 @@ public class FinalWorkDb extends DbModel {
         this.status = status;
     }
 
-    public int getPromotorReviewId() {
+    public Long getPromotorReviewId() {
         return PromotorReviewId;
     }
 
-    public void setPromotorReviewId(int promotorReviewId) {
+    public void setPromotorReviewId(Long promotorReviewId) {
         PromotorReviewId = promotorReviewId;
     }
 
-    public int getReviewerReviewId() {
+    public Long getReviewerReviewId() {
         return ReviewerReviewId;
     }
 
-    public void setReviewerReviewId(int reviewerReviewId) {
+    public void setReviewerReviewId(Long reviewerReviewId) {
         ReviewerReviewId = reviewerReviewId;
     }
 
-    public int getReviewerId() {
+    public Long getReviewerId() {
         return ReviewerId;
     }
 
-    public void setReviewerId(int reviewerId) {
+    public void setReviewerId(Long reviewerId) {
         ReviewerId = reviewerId;
     }
 
-    public int getPromotorId() {
+    public Long getPromotorId() {
         return PromotorId;
     }
 
-    public void setPromotorId(int promotorId) {
+    public void setPromotorId(Long promotorId) {
         PromotorId = promotorId;
     }
 }
