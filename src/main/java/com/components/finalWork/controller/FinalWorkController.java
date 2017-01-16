@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
 
 
@@ -15,10 +16,10 @@ import javax.xml.bind.ValidationException;
 public class FinalWorkController {
 
     @Autowired
-    private FinalWorkService service;
+    FinalWorkService service;
 
     @RequestMapping(method = RequestMethod.POST, path = "/api/finalwork")
-    public FinalWork createFinalWork(@RequestBody  FinalWork finalWork) throws ValidationException {
+    public FinalWork createFinalWork(@RequestBody  @Valid FinalWork finalWork) throws ValidationException {
         return service.createFinalWork(finalWork);
     }
 }

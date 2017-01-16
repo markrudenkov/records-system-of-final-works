@@ -2,17 +2,21 @@ package com.components.finalWork.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+import javax.validation.constraints.NotNull;
+
+
 public class FinalWork {
 
     private Long id;
     private String title;
     private String annotation;
     private String status;
-    private Long PromotorReviewId;
-    private Long ReviewerReviewId;
-    private Long ReviewerId;
-    private Long PromotorId;
+
+
+    private Long promotorReviewId;
+    private Long reviewerReviewId;
+    private Long reviewerId;
+    private Long promotorId;
 
     public Long getId() {
         return id;
@@ -47,34 +51,34 @@ public class FinalWork {
     }
 
     public Long getPromotorReviewId() {
-        return PromotorReviewId;
+        return promotorReviewId;
     }
 
     public void setPromotorReviewId(Long promotorReviewId) {
-        PromotorReviewId = promotorReviewId;
+        this.promotorReviewId = promotorReviewId;
     }
 
     public Long getReviewerReviewId() {
-        return ReviewerReviewId;
+        return reviewerReviewId;
     }
 
     public void setReviewerReviewId(Long reviewerReviewId) {
-        ReviewerReviewId = reviewerReviewId;
+        this.reviewerReviewId = reviewerReviewId;
     }
 
     public Long getReviewerId() {
-        return ReviewerId;
+        return reviewerId;
     }
 
     public void setReviewerId(Long reviewerId) {
-        ReviewerId = reviewerId;
+        this.reviewerId = reviewerId;
     }
 
     public Long getPromotorId() {
-        return PromotorId;
+        return promotorId;
     }
 
     public void setPromotorId(Long promotorId) {
-        PromotorId = promotorId;
+        this.promotorId = promotorId;
     }
 }
