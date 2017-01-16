@@ -49,6 +49,8 @@ class UserListItem extends Component {
         } else {
             return (
                 <div className={styleListItem.wrapper}>
+                    <p className={styleListItem.itemText}>{user.id}</p>
+                    <p className={styleListItem.itemText}>{user.username}</p>
                     <p className={styleListItem.itemText}>{user.name}</p>
                     <p className={styleListItem.itemText}>{user.surname}</p>
                     <button className={`${styleButtons.buttonPrimary} ${styleListItem.editButton}`} onClick={this.switchMode}>Edit</button>

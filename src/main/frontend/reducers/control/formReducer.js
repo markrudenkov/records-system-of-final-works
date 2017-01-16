@@ -23,6 +23,12 @@ const textValidator = (input) => {
     }
     return '';
 };
+const idValidator = (input) => {
+    if (!/^[0-9]{1,20}$/.test(input)) {
+        return 'has to be longer than 3; only numbers allowed!';
+    }
+    return '';
+};
 
 const studentListFormData = [{
         type: 'input',
@@ -70,11 +76,11 @@ const studentFormData = [{
         type: 'input',
         props: {
             type: 'text',
-            placeholder: 'Enter UserId',
+            placeholder: 'Enter Student Id',
             ref: 'id'
         },
-        label: 'UserId',
-        validate: loginValidator
+        label: 'Student Id',
+        validate: idValidator
     },
     {
         type: 'input',
@@ -117,16 +123,56 @@ const studentFormData = [{
         validate: passValidator
 }];
 
-const academicFormData = studentFormData.concat([{
-    type: 'input',
-    props: {
-        type: 'text',
-        placeholder: 'Enter Academic Title',
-        ref: 'title'
+const academicFormData = [{
+        type: 'input',
+        props: {
+            type: 'text',
+            placeholder: 'Enter Name',
+            ref: 'name'
+        },
+        label: 'Name',
+        validate: nameValidator
     },
-    label: 'Academic Title',
-    validate: textValidator
-}]);
+    {
+        type: 'input',
+        props: {
+            type: 'text',
+            placeholder: 'Enter Surname',
+            ref: 'surname'
+        },
+        label: 'Surname',
+        validate: nameValidator
+    },
+    {
+        type: 'input',
+        props: {
+            type: 'text',
+            placeholder: 'Enter Username',
+            ref: 'username'
+        },
+        label: 'Username',
+        validate: loginValidator
+    },
+    {
+        type: 'input',
+        props: {
+            type: 'password',
+            placeholder: 'Enter Password',
+            ref: 'password'
+        },
+        label: 'Password',
+        validate: passValidator
+    },
+    {
+        type: 'input',
+        props: {
+            type: 'text',
+            placeholder: 'Enter Academic Title',
+            ref: 'title'
+        },
+        label: 'Academic Title',
+        validate: textValidator
+}];
 
 const studentForm = {
     formData: studentFormData,
