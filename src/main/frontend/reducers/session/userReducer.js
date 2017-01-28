@@ -8,6 +8,7 @@ const initialState = {
     token_type: ''
 };
 
+
 function userReducer(state=initialState, action) {
     switch(action.type) {
         case 'RECEIVE_LOGIN':
@@ -27,7 +28,7 @@ function userReducer(state=initialState, action) {
             });
         break;
         case 'LOGOUT':
-            state = Object.assign({}, state, initialState);
+            state = Object.assign({}, initialState);
         break;
     }
     return state;

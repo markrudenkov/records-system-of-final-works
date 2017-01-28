@@ -70,9 +70,7 @@ class UserListItem extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-        hidden: state.communication.notification.hidden
-    }
+    return {};
 }
 
 function matchDispatchToProps(dispatch) {

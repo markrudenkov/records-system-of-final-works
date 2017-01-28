@@ -6,10 +6,6 @@ const defaultLinks = [{
     {
         title: 'About',
         url: 'about'
-    },
-    {
-        title: 'User lists',
-        url: 'user_list'
     }
 ];
 
@@ -21,6 +17,14 @@ const guestLinks = defaultLinks.concat([{
 ]);
 
 const adminLinks = defaultLinks.concat([{
+        title: 'Diploma list',
+        url: 'admin/diploma_list'
+    },
+    {
+        title: 'User lists',
+        url: 'admin/user_list'
+    },
+    {
         title: 'Register user',
         url: 'admin/register_user'
     },
@@ -32,8 +36,8 @@ const adminLinks = defaultLinks.concat([{
 ]);
 
 const academicLinks = defaultLinks.concat([{
-        title: 'Register user',
-        url: 'admin/register_user'
+        title: 'Register Diploma',
+        url: 'academic/register_diploma'
     },
     {
         title: 'Logout',

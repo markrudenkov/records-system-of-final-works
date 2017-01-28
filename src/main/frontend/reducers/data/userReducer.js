@@ -9,10 +9,10 @@ function userReducer(state=initialState, action) {
     let academics = Object.assign([], state.academics);
 
     switch(action.type) {
-        case 'RECIVE_ACADEMICS':
+        case 'RECEIVE_ACADEMICS':
             state = Object.assign({}, state, {academics: action.data});
         break;
-        case 'RECIVE_STUDENTS':
+        case 'RECEIVE_STUDENTS':
             state = Object.assign({}, state, {students: action.data});
         break;
         case 'STUDENT_DELETED':
@@ -46,6 +46,9 @@ function userReducer(state=initialState, action) {
                     return Object.assign({}, state, {academics: academics});
                 }
             }
+        break;
+        case 'LOGOUT':
+            state = Object.assign({}, initialState);
         break;
     }
     return state;
