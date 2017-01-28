@@ -1,19 +1,14 @@
-package com.components.finalWork.service;
+package com.components.final_work.service;
 
-import com.components.academic.model.Academic;
-import com.components.academic.repository.model.AcademicDb;
-import com.components.finalWork.model.FinalWork;
-import com.components.finalWork.model.FinalWorkStatus;
-import com.components.finalWork.repository.FinalWorkRepository;
-import com.components.finalWork.repository.model.FinalWorkDb;
-import com.components.student.model.Student;
-import com.components.student.service.StudentService;
+import com.components.final_work.model.FinalWork;
+import com.components.final_work.model.FinalWorkStatus;
+import com.components.final_work.repository.FinalWorkRepository;
+import com.components.final_work.repository.model.FinalWorkDb;
 import com.components.utils.exception.BusinessException;
 import com.components.utils.exception.ValidationException;
 
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +21,7 @@ public class FinalWorkService {
     @Autowired
     FinalWorkRepository repository;
 
+    @Transactional
     public FinalWork  updateFinalWorkStatus(Long id, FinalWork finalWork) {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
         if (EnumUtils.isValidEnum(FinalWorkStatus.Statuses.class, finalWork.getStatus())){
@@ -37,6 +33,7 @@ public class FinalWorkService {
         return mapToFinalWork(finalWorkDb);
     }
 
+    @Transactional
     public List<FinalWork> getAllFinalWorks() {
         return repository.findAll().stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
     }

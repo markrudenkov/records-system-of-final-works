@@ -1,16 +1,12 @@
-package com.components.finalWork.repository;
+package com.components.final_work.repository;
 
-import com.components.academic.repository.model.AcademicDb;
-import com.components.finalWork.model.FinalWork;
-import com.components.finalWork.repository.model.FinalWorkDb;
+import com.components.final_work.repository.model.FinalWorkDb;
 import com.components.utils.repository.BaseRepository;
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {

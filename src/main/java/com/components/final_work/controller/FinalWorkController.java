@@ -1,8 +1,7 @@
-package com.components.finalWork.controller;
+package com.components.final_work.controller;
 
-import com.components.finalWork.model.FinalWork;
-import com.components.finalWork.service.FinalWorkService;
-import com.components.student.model.Student;
+import com.components.final_work.model.FinalWork;
+import com.components.final_work.service.FinalWorkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

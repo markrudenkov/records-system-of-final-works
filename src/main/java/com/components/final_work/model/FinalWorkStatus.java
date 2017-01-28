@@ -1,4 +1,4 @@
-package com.components.finalWork.model;
+package com.components.final_work.model;
 
 
 public class FinalWorkStatus {

@@ -1,25 +1,26 @@
-package com.components.finalWork.model;
+package com.components.final_work.repository.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.validation.constraints.NotNull;
+import com.components.utils.repository.model.DbModel;
 
 
-public class FinalWork {
+public class FinalWorkDb extends DbModel {
 
     private Long id;
     private String title;
     private String annotation;
     private String status;
-    private Long promotorReviewId;
-    private Long reviewerReviewId;
-    private Long reviewerId;
-    private Long promotorId;
+    private Long PromotorReviewId;
+    private Long ReviewerReviewId;
+    private Long ReviewerId;
+    private Long PromotorId;
 
+
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -49,34 +50,34 @@ public class FinalWork {
     }
 
     public Long getPromotorReviewId() {
-        return promotorReviewId;
+        return PromotorReviewId;
     }
 
     public void setPromotorReviewId(Long promotorReviewId) {
-        this.promotorReviewId = promotorReviewId;
+        PromotorReviewId = promotorReviewId;
     }
 
     public Long getReviewerReviewId() {
-        return reviewerReviewId;
+        return ReviewerReviewId;
     }
 
     public void setReviewerReviewId(Long reviewerReviewId) {
-        this.reviewerReviewId = reviewerReviewId;
+        ReviewerReviewId = reviewerReviewId;
     }
 
     public Long getReviewerId() {
-        return reviewerId;
+        return ReviewerId;
     }
 
     public void setReviewerId(Long reviewerId) {
-        this.reviewerId = reviewerId;
+        ReviewerId = reviewerId;
     }
 
     public Long getPromotorId() {
-        return promotorId;
+        return PromotorId;
     }
 
     public void setPromotorId(Long promotorId) {
-        this.promotorId = promotorId;
+        PromotorId = promotorId;
     }
 }
