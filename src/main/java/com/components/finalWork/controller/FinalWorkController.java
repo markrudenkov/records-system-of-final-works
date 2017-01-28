@@ -24,8 +24,8 @@ public class FinalWorkController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/api/finalwork/{id}")
-    public FinalWork  updateAcademic(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
-        return service.updateFinalworkStatus(id, finalWork);
+    public FinalWork  updateFinalWork(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
+        return service.updateFinalWorkStatus(id, finalWork);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/finalwork")

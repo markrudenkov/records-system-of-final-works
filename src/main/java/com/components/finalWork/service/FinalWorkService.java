@@ -8,8 +8,10 @@ import com.components.finalWork.repository.FinalWorkRepository;
 import com.components.finalWork.repository.model.FinalWorkDb;
 import com.components.student.model.Student;
 import com.components.student.service.StudentService;
+import com.components.utils.exception.BusinessException;
 import com.components.utils.exception.ValidationException;
 
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,30 @@ import java.util.stream.Collectors;
 public class FinalWorkService {
 
     @Autowired
-    private FinalWorkRepository repository;
+    FinalWorkRepository repository;
+
+    public FinalWork  updateFinalWorkStatus(Long id, FinalWork finalWork) {
+        FinalWorkDb finalWorkDb = new FinalWorkDb();
+        if (EnumUtils.isValidEnum(FinalWorkStatus.Statuses.class, finalWork.getStatus())){
+            repository.updateFinalWorkStatus(id,finalWork.getStatus().toString());
+            finalWorkDb = repository.findOne(id);
+        }else{
+            throw new BusinessException("Incorrect status of final work");
+        }
+        return mapToFinalWork(finalWorkDb);
+    }
+
+    public List<FinalWork> getAllFinalWorks() {
+        return repository.findAll().stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
+    }
 
     @Transactional
     public FinalWork createFinalWork (FinalWork finalWork) throws ValidationException {
-        finalWork.setStatus(FinalWorkStatus.REGISTERED);
+        finalWork.setStatus(FinalWorkStatus.Statuses.REGISTERED.toString());
         FinalWorkDb db = repository.create(mapToFinalWorkDb(finalWork));
         return mapToFinalWork(db);
     }
+
 
     private static FinalWork mapToFinalWork(FinalWorkDb db) {
         FinalWork api = new FinalWork();
@@ -62,11 +80,5 @@ public class FinalWorkService {
         return mapToFinalWorkDb(api.getId(), api);
     }
 
-    public FinalWork  updateFinalworkStatus(Long id, FinalWork finalWork) {
-        return finalWork;
-    }
 
-    public List<FinalWork> getAllFinalWorks() {
-        return repository.findAll().stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
-    }
 }

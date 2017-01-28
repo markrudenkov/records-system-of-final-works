@@ -1,6 +1,7 @@
 package com.components.finalWork.repository;
 
 import com.components.academic.repository.model.AcademicDb;
+import com.components.finalWork.model.FinalWork;
 import com.components.finalWork.repository.model.FinalWorkDb;
 import com.components.utils.repository.BaseRepository;
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
@@ -14,8 +15,7 @@ import java.util.List;
 @Repository
 public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
 
-
-    public static final String SELECT_BY_USERNAME = "SELECT * FROM final_works where username = ?";
+    public static final String UPDATE_STATUS_BY_ID = "UPDATE final_works  SET status = ? WHERE final_work_id = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -48,11 +48,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
         super(ROW_MAPPER, ROW_UNMAPPER, "final_works", "final_work_id");
     }
 
-    public FinalWorkDb getUserByUsername(String username) {
-        List<FinalWorkDb> users = template.query(SELECT_BY_USERNAME, new Object[]{username}, ROW_MAPPER);
-        if (users.isEmpty()) {
-            return null;
-        }
-        return users.get(0);
+    public void updateFinalWorkStatus(Long id, String status){
+        template.update(UPDATE_STATUS_BY_ID,new Object[]{status,id});
     }
 }

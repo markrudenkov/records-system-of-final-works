@@ -1,5 +1,7 @@
 package com.components.utils.repository;
 
+import com.components.finalWork.model.FinalWork;
+import com.components.finalWork.repository.model.FinalWorkDb;
 import com.components.utils.repository.model.DbModel;
 import com.nurkiewicz.jdbcrepository.JdbcRepository;
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
@@ -35,4 +37,6 @@ public abstract class BaseRepository<E extends DbModel> extends JdbcRepository<E
         }
         return Collections.unmodifiableMap(map);
     }
+
+
 }
