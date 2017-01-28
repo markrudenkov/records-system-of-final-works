@@ -23,12 +23,12 @@ public class FinalWorkController {
         return service.createFinalWork(finalWork);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, path = "/api/admin/finalwork/{id}")
+    @RequestMapping(method = RequestMethod.PUT, path = "/api/finalwork/{id}")
     public FinalWork  updateAcademic(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
         return service.updateFinalworkStatus(id, finalWork);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/api/admin/finalworks")
+    @RequestMapping(method = RequestMethod.GET, path = "/api/finalwork")
     public List<FinalWork> getAllFinalWorks() {
         return service.getAllFinalWorks();
     }
