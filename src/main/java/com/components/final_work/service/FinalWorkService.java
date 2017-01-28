@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,11 @@ public class FinalWorkService {
 
     @Autowired
     FinalWorkRepository repository;
+
+    @Transactional
+    public List<FinalWork> getAllConfirmedFinalWorks() {
+        return repository.getAllConfirmedFinalWorks().stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
+    }
 
     @Transactional
     public FinalWork  updateFinalWorkStatus(Long id, FinalWork finalWork) {
@@ -76,6 +82,7 @@ public class FinalWorkService {
     private static FinalWorkDb mapToFinalWorkDb(FinalWork api) {
         return mapToFinalWorkDb(api.getId(), api);
     }
+
 
 
 }

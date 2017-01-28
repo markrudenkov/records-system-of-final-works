@@ -540,3 +540,26 @@ databaseChangeLog:
                 name: password
                 value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
             tableName: students
+
+  - changeSet:
+      id: 22
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: title
+                value: 'Create fintech platform'
+            - column:
+                name: status
+                value: 'REGISTERED'
+            - column:
+                name: annotation
+                value: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged'
+            - column:
+                name: status
+                value: 'REGISTERED'
+            - column:
+                name: promotor_id
+                value: 1
+            tableName: final_works

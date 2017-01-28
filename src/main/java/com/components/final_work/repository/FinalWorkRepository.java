@@ -8,10 +8,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
 
     public static final String UPDATE_STATUS_BY_ID = "UPDATE final_works  SET status = ? WHERE final_work_id = ?";
+    public static final String SELECT_CONFIRMED_FINAL_WORKS = "SELECT * FROM final_works WHERE status = 'CONFIRMED'";
 
     @Autowired
     private JdbcTemplate template;
@@ -46,5 +49,10 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
 
     public void updateFinalWorkStatus(Long id, String status){
         template.update(UPDATE_STATUS_BY_ID,new Object[]{status,id});
+    }
+
+    public List<FinalWorkDb> getAllConfirmedFinalWorks() {
+        List<FinalWorkDb> finalWorkDbs = template.query(SELECT_CONFIRMED_FINAL_WORKS, ROW_MAPPER);
+        return  finalWorkDbs;
     }
 }
