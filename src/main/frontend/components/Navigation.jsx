@@ -11,12 +11,12 @@ const style = require('../scss/navigation.scss');
 
 class Navigation extends Component {
     render() {
-        const { locations } = this.props;
+        const { links } = this.props;
         return (
             <ul className={style.nav}>
-                {locations.map(location => {
-                    let look = location.alignRight ? style.specialItem : style.listItem;
-                    return <li key={location.title} className={look}><Link onClick={(e)=>{console.log('you clicked '+location.title);}} to={location.url}>{location.title}</Link></li>
+                {links.map(link => {
+                    let look = link.alignRight ? style.specialItem : style.listItem;
+                    return <li key={link.title} className={look}><Link to={link.url}>{link.title}</Link></li>
                 })}
             </ul>
         );
@@ -25,7 +25,7 @@ class Navigation extends Component {
 
 function mapStateToProps(state) {
     return {
-        locations: state.communication.navigation.links
+        links: state.communication.navigation.links
     }
 }
 

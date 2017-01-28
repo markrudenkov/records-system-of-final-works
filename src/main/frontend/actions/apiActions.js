@@ -45,7 +45,6 @@ function updateUser(user, data) {
     return (dispatch) => {
         dispatch(showNotification('Deleted '+user+' info...', 'info'));
         dispatch(apiReq('api/admin/'+user+'/'+data.id, req));
-        console.log('api/admin/'+user+'/'+data.id);
         dispatch(successCallback(data));
     };
 }
@@ -90,7 +89,7 @@ function getAcademics() {
 function receiveStudents(data) {
     const action = () => {
         return {
-            type: 'RECIVE_STUDENTS',
+            type: 'RECEIVE_STUDENTS',
             data: data
         };
     };
@@ -103,7 +102,7 @@ function receiveStudents(data) {
 function receiveAcademics(data) {
     const action = () => {
         return {
-            type: 'RECIVE_ACADEMICS',
+            type: 'RECEIVE_ACADEMICS',
             data: data
         };
     };
