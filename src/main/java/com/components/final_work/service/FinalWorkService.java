@@ -23,6 +23,11 @@ public class FinalWorkService {
     FinalWorkRepository repository;
 
     @Transactional
+    public FinalWork getStudentFinalWork(Long id) {
+        return mapToFinalWork(repository.findOne(id));
+    }
+
+    @Transactional
     public FinalWork updateFinalWorkStatusByStudent(Long id, FinalWork finalWork) {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
         if (EnumUtils.isValidEnum(FinalWorkStatus.StudentTrigeredStatuses.class, finalWork.getStatus())) {

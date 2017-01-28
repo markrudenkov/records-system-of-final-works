@@ -1,5 +1,6 @@
 package com.components.final_work.controller;
 
+import com.components.academic.model.Academic;
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.service.FinalWorkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -35,6 +37,11 @@ public class FinalWorkController {
     @RequestMapping(method = RequestMethod.GET, path = "/api/student/finalwork")
     public List<FinalWork> getAllConfirmedFinalWorks() {
         return service.getAllConfirmedFinalWorks();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/api/student/finalwork/{id}")
+    public FinalWork getStudentFinalWorks(@PathVariable Long id) {
+        return service.getStudentFinalWork(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/api/student/finalwork/{id}")
