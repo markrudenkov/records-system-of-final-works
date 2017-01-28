@@ -1,20 +1,5 @@
 
-const initialState = [{
-        id: 1,
-        title: 'Gra oparata na analizowaniu sztucznego intelektu wykorzystujac systemy biblioteki java ML',
-        status: 'REGISTERED'
-    },
-    {
-        id: 2,
-        title: 'Test1',
-        status: 'REGISTERED'
-    },
-    {
-        id: 3,
-        title: 'Test1',
-        status: 'CONFIRMED'
-    }
-];
+const initialState = [];
 
 function diplomaReducer(state=initialState, action) {
     switch(action.type) {

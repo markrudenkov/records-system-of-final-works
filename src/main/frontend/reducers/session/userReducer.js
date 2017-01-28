@@ -17,7 +17,7 @@ function userReducer(state=initialState, action) {
             const username = action.user.decoded.user_name;
 
             let role = permission.replace('ROLE_', '');
-
+            console.log(action.user);
             state = Object.assign({}, state, {
                 isLoggedIn: true,
                 permission: role,

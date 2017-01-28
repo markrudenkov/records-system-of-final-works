@@ -73,9 +73,15 @@ function diplomaStatusChange(data) {
 }
 
 function receiveDiplomas(data) {
-    return {
-        type: 'RECEIVE_DIPLOMAS',
-        data: data
+    const action = () => {
+        return {
+            type: 'RECEIVE_DIPLOMAS',
+            data: data
+        };
+    }
+    return (dispatch) => {
+        dispatch(showNotification('Diploma list update', 'success'));
+        dispatch(action());
     };
 }
 
