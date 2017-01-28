@@ -468,3 +468,52 @@ databaseChangeLog:
                CREATE TRIGGER update_teachers
                AFTER UPDATE ON teachers FOR EACH ROW
                UPDATE users SET username=NEW.username WHERE username=OLD.username;
+
+  - changeSet:
+      id: 19
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: teacher_id
+                value: 1
+            - column:
+                name: name
+                value: 'Jan'
+            - column:
+                name: surname
+                value: 'Nachtigal'
+            - column:
+                name: username
+                value: 'jannachtigal'
+            - column:
+                name: password
+                value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
+            - column:
+                name: academic_title
+                value: 'professor'
+            tableName: teachers
+
+  - changeSet:
+      id: 20
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: title
+                value: 'Create e-store'
+            - column:
+                name: status
+                value: 'REGISTERED'
+            - column:
+                name: annotation
+                value: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged'
+            - column:
+                name: status
+                value: 'REGISTERED'
+            - column:
+                name: promotor_id
+                value: 1
+            tableName: final_works

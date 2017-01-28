@@ -6,12 +6,17 @@ import com.components.finalWork.model.FinalWork;
 import com.components.finalWork.model.FinalWorkStatus;
 import com.components.finalWork.repository.FinalWorkRepository;
 import com.components.finalWork.repository.model.FinalWorkDb;
+import com.components.student.model.Student;
+import com.components.student.service.StudentService;
 import com.components.utils.exception.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FinalWorkService {
@@ -25,12 +30,6 @@ public class FinalWorkService {
         FinalWorkDb db = repository.create(mapToFinalWorkDb(finalWork));
         return mapToFinalWork(db);
     }
-
-
-
-
-
-
 
     private static FinalWork mapToFinalWork(FinalWorkDb db) {
         FinalWork api = new FinalWork();
@@ -61,5 +60,13 @@ public class FinalWorkService {
 
     private static FinalWorkDb mapToFinalWorkDb(FinalWork api) {
         return mapToFinalWorkDb(api.getId(), api);
+    }
+
+    public FinalWork  updateFinalworkStatus(Long id, FinalWork finalWork) {
+        return finalWork;
+    }
+
+    public List<FinalWork> getAllFinalWorks() {
+        return repository.findAll().stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
     }
 }
