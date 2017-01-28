@@ -23,17 +23,29 @@ public class FinalWorkService {
     FinalWorkRepository repository;
 
     @Transactional
+    public FinalWork updateFinalWorkStatusByStudent(Long id, FinalWork finalWork) {
+        FinalWorkDb finalWorkDb = new FinalWorkDb();
+        if (EnumUtils.isValidEnum(FinalWorkStatus.StudentTrigeredStatuses.class, finalWork.getStatus())) {
+            repository.updateFinalWorkStatus(id, finalWork.getStatus().toString());
+            finalWorkDb = repository.findOne(id);
+        } else {
+            throw new BusinessException("Incorrect status of final work");
+        }
+        return mapToFinalWork(finalWorkDb);
+    }
+
+    @Transactional
     public List<FinalWork> getAllConfirmedFinalWorks() {
         return repository.getAllConfirmedFinalWorks().stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
     }
 
     @Transactional
-    public FinalWork  updateFinalWorkStatus(Long id, FinalWork finalWork) {
+    public FinalWork updateFinalWorkStatus(Long id, FinalWork finalWork) {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
-        if (EnumUtils.isValidEnum(FinalWorkStatus.Statuses.class, finalWork.getStatus())){
-            repository.updateFinalWorkStatus(id,finalWork.getStatus().toString());
+        if (EnumUtils.isValidEnum(FinalWorkStatus.Statuses.class, finalWork.getStatus())) {
+            repository.updateFinalWorkStatus(id, finalWork.getStatus().toString());
             finalWorkDb = repository.findOne(id);
-        }else{
+        } else {
             throw new BusinessException("Incorrect status of final work");
         }
         return mapToFinalWork(finalWorkDb);
@@ -45,12 +57,11 @@ public class FinalWorkService {
     }
 
     @Transactional
-    public FinalWork createFinalWork (FinalWork finalWork) throws ValidationException {
+    public FinalWork createFinalWork(FinalWork finalWork) throws ValidationException {
         finalWork.setStatus(FinalWorkStatus.Statuses.REGISTERED.toString());
         FinalWorkDb db = repository.create(mapToFinalWorkDb(finalWork));
         return mapToFinalWork(db);
     }
-
 
     private static FinalWork mapToFinalWork(FinalWorkDb db) {
         FinalWork api = new FinalWork();
@@ -82,7 +93,4 @@ public class FinalWorkService {
     private static FinalWorkDb mapToFinalWorkDb(FinalWork api) {
         return mapToFinalWorkDb(api.getId(), api);
     }
-
-
-
 }

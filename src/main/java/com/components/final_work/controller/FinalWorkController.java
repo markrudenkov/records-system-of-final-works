@@ -23,10 +23,9 @@ public class FinalWorkController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/api/finalwork/{id}")
-    public FinalWork  updateFinalWork(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
+    public FinalWork  updateFinalWorkStatus(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
         return service.updateFinalWorkStatus(id, finalWork);
     }
-
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/finalwork")
     public List<FinalWork> getAllFinalWorks() {
@@ -36,5 +35,10 @@ public class FinalWorkController {
     @RequestMapping(method = RequestMethod.GET, path = "/api/student/finalwork")
     public List<FinalWork> getAllConfirmedFinalWorks() {
         return service.getAllConfirmedFinalWorks();
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, path = "/api/student/finalwork/{id}")
+    public FinalWork  updateFinalWorkStatusByStudent(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
+        return service.updateFinalWorkStatusByStudent(id, finalWork);
     }
 }
