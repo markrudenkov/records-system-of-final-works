@@ -11,8 +11,6 @@ public class FinalWork {
     private String title;
     private String annotation;
     private String status;
-
-
     private Long promotorReviewId;
     private Long reviewerReviewId;
     private Long reviewerId;
