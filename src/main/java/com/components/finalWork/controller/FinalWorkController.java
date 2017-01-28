@@ -18,6 +18,8 @@ public class FinalWorkController {
     @Autowired
     FinalWorkService service;
 
+
+    // Teacher could create final work
     @RequestMapping(method = RequestMethod.POST, path = "/api/finalwork")
     public FinalWork createFinalWork(@RequestBody  @Valid FinalWork finalWork) throws ValidationException {
         return service.createFinalWork(finalWork);
