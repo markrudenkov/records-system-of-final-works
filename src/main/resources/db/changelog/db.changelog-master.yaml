@@ -517,3 +517,26 @@ databaseChangeLog:
                 name: promotor_id
                 value: 1
             tableName: final_works
+
+  - changeSet:
+      id: 21
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: student_id
+                value: 1
+            - column:
+                name: name
+                value: 'Jaroslav'
+            - column:
+                name: surname
+                value: 'Siroic'
+            - column:
+                name: username
+                value: 'jaroslavsiroic'
+            - column:
+                name: password
+                value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
+            tableName: students
