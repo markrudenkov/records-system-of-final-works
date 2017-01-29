@@ -5,7 +5,8 @@ const initialState = {
     permission: 'GUEST',
     token: '',
     refresh_token: '',
-    token_type: ''
+    token_type: '',
+    studentFiles: {}
 };
 
 
@@ -26,6 +27,12 @@ function userReducer(state=initialState, action) {
                 username: username,
                 token_type: token_type
             });
+        break;
+        case 'UPDATE_DIPLOMA':
+            state = Object.assign({}, state, { studentFiles: { finalWorkID: action.data.id }});
+        break;
+        case 'REICEIVE_STUDENT_INFO':
+            state = Object.assign({}, state, { studentFiles: action.data });
         break;
         case 'LOGOUT':
             state = Object.assign({}, initialState);
