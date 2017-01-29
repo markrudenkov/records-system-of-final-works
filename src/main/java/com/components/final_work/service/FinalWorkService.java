@@ -40,6 +40,11 @@ public class FinalWorkService {
     }
 
     @Transactional(readOnly = true)
+    public FinalWork getFinalWorkOfStudent(Long finalworkId) {
+        return mapToFinalWork(repository.findOne(finalworkId));
+    }
+
+    @Transactional(readOnly = true)
     public List<FinalWork> getPromotorFinalWorks(Long promotorId) {
         return repository.getPromotorFinalWorks(promotorId).stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
     }
@@ -108,6 +113,7 @@ public class FinalWorkService {
     private static FinalWorkDb mapToFinalWorkDb(FinalWork api) {
         return mapToFinalWorkDb(api.getId(), api);
     }
+
 
 
 }

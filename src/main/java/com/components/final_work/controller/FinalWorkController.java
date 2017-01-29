@@ -32,6 +32,11 @@ public class FinalWorkController {
         return service.getAllFinalWorks();
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/api/student/finalwork/{id}")
+    public FinalWork getFinalWorkOfStudent(@PathVariable Long id) {
+        return service.getFinalWorkOfStudent(id);
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = "/api/student/finalwork")
     public List<FinalWork> getAllConfirmedFinalWorks() {
         return service.getAllConfirmedFinalWorks();
