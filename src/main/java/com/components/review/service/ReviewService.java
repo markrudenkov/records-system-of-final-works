@@ -1,6 +1,7 @@
 package com.components.review.service;
 
 
+import com.components.final_work.model.FinalWork;
 import com.components.final_work.repository.FinalWorkRepository;
 import com.components.final_work.repository.model.FinalWorkDb;
 import com.components.review.model.Review;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ReviewService {
 
@@ -20,6 +23,8 @@ public class ReviewService {
 
     @Autowired
     FinalWorkRepository finalWorkRepository;
+
+
 
     @Transactional
     public Review createReview(Review review) throws ValidationException {
@@ -59,4 +64,6 @@ public class ReviewService {
     private static ReviewDB mapToReviewDb(Review api) {
         return mapToReviewDb(api.getId(), api);
     }
+
+
 }

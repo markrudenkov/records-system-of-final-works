@@ -36,14 +36,17 @@ public class FinalWorkService {
         } else {
             throw new BusinessException("Incorrect status of final work");
         }
-
         return mapToFinalWork(finalWorkDb);
     }
 
+    @Transactional(readOnly = true)
+    public List<FinalWork> getPromotorFinalWorks(Long promotorId) {
+        return repository.getPromotorFinalWorks(promotorId).stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
+    }
 
-    private void updateStudentFinalWorkID(Long studentID, Long finalWorkId){
-
-
+    @Transactional(readOnly = true)
+    public List<FinalWork> getFinalWorksToReview(Long reviewerId) {
+        return repository.getFinalWorksForReview(reviewerId).stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
     }
 
 
@@ -105,4 +108,6 @@ public class FinalWorkService {
     private static FinalWorkDb mapToFinalWorkDb(FinalWork api) {
         return mapToFinalWorkDb(api.getId(), api);
     }
+
+
 }
