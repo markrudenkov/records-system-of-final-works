@@ -36,14 +36,13 @@ public class FinalWorkService {
         } else {
             throw new BusinessException("Incorrect status of final work");
         }
-
         return mapToFinalWork(finalWorkDb);
     }
 
 
-    private void updateStudentFinalWorkID(Long studentID, Long finalWorkId){
-
-
+    @Transactional(readOnly = true)
+    public List<FinalWork> getFinalWorksToReview(Long reviewerId) {
+        return repository.getFinalWorksForReview(reviewerId).stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
     }
 
 

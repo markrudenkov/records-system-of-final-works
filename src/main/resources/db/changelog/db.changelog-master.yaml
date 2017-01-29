@@ -571,6 +571,9 @@ databaseChangeLog:
             - column:
                 name: promotor_id
                 value: 1
+            - column:
+                name: reviewer_id
+                value: 2
             tableName: final_works
 
   - changeSet:
