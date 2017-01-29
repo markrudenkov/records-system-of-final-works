@@ -47,8 +47,12 @@ const academicLinks = defaultLinks.concat([{
 ]);
 
 const studentLinks = defaultLinks.concat([{
-        title: 'Register user',
-        url: 'admin/register_user'
+        title: 'My diploma',
+        url: 'student/my_diploma'
+    },
+    {
+        title: 'Diploma list',
+        url: 'student/diploma_list',
     },
     {
         title: 'Logout',
