@@ -19,14 +19,17 @@ class StudentDiplomaList extends Component {
     constructor(props) {
         super(props);
         this.showModal = this.showModal.bind(this);
-        this.state = {showModal: false, diploma: {}, recenzent: {}, promotor: {}};
+        this.discardDiploma = this.discardDiploma.bind(this);
+        this.state = {diploma: {}, recenzent: {}, promotor: {}};
     }
 
     componentWillMount() {
         this.props.getAcademics();
+        this.props.getDiplomas();
+        this.props.getStudent(this.props.username);
     }
 
-    showModal(diploma) {
+    discardDiploma(diploma) {
         const { academics } = this.props;
 
         let recenzent = null; let promotor = null;
@@ -50,7 +53,7 @@ class StudentDiplomaList extends Component {
                 <h2>My Diploma</h2>
                 <DiplomaInfo title={title} annotation={annotation} promotor={this.state.promotor} recenzent={this.state.recenzent} />
                 <div className={style.center} >
-                    <button className={styleButtons.buttonDanger} onClick={() => {}}>F#@k you diploma work</button>
+                    <button className={styleButtons.buttonDanger} onClick={this.discardDiploma}}>Reject diploma work</button>
                 </div>
             </div>
         );
