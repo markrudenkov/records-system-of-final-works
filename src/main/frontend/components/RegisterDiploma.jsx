@@ -6,7 +6,7 @@ const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
 const { showNotification } = require('../actions/notificationActions');
-const { getAcademics } = require('../actions/apiActions');
+const { getAcademics, registerDiploma } = require('../actions/apiActions');
 
 const bStyle = require('../scss/_buttons.scss');
 const fStyle = require('../scss/_forms.scss');
@@ -49,11 +49,18 @@ class RegisterDiploma extends React.Component {
         let data = {
             title,
             description,
-            recenzent
+            recenzent,
         };
         this.refs.title.value = '';
         this.refs.description.value = '';
-        console.log('Send '+JSON.stringify(data));
+
+        for (var i = 0; i < this.props.recenzents.length; i++) {
+            if (this.props.recenzents[i].username === this.props.username) {
+                data.promotor = this.props.recenzents[i].id;
+                break;
+            }
+        }
+        this.props.registerDiploma(data);
     }
 
     render() {
@@ -96,7 +103,8 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         showNotification: showNotification,
-        getAcademics: getAcademics
+        getAcademics: getAcademics,
+        registerDiploma: registerDiploma
     }, dispatch);
 }
 

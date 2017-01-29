@@ -112,9 +112,33 @@ function receiveAcademics(data) {
     };
 }
 
+function registerDiploma(data) {
+    const obj = {
+        title: data.title,
+        annotation: data.description,
+        reviewerId: data.recenzent,
+        promotorId: data.promotor
+    };
+    console.log(obj);
+    const req = {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(obj)
+    };
+
+    return (dispatch) => {
+        dispatch(showNotification('Sending info...', 'info'));
+        dispatch(apiReq('api/finalwork/', req));
+    };
+}
+
 module.exports = {
     getAcademics,
     getStudents,
     deleteUser,
-    updateUser
+    updateUser,
+    registerDiploma
 };

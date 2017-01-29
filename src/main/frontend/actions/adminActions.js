@@ -40,7 +40,7 @@ function changeDiplomaStatus(data) {
     };
     return (dispatch) => {
         dispatch(showNotification('Status changed', 'info'));
-        dispatch(apiReq('api/finalwork/', req));
+        dispatch(apiReq('api/finalwork/'+data.id, req));
         dispatch(diplomaStatusChange(data));
     };
 }
@@ -73,9 +73,15 @@ function diplomaStatusChange(data) {
 }
 
 function receiveDiplomas(data) {
-    return {
-        type: 'RECEIVE_DIPLOMAS',
-        data: data
+    const action = () => {
+        return {
+            type: 'RECEIVE_DIPLOMAS',
+            data: data
+        };
+    }
+    return (dispatch) => {
+        dispatch(showNotification('Diploma list update', 'success'));
+        dispatch(action());
     };
 }
 

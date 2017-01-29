@@ -22,6 +22,7 @@ class AdminDiplomaList extends Component {
         const { diplomas } = this.props;
         return (
             <div className={style.center}>
+                <h2>Diploma list</h2>
                 {diplomas.map((dip) => {
                     let buttons = <span />;
                     if (dip.status === 'REGISTERED') {
