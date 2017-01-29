@@ -1,7 +1,9 @@
 package com.components.defence.service;
 
 import com.components.defence.model.Defence;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DefenceService {
 
 
