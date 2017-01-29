@@ -6,21 +6,32 @@ const style = require('../scss/modal.scss');
 
 class Modal extends Component {
 
-    render() {
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+    constructor(props) {
+        super(props);
+        this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
+        this.close = this.close.bind(this);
+    }
+
+    close() {
+        this.props.onHide();
+    }
+
+    handleBackgroundClick(e) {
+        if (e.target === e.currentTarget) {
+            this.close();
         }
-        return (
-            <div className={`${style.modal} ${style.modalContent}`}>
-                <span className={style.close}>&times;</span>
-                {this.props.children}
+    };
+
+    render() {
+        return this.props.show ? (
+            <div onClick={this.handleBackgroundClick} className={style.modal}>
+                <div className={style.modalContent}>
+                    <span onClick={this.close} className={style.close}>&times;</span>
+                    {this.props.children}
+                </div>
             </div>
-        );
+        ) : null;
     }
 }
-
-
 
 module.exports = Modal;

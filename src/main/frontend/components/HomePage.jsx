@@ -9,15 +9,14 @@ const styleButtons = require('../scss/_buttons.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { toggleNotification, hideNotification, showNotification } = require('../actions/notificationActions');
-
-
 class HomePage extends Component {
 
     constructor(props) {
         super(props);
         this.loggedIn = this.loggedIn.bind(this);
         this.notloggedIn = this.notloggedIn.bind(this);
+
+        this.state = {showModal: false};
     }
 
     loggedIn() {
@@ -52,16 +51,7 @@ function mapStateToProps(state) {
         userIsLoggedIn: state.session.user.isLoggedIn,
         username: state.session.user.username,
         permission: state.session.user.permission,
-        academicFormData: state.control.forms.academicForm.formData
     }
 }
 
-function matchDispatchToProps(dispatch) {
-    return bindActionCreators({
-        toggleNotification: toggleNotification,
-        showNotification: showNotification,
-        hideNotification: hideNotification,
-    }, dispatch);
-}
-
-module.exports = connect(mapStateToProps, matchDispatchToProps)(HomePage);
+module.exports = connect(mapStateToProps)(HomePage);
