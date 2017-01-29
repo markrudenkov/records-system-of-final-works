@@ -3,6 +3,7 @@ package com.components.student.service;
 import com.components.academic.model.Academic;
 import com.components.academic.repository.model.AcademicDb;
 import com.components.academic.service.AcademicService;
+import com.components.final_work.model.FinalWork;
 import com.components.student.model.Student;
 import com.components.student.repository.StudentRepository;
 import com.components.student.repository.model.StudentDb;
@@ -31,6 +32,11 @@ public class StudentService {
     StudentRepository repository;
 
     @Transactional
+    public Student getStudentByUsername(String username) {
+        return mapToStudent(repository.getStudentsByUsername(username));
+    }
+
+    @Transactional
     public Student createStudent (Student student) throws ValidationException {
         StudentDb userByUsername = getUserDbByUsername(student.getUsername());
         if (userByUsername != null) {
@@ -46,6 +52,7 @@ public class StudentService {
         return repository.findAll().stream().map(StudentService::mapToStudent).collect(Collectors.toList());
     }
 
+    @Transactional
     private StudentDb getUserDbByUsername(String username) {
         return repository.getStudentsByUsername(username);
     }

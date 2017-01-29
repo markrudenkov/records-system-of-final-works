@@ -1,5 +1,6 @@
 package com.components.student.controller;
 
+import com.components.final_work.model.FinalWork;
 import com.components.student.model.Student;
 import com.components.student.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class StudentController {
     public String removeStudent(@PathVariable Long id) {
         studentService.remove(id);
         return "{\"message\": \"removed\"}";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/api/student/{username}")
+    public Student getStudentFinalWorks(@PathVariable String username) {
+        return studentService.getStudentByUsername(username);
     }
 
 }

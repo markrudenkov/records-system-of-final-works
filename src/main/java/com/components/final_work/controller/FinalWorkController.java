@@ -39,11 +39,6 @@ public class FinalWorkController {
         return service.getAllConfirmedFinalWorks();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/api/student/finalwork/{id}")
-    public FinalWork getStudentFinalWorks(@PathVariable Long id) {
-        return service.getStudentFinalWork(id);
-    }
-
     @RequestMapping(method = RequestMethod.PUT, path = "/api/student/finalwork/{id}")
     public FinalWork  updateFinalWorkStatusByStudent(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
         return service.updateFinalWorkStatusByStudent(id, finalWork);

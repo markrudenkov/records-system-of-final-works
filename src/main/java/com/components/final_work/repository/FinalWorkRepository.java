@@ -15,6 +15,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
 
     public static final String UPDATE_STATUS_BY_ID = "UPDATE final_works  SET status = ? WHERE final_work_id = ?";
     public static final String SELECT_CONFIRMED_FINAL_WORKS = "SELECT * FROM final_works WHERE status = 'CONFIRMED'";
+    public static final String UPDATE_REVIEW_ID = "UPDATE final_works  SET status = ? WHERE final_work_id = ?";
 
     @Autowired
     private JdbcTemplate template;

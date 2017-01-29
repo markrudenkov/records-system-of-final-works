@@ -4,6 +4,7 @@ import com.components.final_work.model.FinalWork;
 import com.components.final_work.model.FinalWorkStatus;
 import com.components.final_work.repository.FinalWorkRepository;
 import com.components.final_work.repository.model.FinalWorkDb;
+import com.components.student.repository.StudentRepository;
 import com.components.utils.exception.BusinessException;
 import com.components.utils.exception.ValidationException;
 
@@ -21,11 +22,6 @@ public class FinalWorkService {
 
     @Autowired
     FinalWorkRepository repository;
-
-    @Transactional
-    public FinalWork getStudentFinalWork(Long id) {
-        return mapToFinalWork(repository.findOne(id));
-    }
 
     @Transactional
     public FinalWork updateFinalWorkStatusByStudent(Long id, FinalWork finalWork) {
@@ -78,7 +74,6 @@ public class FinalWorkService {
         api.setReviewerReviewId(db.getReviewerReviewId());
         api.setReviewerId(db.getReviewerId());
         api.setPromotorId(db.getPromotorId());
-
         return api;
     }
 

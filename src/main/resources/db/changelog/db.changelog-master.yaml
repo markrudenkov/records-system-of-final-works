@@ -201,11 +201,17 @@ databaseChangeLog:
                   name: final_work_id
                   type: int
               - column:
-                  name: reviewer_review_id
+                  name: reviewer_id
                   type: int
+        - addAutoIncrement:
+              columnDataType: int
+              columnName: review_id
+              incrementBy: 1
+              startWith: 1
+              tableName: reviews
 
         - addForeignKeyConstraint:
-            baseColumnNames: reviewer_review_id
+            baseColumnNames: reviewer_id
             baseTableName: reviews
             constraintName: fk_review
             referencedColumnNames: teacher_id
