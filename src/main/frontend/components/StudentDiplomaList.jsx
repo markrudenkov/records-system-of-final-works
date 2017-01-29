@@ -13,7 +13,7 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const getDiplomas = require('../actions/studentActions');
+const { getDiplomas, claimDiploma, getStudent } = require('../actions/studentActions');
 const { getAcademics } = require('../actions/apiActions');
 
 class StudentDiplomaList extends Component {
@@ -21,12 +21,24 @@ class StudentDiplomaList extends Component {
     constructor(props) {
         super(props);
         this.showModal = this.showModal.bind(this);
+        this.claimDiploma = this.claimDiploma.bind(this);
         this.state = {showModal: false, diploma: {}, recenzent: {}, promotor: {}};
     }
 
     componentWillMount() {
         this.props.getAcademics();
         this.props.getDiplomas();
+        this.props.getStudent(this.props.username);
+    }
+
+    claimDiploma() {
+        const { diploma } = this.state;
+        const { studentFiles } = this.props;
+        const data = {
+            studentId: studentFiles.id,
+            id: diploma.id
+        };
+        this.props.claimDiploma(data);
     }
 
     showModal(diploma) {
@@ -46,8 +58,9 @@ class StudentDiplomaList extends Component {
     }
 
     render() {
-        const { diplomas } = this.props;
+        const { diplomas, studentFiles } = this.props;
         const { title, annotation } = this.state.diploma;
+        const button = studentFiles.finalWorkID === 0 ? <button className={styleButtons.buttonSuccess} onClick={this.claimDiploma}>Choose this diploma work</button> : null;
         return (
             <div className={style.center}>
                 <h2>Diploma list</h2>
@@ -63,7 +76,7 @@ class StudentDiplomaList extends Component {
                 <Modal show={this.state.showModal} onHide={()=>{this.setState({showModal: false})}} >
                     <DiplomaInfo title={title} annotation={annotation} promotor={this.state.promotor} recenzent={this.state.recenzent} />
                     <div className={style.center} >
-                        <button className={styleButtons.buttonSuccess} onClick={() => {}}>Choose this diploma work</button>
+                        { button }
                     </div>
                 </Modal>
             </div>
@@ -74,14 +87,18 @@ class StudentDiplomaList extends Component {
 function mapStateToProps(state) {
     return {
         diplomas: state.data.diplomas,
-        academics: state.data.users.academics
+        academics: state.data.users.academics,
+        username: state.session.user.username,
+        studentFiles: state.session.user.studentFiles
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getDiplomas: getDiplomas,
-        getAcademics: getAcademics
+        getAcademics: getAcademics,
+        claimDiploma: claimDiploma,
+        getStudent: getStudent
     }, dispatch);
 }
 
