@@ -492,7 +492,7 @@ databaseChangeLog:
                 value: 'Nachtigal'
             - column:
                 name: username
-                value: 'jannachtigal'
+                value: 'jan'
             - column:
                 name: password
                 value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
@@ -544,7 +544,7 @@ databaseChangeLog:
                 value: 'Siroic'
             - column:
                 name: username
-                value: 'jaroslavsiroic'
+                value: 'ajs'
             - column:
                 name: password
                 value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
@@ -593,7 +593,7 @@ databaseChangeLog:
                 value: 'Kosciuszko'
             - column:
                 name: username
-                value: 'kosciuszko'
+                value: 'kos'
             - column:
                 name: password
                 value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
