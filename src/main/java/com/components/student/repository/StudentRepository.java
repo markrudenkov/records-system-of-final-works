@@ -15,6 +15,7 @@ import java.util.List;
 public class StudentRepository extends BaseRepository<StudentDb> {
 
     public static final String SELECT_BY_USERNAME = "SELECT * FROM students where username = ?";
+    public static final String UPDATE_FINALWORK_ID = "UPDATE students  SET final_work_id = ? WHERE student_id = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -49,5 +50,9 @@ public class StudentRepository extends BaseRepository<StudentDb> {
             return null;
         }
         return students.get(0);
+    }
+
+    public void updateStudentFinalWorkID(Long studentID, Long finalWorkId) {
+        template.update(UPDATE_FINALWORK_ID,new Object[]{finalWorkId,studentID});
     }
 }

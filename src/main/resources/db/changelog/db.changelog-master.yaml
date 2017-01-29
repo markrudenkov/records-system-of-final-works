@@ -522,6 +522,9 @@ databaseChangeLog:
             - column:
                 name: promotor_id
                 value: 1
+            - column:
+                name: reviewer_id
+                value: 2
             tableName: final_works
 
   - changeSet:
@@ -569,3 +572,29 @@ databaseChangeLog:
                 name: promotor_id
                 value: 1
             tableName: final_works
+
+  - changeSet:
+      id: 23
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: teacher_id
+                value: 2
+            - column:
+                name: name
+                value: 'Tadeusz'
+            - column:
+                name: surname
+                value: 'Kosciuszko'
+            - column:
+                name: username
+                value: 'kosciuszko'
+            - column:
+                name: password
+                value: '$2a$10$goYUjJpDuhxXrFWO60lPkufOIEMoUQ9MmdkHYb2q6k0lVlEJH2Nve'
+            - column:
+                name: academic_title
+                value: 'professor'
+            tableName: teachers

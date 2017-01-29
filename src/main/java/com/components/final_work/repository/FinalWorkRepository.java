@@ -15,7 +15,8 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
 
     public static final String UPDATE_STATUS_BY_ID = "UPDATE final_works  SET status = ? WHERE final_work_id = ?";
     public static final String SELECT_CONFIRMED_FINAL_WORKS = "SELECT * FROM final_works WHERE status = 'CONFIRMED'";
-    public static final String UPDATE_REVIEW_ID = "UPDATE final_works  SET status = ? WHERE final_work_id = ?";
+    public static final String UPDATE_PROMOTOR_REVIEW_ID = "UPDATE final_works  SET promotor_review_id = ? WHERE final_work_id = ?";
+    public static final String UPDATE_REVIEWER_REVIEW_ID = "UPDATE final_works  SET reviewer_review_id = ? WHERE final_work_id = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -55,5 +56,13 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
     public List<FinalWorkDb> getAllConfirmedFinalWorks() {
         List<FinalWorkDb> finalWorkDbs = template.query(SELECT_CONFIRMED_FINAL_WORKS, ROW_MAPPER);
         return  finalWorkDbs;
+    }
+
+    public void updatePromotorReviewID(Long promotorReviewID, Long finalWorkID){
+        template.update(UPDATE_PROMOTOR_REVIEW_ID,new Object[]{promotorReviewID,finalWorkID});
+    }
+
+    public void updateReviewerReviewID(Long reviewerReviewID, Long finalWorkID){
+        template.update(UPDATE_REVIEWER_REVIEW_ID,new Object[]{reviewerReviewID,finalWorkID});
     }
 }

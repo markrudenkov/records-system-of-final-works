@@ -1,10 +1,12 @@
 package com.components.review.service;
 
-import com.components.academic.repository.AcademicRepository;
-import com.components.final_work.model.FinalWork;
+
+import com.components.final_work.repository.FinalWorkRepository;
+import com.components.final_work.repository.model.FinalWorkDb;
 import com.components.review.model.Review;
 import com.components.review.repository.ReviewRepository;
 import com.components.review.repository.model.ReviewDB;
+import com.components.utils.exception.BusinessException;
 import com.components.utils.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +19,21 @@ public class ReviewService {
     ReviewRepository repository;
 
     @Autowired
-    AcademicRepository academicRepository;
+    FinalWorkRepository finalWorkRepository;
 
     @Transactional
     public Review createReview(Review review) throws ValidationException {
-        ReviewDB db = repository.create(mapToReviewDb(review));
+        ReviewDB reviewDB = repository.create(mapToReviewDb(review));
+        FinalWorkDb finalWorkDb = finalWorkRepository.findOne(review.getFinalWorkId());
+        if(finalWorkDb.getPromotorId() == review.getReviewerId()){
+                finalWorkRepository.updatePromotorReviewID(reviewDB.getId(),finalWorkDb.getId());
+        }else if(finalWorkDb.getReviewerId() == review.getReviewerId()){
+                finalWorkRepository.updateReviewerReviewID(reviewDB.getId(),finalWorkDb.getId());
+        }else{
+            throw new BusinessException("Reviev alredy exists or revier id is incorrect");
+        }
 
-
-        return mapToReview(db);
+        return mapToReview(reviewDB);
     }
 
     private static Review mapToReview(ReviewDB db) {

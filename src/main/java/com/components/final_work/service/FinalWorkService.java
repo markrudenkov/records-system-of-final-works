@@ -23,17 +23,29 @@ public class FinalWorkService {
     @Autowired
     FinalWorkRepository repository;
 
+    @Autowired
+    StudentRepository studentRepository;
+
     @Transactional
-    public FinalWork updateFinalWorkStatusByStudent(Long id, FinalWork finalWork) {
+    public FinalWork updateFinalWorkStatusByStudent(Long studentId, FinalWork finalWork) {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
         if (EnumUtils.isValidEnum(FinalWorkStatus.StudentTrigeredStatuses.class, finalWork.getStatus())) {
-            repository.updateFinalWorkStatus(id, finalWork.getStatus().toString());
-            finalWorkDb = repository.findOne(id);
+            repository.updateFinalWorkStatus(finalWork.getId(), finalWork.getStatus().toString());
+            studentRepository.updateStudentFinalWorkID(studentId, finalWork.getId());
+            finalWorkDb = repository.findOne(finalWork.getId());
         } else {
             throw new BusinessException("Incorrect status of final work");
         }
+
         return mapToFinalWork(finalWorkDb);
     }
+
+
+    private void updateStudentFinalWorkID(Long studentID, Long finalWorkId){
+
+
+    }
+
 
     @Transactional
     public List<FinalWork> getAllConfirmedFinalWorks() {
