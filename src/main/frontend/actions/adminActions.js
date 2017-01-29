@@ -40,7 +40,7 @@ function changeDiplomaStatus(data) {
     };
     return (dispatch) => {
         dispatch(showNotification('Status changed', 'info'));
-        dispatch(apiReq('api/finalwork/', req));
+        dispatch(apiReq('api/finalwork/'+data.id, req));
         dispatch(diplomaStatusChange(data));
     };
 }

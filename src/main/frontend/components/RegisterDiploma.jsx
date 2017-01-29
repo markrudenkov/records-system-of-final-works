@@ -56,13 +56,11 @@ class RegisterDiploma extends React.Component {
 
         for (var i = 0; i < this.props.recenzents.length; i++) {
             if (this.props.recenzents[i].username === this.props.username) {
-                data.promotor = recenzent.id;
+                data.promotor = this.props.recenzents[i].id;
                 break;
             }
         }
         this.props.registerDiploma(data);
-
-        console.log('Send '+JSON.stringify(data));
     }
 
     render() {
