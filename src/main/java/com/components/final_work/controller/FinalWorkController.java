@@ -1,6 +1,5 @@
 package com.components.final_work.controller;
 
-import com.components.academic.model.Academic;
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.service.FinalWorkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
-import java.io.IOException;
 import java.util.List;
 
 
