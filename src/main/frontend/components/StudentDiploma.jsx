@@ -12,49 +12,56 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { getAcademics } = require('../actions/apiActions');
+const { getFullDiploma, rejectDiploma } = require('../actions/studentActions');
 
 class StudentDiplomaList extends Component {
 
     constructor(props) {
         super(props);
-        this.showModal = this.showModal.bind(this);
         this.discardDiploma = this.discardDiploma.bind(this);
         this.state = {diploma: {}, recenzent: {}, promotor: {}};
     }
 
     componentWillMount() {
-        this.props.getAcademics();
-        this.props.getDiplomas();
-        this.props.getStudent(this.props.username);
+        const { finalWorkID } = this.props.studentFiles;
+        if (finalWorkID != 0) {
+            this.props.getFullDiploma(finalWorkID, (data) => {
+                this.setState({diploma: data.finalWork, recenzent: data.reviewer, promotor: data.promotor});
+                return {
+                    type: 'NOTYPE'
+                };
+            });
+        }
     }
 
-    discardDiploma(diploma) {
-        const { academics } = this.props;
-
-        let recenzent = null; let promotor = null;
-
-        for (var i = 0; i < academics.length; i++) {
-            if (academics[i].id === diploma.promotorId) {
-                promotor = academics[i];
-            }
-            if (academics[i].id === diploma.reviewerId) {
-                recenzent = academics[i];
-            }
+    discardDiploma() {
+        const { diploma } = this.state;
+        const { studentFiles } = this.props;
+        const data = {
+            studentId: studentFiles.id,
+            id: diploma.id
         };
-        this.setState({showModal: true, diploma: diploma, recenzent: recenzent, promotor: promotor});
+        this.props.rejectDiploma(data);
     }
 
     render() {
-        const { diplomas } = this.props;
         const { title, annotation } = this.state.diploma;
+        const { finalWorkID } = this.props.studentFiles;
+
+        //if not chosen show nothing
+        let diploma = finalWorkID != 0 ? (
+            <div>
+                <DiplomaInfo title={title} annotation={annotation} promotor={this.state.promotor} recenzent={this.state.recenzent} />
+                <div className={style.center} >
+                    <button className={styleButtons.buttonDanger} onClick={this.discardDiploma}>Reject diploma work</button>
+                </div>
+            </div>
+        ) : <h4>You have no diploma</h4>;
+
         return (
             <div className={style.center}>
                 <h2>My Diploma</h2>
-                <DiplomaInfo title={title} annotation={annotation} promotor={this.state.promotor} recenzent={this.state.recenzent} />
-                <div className={style.center} >
-                    <button className={styleButtons.buttonDanger} onClick={this.discardDiploma}}>Reject diploma work</button>
-                </div>
+                {diploma}
             </div>
         );
     }
@@ -62,13 +69,14 @@ class StudentDiplomaList extends Component {
 
 function mapStateToProps(state) {
     return {
-        academics: state.data.users.academics
+        studentFiles: state.session.user.studentFiles
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        getAcademics: getAcademics
+        getFullDiploma: getFullDiploma,
+        rejectDiploma: rejectDiploma
     }, dispatch);
 }
 

@@ -9,7 +9,7 @@ class DiplomaInfo extends Component {
     render() {
         const { title, annotation, promotor, recenzent } = this.props;
         return (
-            <div className={`${style.row} ${style.center}`}>
+            <div className={`${style.row} ${style.center} ${style.slim}`}>
                 <h2><b>Title:</b> {title}</h2>
                 <p><b>Description:</b> {annotation}</p>
                 <p><b>Promotor:</b> {`${promotor.title} ${promotor.name} ${promotor.surname}`}</p>

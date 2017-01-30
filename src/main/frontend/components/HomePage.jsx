@@ -6,6 +6,8 @@ const {Component, PropTypes} = React;
 const style = require('../scss/main.scss');
 const styleButtons = require('../scss/_buttons.scss');
 
+const { getStudent } = require('../actions/studentActions');
+
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
@@ -20,6 +22,9 @@ class HomePage extends Component {
     }
 
     loggedIn() {
+        if (this.props.permission === 'STUDENT') {
+            this.props.getStudent(this.props.username);
+        }
         return (
             <div className={style.row}>
                 <h1>You are loggedin as {this.props.username} [{this.props.permission}]</h1>
@@ -54,4 +59,10 @@ function mapStateToProps(state) {
     }
 }
 
-module.exports = connect(mapStateToProps)(HomePage);
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getStudent: getStudent
+    }, dispatch);
+}
+
+module.exports = connect(mapStateToProps, matchDispatchToProps)(HomePage);
