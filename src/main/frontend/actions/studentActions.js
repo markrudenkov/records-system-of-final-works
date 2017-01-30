@@ -94,17 +94,17 @@ function rejectDiploma(data) {
     return updateDiploma(data);
 }
 
-function uploadDiploma(data) {
+function uploadDiploma(data, id) {
     const req = {
         credentials: 'include',
         method: 'POST',
         headers: {
-            'Content-Type': 'multipart/form-data; charset=utf-8',
+             'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
         },
         body: data
     };
     return (dispatch) => {
-        dispatch(apiReq('api/student/finalwork/upload', req));
+        dispatch(apiReq('api/student/finalwork/upload/'+id, req));
     };
 }
 

@@ -48,7 +48,7 @@ class StudentDiplomaList extends Component {
     uploadDiploma() {
         let data = new FormData();
         data.append('file', this.refs.file.files[0]);
-        this.props.uploadDiploma(data);
+        this.props.uploadDiploma(data, this.state.diploma.id);
     }
 
     render() {
