@@ -38,10 +38,10 @@ public class FinalWorkService {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
         if (EnumUtils.isValidEnum(FinalWorkStatus.StudentTrigeredStatuses.class, finalWork.getStatus())) {
             repository.updateFinalWorkStatus(finalWork.getId(), finalWork.getStatus().toString());
-            if(FinalWorkStatus.StudentTrigeredStatuses.CONFIRMED.toString().equals(finalWork.getStatus())){
+            if(FinalWorkStatus.StudentTrigeredStatuses.RESERVED.toString().equals(finalWork.getStatus())){
                 studentRepository.updateStudentFinalWorkID(studentId, finalWork.getId());
             }else{
-                studentRepository.updateStudentFinalWorkID(studentId, (long) 0);
+                studentRepository.updateStudentFinalWorkID(studentId, null);
             }
             finalWorkDb = repository.findOne(finalWork.getId());
         } else {
