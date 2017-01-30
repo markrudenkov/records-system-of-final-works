@@ -23,6 +23,11 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
         return db;
     };
 
+
+
+
+
+
     public DefenceRepository(RowMapper<DefenceDb> rowMapper, RowUnmapper<DefenceDb> rowUnmapper, String tableName, String idColumn, JdbcTemplate template) {
         super(rowMapper, rowUnmapper, tableName, idColumn);
         this.template = template;

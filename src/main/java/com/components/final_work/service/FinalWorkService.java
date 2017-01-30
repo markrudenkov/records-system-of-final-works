@@ -55,8 +55,7 @@ public class FinalWorkService {
         jsonObject.put("finalWork", new JSONObject(finalWork));
         jsonObject.put("promotor",new JSONObject(promotor));
         jsonObject.put("reviewer",new JSONObject(reviewer));
-        String json = jsonObject.toString();
-        return json;
+        return jsonObject.toString();
     }
 
     @Transactional(readOnly = true)
