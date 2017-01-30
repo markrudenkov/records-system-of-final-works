@@ -3,6 +3,10 @@ package com.components.final_work.service;
 import com.components.academic.model.Academic;
 import com.components.academic.repository.AcademicRepository;
 import com.components.academic.repository.model.AcademicDb;
+import com.components.defence.model.Defence;
+import com.components.defence.repository.DefenceRepository;
+import com.components.defence.repository.model.DefenceDb;
+import com.components.defence.service.DefenceService;
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.model.FinalWorkStatus;
 import com.components.final_work.repository.FinalWorkRepository;
@@ -16,9 +20,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +37,15 @@ public class FinalWorkService {
 
     @Autowired
     AcademicRepository academicRepository;
+
+    @Autowired
+    DefenceService defenceService;
+
+    @Autowired
+    DefenceRepository defenceRepository;
+
+
+
 
     @Transactional
     public FinalWork updateFinalWorkStatusByStudent(Long studentId, FinalWork finalWork) {
@@ -49,6 +63,34 @@ public class FinalWorkService {
         }
         return mapToFinalWork(finalWorkDb);
     }
+
+    @Transactional(readOnly = true)
+    public String getFinalWorksAndDefencesOfAcademic(Long id) {
+        List<Defence> defences = defenceRepository.getDefencesByPromotorId(id).stream().map(DefenceService::mapToDefence).collect(Collectors.toList());
+        List<JSONObject> defenceRelatedFinalWorks = new ArrayList<>();
+        for (Defence defence: defences) {
+            defenceRelatedFinalWorks.add(mapToJSONObject(defence));
+        }
+        List<JSONObject> finalWorks = repository.getFinalWorksRelatedToAcademic(id).stream().map(FinalWorkService::mapFinalWorkDbToJSONObject).collect(Collectors.toList());
+        defenceRelatedFinalWorks.addAll(finalWorks);
+
+        return defenceRelatedFinalWorks.toString();
+    }
+
+
+    private static JSONObject mapFinalWorkDbToJSONObject(FinalWorkDb db){
+        return new JSONObject(db);
+    }
+
+
+    @Transactional(readOnly = true)
+    private  JSONObject mapToJSONObject (Defence defence){
+        FinalWork finalWorkDb = mapToFinalWork(repository.findOne(defence.getFinalWorkId()));
+        JSONObject jsonObject = new JSONObject(finalWorkDb);
+        jsonObject.put("defence",defence);
+        return jsonObject;
+    }
+
 
     @Transactional(readOnly = true)
     public String getFinalWorkOfStudent(Long finalworkId) {

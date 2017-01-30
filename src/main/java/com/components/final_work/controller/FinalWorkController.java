@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,5 +57,10 @@ public class FinalWorkController {
     @RequestMapping(method = RequestMethod.GET, path = "/api/academic/promotor/finalworks/{id}")
     public List<FinalWork> getPromotorFinalWorks(@PathVariable Long id) {
         return service.getPromotorFinalWorks(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/api/academic/finalworks/{id}")
+    public String getFinalWorksAndDefencesOfAcademic(@PathVariable Long id) {
+        return service.getFinalWorksAndDefencesOfAcademic(id);
     }
 }

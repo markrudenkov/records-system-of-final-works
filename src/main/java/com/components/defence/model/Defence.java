@@ -49,4 +49,15 @@ public class Defence {
     public void setPromotorId(Long promotorId) {
         this.promotorId = promotorId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", evaluation='" + evaluation + '\'' +
+                ", date=" + date +
+                ", finalWorkId=" + finalWorkId +
+                ", promotorId=" + promotorId +
+                '}';
+    }
 }

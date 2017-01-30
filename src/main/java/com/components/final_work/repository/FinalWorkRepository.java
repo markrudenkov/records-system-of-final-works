@@ -19,6 +19,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
     public static final String UPDATE_REVIEWER_REVIEW_ID = "UPDATE final_works  SET reviewer_review_id = ? WHERE final_work_id = ?";
     public static final String SELECT_FINAL_WORKS_FOR_REVIEW = "SELECT * FROM final_works WHERE reviewer_id = ? AND status = 'FOR_RECENSION' " ;
     public static final String SELECT_RESERVED_FINAL_WORKS_CREATED_BY_PROMOTOR = "SELECT * FROM final_works WHERE promotor_id = ? " ;
+    public static final String SELECT_FINAL_WORKS_RELATED_TO_ACADEMIC = "SELECT * FROM final_works WHERE reviewer_id = ? OR promotor_id = ? " ;
 
     @Autowired
     private JdbcTemplate template;
@@ -75,6 +76,11 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
 
     public List<FinalWorkDb> getPromotorFinalWorks(Long promotorId) {
         List<FinalWorkDb> finalWorkDbs = template.query(SELECT_RESERVED_FINAL_WORKS_CREATED_BY_PROMOTOR,new Object[]{promotorId}, ROW_MAPPER);
+        return  finalWorkDbs;
+    }
+
+    public List<FinalWorkDb> getFinalWorksRelatedToAcademic(Long promotorId) {
+        List<FinalWorkDb> finalWorkDbs = template.query(SELECT_FINAL_WORKS_RELATED_TO_ACADEMIC,new Object[]{promotorId,promotorId}, ROW_MAPPER);
         return  finalWorkDbs;
     }
 }

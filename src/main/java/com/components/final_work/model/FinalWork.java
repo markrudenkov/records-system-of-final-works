@@ -75,4 +75,18 @@ public class FinalWork {
     public void setPromotorId(Long promotorId) {
         this.promotorId = promotorId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", annotation='" + annotation + '\'' +
+                ", status='" + status + '\'' +
+                ", promotorReviewId=" + promotorReviewId +
+                ", reviewerReviewId=" + reviewerReviewId +
+                ", reviewerId=" + reviewerId +
+                ", promotorId=" + promotorId +
+                '}';
+    }
 }

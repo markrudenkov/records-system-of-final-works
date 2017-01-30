@@ -7,10 +7,15 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+@Repository
 public class DefenceRepository extends BaseRepository<DefenceDb> {
+
+    public static final String SELECT_DEFENCES_BY_PROMOTOR_ID = "SELECT * FROM work_defenses WHERE promotor_id = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -36,5 +41,10 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
 
     public DefenceRepository() {
         super(ROW_MAPPER, ROW_UNMAPPER, "work_defenses", "defense_id");
+    }
+
+    public List<DefenceDb> getDefencesByPromotorId(Long promotorId) {
+        List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_PROMOTOR_ID,new Object[]{promotorId}, ROW_MAPPER);
+        return  defenceDbList;
     }
 }
