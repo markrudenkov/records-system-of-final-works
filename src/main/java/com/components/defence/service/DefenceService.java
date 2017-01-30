@@ -2,7 +2,6 @@ package com.components.defence.service;
 
 import com.components.defence.model.Defence;
 import com.components.defence.repository.model.DefenceDb;
-import com.components.final_work.model.FinalWork;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -18,7 +17,7 @@ public class DefenceService {
         return null;
     }
 
-    private  static Defence mapToDefence(DefenceDb db){
+    public   static Defence mapToDefence(DefenceDb db){
         Defence api = new Defence();
         api.setId(db.getId());
         api.setDate(db.getDate());
@@ -27,7 +26,7 @@ public class DefenceService {
         api.setPromotorId(db.getPromotorId());
         return api;
     }
-    private static DefenceDb mapToDefenceDb(Long id, Defence api){
+    public static DefenceDb mapToDefenceDb(Long id, Defence api){
         DefenceDb db = new DefenceDb();
         db.setId(id);
         db.setDate(api.getDate());
