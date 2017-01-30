@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.Timestamp;
+
 public class DefenceRepository extends BaseRepository<DefenceDb> {
 
     @Autowired
@@ -23,13 +25,16 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
         return db;
     };
 
+    private static  final RowUnmapper<DefenceDb> ROW_UNMAPPER = defenceDb -> mapOf(
+            "defense_id", defenceDb.getId(),
+            "evaluation", defenceDb.getEvaluation(),
+            "date", new Timestamp(defenceDb.getDate().getMillis()),
+            "final_work_id", defenceDb.getFinalWorkId(),
+            "promotor_id", defenceDb.getPromotorId()
+    );
 
 
-
-
-
-    public DefenceRepository(RowMapper<DefenceDb> rowMapper, RowUnmapper<DefenceDb> rowUnmapper, String tableName, String idColumn, JdbcTemplate template) {
-        super(rowMapper, rowUnmapper, tableName, idColumn);
-        this.template = template;
+    public DefenceRepository() {
+        super(ROW_MAPPER, ROW_UNMAPPER, "work_defenses", "defense_id");
     }
 }

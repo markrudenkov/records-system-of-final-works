@@ -38,7 +38,11 @@ public class FinalWorkService {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
         if (EnumUtils.isValidEnum(FinalWorkStatus.StudentTrigeredStatuses.class, finalWork.getStatus())) {
             repository.updateFinalWorkStatus(finalWork.getId(), finalWork.getStatus().toString());
-            studentRepository.updateStudentFinalWorkID(studentId, finalWork.getId());
+            if(FinalWorkStatus.StudentTrigeredStatuses.CONFIRMED.toString().equals(finalWork.getStatus())){
+                studentRepository.updateStudentFinalWorkID(studentId, finalWork.getId());
+            }else{
+                studentRepository.updateStudentFinalWorkID(studentId, (long) 0);
+            }
             finalWorkDb = repository.findOne(finalWork.getId());
         } else {
             throw new BusinessException("Incorrect status of final work");
