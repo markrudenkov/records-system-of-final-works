@@ -26,6 +26,17 @@ public class FinalWorkService {
     @Autowired
     StudentRepository studentRepository;
 
+    @Transactional(readOnly = true)
+    public List<FinalWork> getFinalWorksAndDefencesOfAcademic(Long id) {
+
+
+
+
+
+        return null;
+    }
+
+
     @Transactional
     public FinalWork updateFinalWorkStatusByStudent(Long studentId, FinalWork finalWork) {
         FinalWorkDb finalWorkDb = new FinalWorkDb();

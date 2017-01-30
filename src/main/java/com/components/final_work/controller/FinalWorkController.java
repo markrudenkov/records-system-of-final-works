@@ -56,4 +56,9 @@ public class FinalWorkController {
     public List<FinalWork> getPromotorFinalWorks(@PathVariable Long id) {
         return service.getPromotorFinalWorks(id);
     }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/api/academic/finalworks/{id}")
+    public List<FinalWork> getFinalWorksAndDefencesOfAcademic(@PathVariable Long id) {
+        return service.getFinalWorksAndDefencesOfAcademic(id);
+    }
 }
