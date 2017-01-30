@@ -28,6 +28,20 @@ function getDiplomas() {
     };
 }
 
+function getFullDiploma(id, callBack) {
+    const req = {
+        credentials: 'include',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        }
+    };
+    return (dispatch) => {
+        dispatch(showNotification('Loading diploma...', 'info'));
+        dispatch(apiReq('api/student/finalwork/'+id, req, callBack));
+    };
+}
+
 function updateDiploma(data) {
     const req = {
         credentials: 'include',
@@ -39,7 +53,7 @@ function updateDiploma(data) {
     };
     const action = () => {
         return {
-            type: 'UPDATE_DIPLOMA',
+            type: data.status+'_DIPLOMA',
             data: data
         };
     }
@@ -84,5 +98,6 @@ module.exports = {
     getDiplomas,
     claimDiploma,
     getStudent,
-
+    getFullDiploma,
+    rejectDiploma
 };
