@@ -28,8 +28,13 @@ function userReducer(state=initialState, action) {
                 token_type: token_type
             });
         break;
-        case 'UPDATE_DIPLOMA':
+        case 'RESERVED_DIPLOMA':
+            // choosen new diploma
             state = Object.assign({}, state, { studentFiles: { finalWorkID: action.data.id }});
+        break;
+        case 'CONFIRMED_DIPLOMA':
+            // rejected diploma
+            state = Object.assign({}, state, { studentFiles: { finalWorkID: 0 }});
         break;
         case 'REICEIVE_STUDENT_INFO':
             state = Object.assign({}, state, { studentFiles: action.data });

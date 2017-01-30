@@ -80,4 +80,18 @@ public class FinalWorkDb extends DbModel {
     public void setPromotorId(Long promotorId) {
         PromotorId = promotorId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", annotation='" + annotation + '\'' +
+                ", status='" + status + '\'' +
+                ", PromotorReviewId=" + PromotorReviewId +
+                ", ReviewerReviewId=" + ReviewerReviewId +
+                ", ReviewerId=" + ReviewerId +
+                ", PromotorId=" + PromotorId +
+                '}';
+    }
 }

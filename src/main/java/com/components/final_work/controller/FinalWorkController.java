@@ -2,6 +2,7 @@ package com.components.final_work.controller;
 
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.service.FinalWorkService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class FinalWorkController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/student/finalwork/{id}")
-    public FinalWork getFinalWorkOfStudent(@PathVariable Long id) {
+    public String getFinalWorkOfStudent(@PathVariable Long id) {
         return service.getFinalWorkOfStudent(id);
     }
 

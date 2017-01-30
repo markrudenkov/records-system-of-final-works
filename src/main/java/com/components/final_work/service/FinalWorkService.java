@@ -1,5 +1,8 @@
 package com.components.final_work.service;
 
+import com.components.academic.model.Academic;
+import com.components.academic.repository.AcademicRepository;
+import com.components.academic.repository.model.AcademicDb;
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.model.FinalWorkStatus;
 import com.components.final_work.repository.FinalWorkRepository;
@@ -9,6 +12,7 @@ import com.components.utils.exception.BusinessException;
 import com.components.utils.exception.ValidationException;
 
 import org.apache.commons.lang3.EnumUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,23 +30,24 @@ public class FinalWorkService {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    AcademicRepository academicRepository;
+
     @Transactional(readOnly = true)
     public List<FinalWork> getFinalWorksAndDefencesOfAcademic(Long id) {
-
-
-
-
-
         return null;
     }
-
-
+    
     @Transactional
     public FinalWork updateFinalWorkStatusByStudent(Long studentId, FinalWork finalWork) {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
         if (EnumUtils.isValidEnum(FinalWorkStatus.StudentTrigeredStatuses.class, finalWork.getStatus())) {
             repository.updateFinalWorkStatus(finalWork.getId(), finalWork.getStatus().toString());
-            studentRepository.updateStudentFinalWorkID(studentId, finalWork.getId());
+            if(FinalWorkStatus.StudentTrigeredStatuses.RESERVED.toString().equals(finalWork.getStatus())){
+                studentRepository.updateStudentFinalWorkID(studentId, finalWork.getId());
+            }else{
+                studentRepository.updateStudentFinalWorkID(studentId, null);
+            }
             finalWorkDb = repository.findOne(finalWork.getId());
         } else {
             throw new BusinessException("Incorrect status of final work");
@@ -51,8 +56,15 @@ public class FinalWorkService {
     }
 
     @Transactional(readOnly = true)
-    public FinalWork getFinalWorkOfStudent(Long finalworkId) {
-        return mapToFinalWork(repository.findOne(finalworkId));
+    public String getFinalWorkOfStudent(Long finalworkId) {
+        FinalWorkDb finalWork = repository.findOne(finalworkId);
+        AcademicDb promotor = academicRepository.findOne(finalWork.getPromotorId());
+        AcademicDb reviewer = academicRepository.findOne(finalWork.getReviewerId());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("finalWork", new JSONObject(finalWork));
+        jsonObject.put("promotor",new JSONObject(promotor));
+        jsonObject.put("reviewer",new JSONObject(reviewer));
+        return jsonObject.toString();
     }
 
     @Transactional(readOnly = true)

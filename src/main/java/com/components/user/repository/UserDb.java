@@ -51,4 +51,15 @@ public class UserDb extends DbModel{
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "UserDb{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
 }

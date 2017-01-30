@@ -13,7 +13,7 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { getDiplomas, claimDiploma, getStudent } = require('../actions/studentActions');
+const { getDiplomas, claimDiploma, getFullDiploma, getStudent } = require('../actions/studentActions');
 const { getAcademics } = require('../actions/apiActions');
 
 class StudentDiplomaList extends Component {
@@ -23,12 +23,6 @@ class StudentDiplomaList extends Component {
         this.showModal = this.showModal.bind(this);
         this.claimDiploma = this.claimDiploma.bind(this);
         this.state = {showModal: false, diploma: {}, recenzent: {}, promotor: {}};
-    }
-
-    componentWillMount() {
-        this.props.getAcademics();
-        this.props.getDiplomas();
-        this.props.getStudent(this.props.username);
     }
 
     claimDiploma() {
@@ -43,18 +37,12 @@ class StudentDiplomaList extends Component {
 
     showModal(diploma) {
         const { academics } = this.props;
-
-        let recenzent = null; let promotor = null;
-
-        for (var i = 0; i < academics.length; i++) {
-            if (academics[i].id === diploma.promotorId) {
-                promotor = academics[i];
-            }
-            if (academics[i].id === diploma.reviewerId) {
-                recenzent = academics[i];
-            }
-        };
-        this.setState({showModal: true, diploma: diploma, recenzent: recenzent, promotor: promotor});
+        this.props.getFullDiploma(diploma.id, (data) => {
+            this.setState({showModal: true, diploma: data.finalWork, recenzent: data.reviewer, promotor: data.promotor});
+            return {
+                type: 'NOTYPE'
+            };
+        });
     }
 
     render() {
@@ -98,7 +86,8 @@ function matchDispatchToProps(dispatch) {
         getDiplomas: getDiplomas,
         getAcademics: getAcademics,
         claimDiploma: claimDiploma,
-        getStudent: getStudent
+        getStudent: getStudent,
+        getFullDiploma: getFullDiploma
     }, dispatch);
 }
 
