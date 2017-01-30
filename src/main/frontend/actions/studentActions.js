@@ -94,10 +94,25 @@ function rejectDiploma(data) {
     return updateDiploma(data);
 }
 
+function uploadDiploma(data) {
+    const req = {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'multipart/form-data; charset=utf-8',
+        },
+        body: data
+    };
+    return (dispatch) => {
+        dispatch(apiReq('api/student/finalwork/upload', req));
+    };
+}
+
 module.exports = {
     getDiplomas,
     claimDiploma,
     getStudent,
     getFullDiploma,
-    rejectDiploma
+    rejectDiploma,
+    uploadDiploma
 };

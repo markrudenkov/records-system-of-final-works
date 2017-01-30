@@ -13,7 +13,7 @@ function diplomaReducer(state=initialState, action) {
             }
         break;
         case 'RECEIVE_DIPLOMAS':
-            state = Object.assign([], state, action.data);
+            state = Object.assign([], initialState, action.data);
         break;
         case 'LOGOUT':
             state = Object.assign([], initialState);

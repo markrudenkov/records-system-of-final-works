@@ -11,6 +11,7 @@ const initialState = {
 
 
 function userReducer(state=initialState, action) {
+    let studentFiles = Object.assign({}, state.studentFiles);
     switch(action.type) {
         case 'RECEIVE_LOGIN':
             const { access_token, refresh_token, token_type } = action.user;
@@ -30,11 +31,14 @@ function userReducer(state=initialState, action) {
         break;
         case 'RESERVED_DIPLOMA':
             // choosen new diploma
-            state = Object.assign({}, state, { studentFiles: { finalWorkID: action.data.id }});
+            console.log(action.data);
+            studentFiles.finalWorkID = action.data.id;
+            state = Object.assign({}, state, { studentFiles: studentFiles });
         break;
         case 'CONFIRMED_DIPLOMA':
             // rejected diploma
-            state = Object.assign({}, state, { studentFiles: { finalWorkID: 0 }});
+            studentFiles.finalWorkID = 0;
+            state = Object.assign({}, state, { studentFiles: studentFiles });
         break;
         case 'REICEIVE_STUDENT_INFO':
             state = Object.assign({}, state, { studentFiles: action.data });

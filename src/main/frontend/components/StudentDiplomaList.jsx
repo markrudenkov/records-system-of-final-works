@@ -25,13 +25,19 @@ class StudentDiplomaList extends Component {
         this.state = {showModal: false, diploma: {}, recenzent: {}, promotor: {}};
     }
 
+    componentWillMount() {
+        this.props.getDiplomas();
+    }
+
     claimDiploma() {
         const { diploma } = this.state;
         const { studentFiles } = this.props;
+        console.log(studentFiles);
         const data = {
             studentId: studentFiles.id,
             id: diploma.id
         };
+        console.log(data);
         this.props.claimDiploma(data);
     }
 
