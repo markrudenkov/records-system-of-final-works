@@ -73,7 +73,6 @@ public class FinalWorkService {
         }
         List<JSONObject> finalWorks = repository.getFinalWorksRelatedToAcademic(id).stream().map(FinalWorkService::mapFinalWorkDbToJSONObject).collect(Collectors.toList());
         defenceRelatedFinalWorks.addAll(finalWorks);
-
         return defenceRelatedFinalWorks.toString();
     }
 

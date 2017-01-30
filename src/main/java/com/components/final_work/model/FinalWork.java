@@ -11,6 +11,7 @@ public class FinalWork {
     private Long reviewerReviewId;
     private Long reviewerId;
     private Long promotorId;
+    private String filePath;
 
     public Long getId() {
         return id;
@@ -76,6 +77,14 @@ public class FinalWork {
         this.promotorId = promotorId;
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -87,6 +96,7 @@ public class FinalWork {
                 ", reviewerReviewId=" + reviewerReviewId +
                 ", reviewerId=" + reviewerId +
                 ", promotorId=" + promotorId +
+                ", filePath='" + filePath + '\'' +
                 '}';
     }
 }

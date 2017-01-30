@@ -13,6 +13,7 @@ public class FinalWorkDb extends DbModel {
     private Long ReviewerReviewId;
     private Long ReviewerId;
     private Long PromotorId;
+    private String filePath;
 
 
     @Override
@@ -81,6 +82,14 @@ public class FinalWorkDb extends DbModel {
         PromotorId = promotorId;
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -92,6 +101,7 @@ public class FinalWorkDb extends DbModel {
                 ", ReviewerReviewId=" + ReviewerReviewId +
                 ", ReviewerId=" + ReviewerId +
                 ", PromotorId=" + PromotorId +
+                ", filePath='" + filePath + '\'' +
                 '}';
     }
 }

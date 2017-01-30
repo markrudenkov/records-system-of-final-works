@@ -20,6 +20,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
     public static final String SELECT_FINAL_WORKS_FOR_REVIEW = "SELECT * FROM final_works WHERE reviewer_id = ? AND status = 'FOR_RECENSION' " ;
     public static final String SELECT_RESERVED_FINAL_WORKS_CREATED_BY_PROMOTOR = "SELECT * FROM final_works WHERE promotor_id = ? " ;
     public static final String SELECT_FINAL_WORKS_RELATED_TO_ACADEMIC = "SELECT * FROM final_works WHERE reviewer_id = ? OR promotor_id = ? " ;
+    public static final String UPDATE_FILE_PATH = "UPDATE final_works  SET file = ? WHERE final_work_id = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -30,6 +31,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
         db.setTitle(rs.getString("title"));
         db.setAnnotation(rs.getString("annotation"));
         db.setStatus(rs.getString("status"));
+        db.setFilePath(rs.getString("file"));
         db.setPromotorReviewId(rs.getLong("promotor_review_id"));
         db.setReviewerReviewId(rs.getLong("reviewer_review_id"));
         db.setReviewerId(rs.getLong("reviewer_id"));
@@ -45,7 +47,8 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
             "promotor_review_id", finalWorkDb.getPromotorReviewId(),
             "reviewer_review_id", finalWorkDb.getReviewerReviewId(),
             "reviewer_id", finalWorkDb.getReviewerId(),
-            "promotor_id", finalWorkDb.getPromotorId()
+            "promotor_id", finalWorkDb.getPromotorId(),
+            "file",finalWorkDb.getFilePath()
     );
 
     public FinalWorkRepository() {
@@ -82,5 +85,9 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
     public List<FinalWorkDb> getFinalWorksRelatedToAcademic(Long promotorId) {
         List<FinalWorkDb> finalWorkDbs = template.query(SELECT_FINAL_WORKS_RELATED_TO_ACADEMIC,new Object[]{promotorId,promotorId}, ROW_MAPPER);
         return  finalWorkDbs;
+    }
+
+    public void updateFinalWorkFileParth(String filePath, Long finalWorkID){
+        template.update(UPDATE_FILE_PATH,new Object[]{filePath,finalWorkID});
     }
 }

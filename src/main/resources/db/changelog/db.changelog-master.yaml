@@ -100,7 +100,7 @@ databaseChangeLog:
                   type: varchar(1000)
               - column:
                   name: file
-                  type: blob
+                  type: varchar(300)
               - column:
                   name: promotor_review_id
                   type: int
