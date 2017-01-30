@@ -12,13 +12,14 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { getFullDiploma, rejectDiploma } = require('../actions/studentActions');
+const { getFullDiploma, rejectDiploma, uploadDiploma } = require('../actions/studentActions');
 
 class StudentDiplomaList extends Component {
 
     constructor(props) {
         super(props);
         this.discardDiploma = this.discardDiploma.bind(this);
+        this.uploadDiploma = this.uploadDiploma.bind(this);
         this.state = {diploma: {}, recenzent: {}, promotor: {}};
     }
 
@@ -44,6 +45,12 @@ class StudentDiplomaList extends Component {
         this.props.rejectDiploma(data);
     }
 
+    uploadDiploma() {
+        let data = new FormData();
+        data.append('file', this.refs.file.files[0]);
+        this.props.uploadDiploma(data);
+    }
+
     render() {
         const { title, annotation } = this.state.diploma;
         const { finalWorkID } = this.props.studentFiles;
@@ -53,7 +60,11 @@ class StudentDiplomaList extends Component {
             <div>
                 <DiplomaInfo title={title} annotation={annotation} promotor={this.state.promotor} recenzent={this.state.recenzent} />
                 <div className={style.center} >
-                    <button className={styleButtons.buttonDanger} onClick={this.discardDiploma}>Reject diploma work</button>
+                    <button className={styleButtons.buttonDanger} onClick={this.discardDiploma}>Give up diploma work</button>
+                    <div className={style.row} >
+                        <input type='file' ref='file' title='upload file' />
+                        <button className={styleButtons.buttonSuccess} onClick={this.uploadDiploma} >Upload file</button>
+                    </div>
                 </div>
             </div>
         ) : <h4>You have no diploma</h4>;
@@ -76,7 +87,8 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getFullDiploma: getFullDiploma,
-        rejectDiploma: rejectDiploma
+        rejectDiploma: rejectDiploma,
+        uploadDiploma: uploadDiploma
     }, dispatch);
 }
 
