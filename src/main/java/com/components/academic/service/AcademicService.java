@@ -3,6 +3,7 @@ package com.components.academic.service;
 import com.components.academic.model.Academic;
 import com.components.academic.repository.AcademicRepository;
 import com.components.academic.repository.model.AcademicDb;
+import com.components.student.model.Student;
 import com.components.user.model.User;
 import com.components.user.repository.UserDb;
 import com.components.utils.exception.DataNotFoundException;
@@ -31,9 +32,14 @@ public class AcademicService {
     @Autowired
     private AcademicRepository repository;
 
+    @Transactional(readOnly = true)
+    public Academic getAcademicByUsername(String username) {
+        return mapToAcademic(repository.getAcademicByUsername(username));
+    }
+
     @Transactional
     public Academic createAcademic (Academic academic) throws ValidationException {
-        AcademicDb userByUsername = getUserDbByUsername(academic.getUsername());
+        AcademicDb userByUsername = repository.getAcademicByUsername(academic.getUsername());
         if (userByUsername != null) {
             throw new ValidationException("username", "already exists");
         }
@@ -55,11 +61,6 @@ public class AcademicService {
         } else {
             throw new DataNotFoundException("Academic with id " + id + " not found");
         }
-    }
-
-
-    private AcademicDb getUserDbByUsername(String username) {
-        return repository.getUserByUsername(username);
     }
 
     @Transactional
@@ -106,4 +107,5 @@ public class AcademicService {
     private static AcademicDb mapToAcademicDb(Academic api) {
         return mapToAcademicDb(api.getId(), api);
     }
+
 }

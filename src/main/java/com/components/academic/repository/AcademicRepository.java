@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class AcademicRepository extends BaseRepository<AcademicDb> {
 
-    public static final String SELECT_BY_USERNAME = "SELECT * FROM teachers where username = ?";
+    public static final String SELECT_ACADEMIC_BY_USERNAME = "SELECT * FROM teachers where username = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -42,8 +42,8 @@ public class AcademicRepository extends BaseRepository<AcademicDb> {
         super(ROW_MAPPER, ROW_UNMAPPER, "teachers", "teacher_id");
     }
 
-    public AcademicDb getUserByUsername(String username) {
-        List<AcademicDb> users = template.query(SELECT_BY_USERNAME, new Object[]{username}, ROW_MAPPER);
+    public AcademicDb getAcademicByUsername(String username) {
+        List<AcademicDb> users = template.query(SELECT_ACADEMIC_BY_USERNAME, new Object[]{username}, ROW_MAPPER);
         if (users.isEmpty()) {
             return null;
         }

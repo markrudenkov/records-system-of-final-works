@@ -46,7 +46,7 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/student/{username}")
-    public Student getStudentFinalWorks(@PathVariable String username) {
+    public Student getStudentByUsername(@PathVariable String username) {
         return studentService.getStudentByUsername(username);
     }
 

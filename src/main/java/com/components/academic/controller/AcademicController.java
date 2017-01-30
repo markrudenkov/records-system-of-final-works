@@ -2,7 +2,6 @@ package com.components.academic.controller;
 
 import com.components.academic.model.Academic;
 import com.components.academic.service.AcademicService;
-import com.components.student.service.StudentService;
 import com.components.utils.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +43,9 @@ public class AcademicController extends BaseController {
         service.remove(id);
     }
 
-
+    @RequestMapping(method = RequestMethod.GET, path = "/api/academic/{username}")
+    public Academic getAcademicByUsername(@PathVariable String username) {
+        return service.getAcademicByUsername(username);
+    }
 
 }
