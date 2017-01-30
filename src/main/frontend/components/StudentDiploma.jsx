@@ -14,6 +14,10 @@ const { connect } = require('react-redux');
 
 const { getFullDiploma, rejectDiploma, uploadDiploma } = require('../actions/studentActions');
 
+
+const fetch = require('isomorphic-fetch');
+
+
 class StudentDiplomaList extends Component {
 
     constructor(props) {
@@ -48,7 +52,18 @@ class StudentDiplomaList extends Component {
     uploadDiploma() {
         let data = new FormData();
         data.append('file', this.refs.file.files[0]);
-        this.props.uploadDiploma(data, this.state.diploma.id);
+        const req = {
+            method: 'POST',
+            // headers: {
+            //      'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+            //      'Content-Disposition': 'form-data; name="file"; filename=""'
+            // },
+            body: data
+        };
+        fetch('api/student/finalwork/upload/'+1, req).then((res) =>{
+            console.log(res.status);
+        })
+        //this.props.uploadDiploma(data, this.state.diploma.id);
     }
 
     render() {

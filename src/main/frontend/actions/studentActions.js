@@ -100,6 +100,7 @@ function uploadDiploma(data, id) {
         method: 'POST',
         headers: {
              'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+             'Content-Disposition': 'form-data; name="file"; filename=""'
         },
         body: data
     };
