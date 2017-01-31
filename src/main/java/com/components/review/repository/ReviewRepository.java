@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReviewRepository extends BaseRepository<ReviewDB>{
+public class ReviewRepository extends BaseRepository<ReviewDB> {
 
     @Autowired
     private JdbcTemplate template;
@@ -31,8 +31,6 @@ public class ReviewRepository extends BaseRepository<ReviewDB>{
             "final_work_id", reviewDB.getFinalWorkId(),
             "reviewer_id", reviewDB.getReviewerId()
     );
-
-
 
     public ReviewRepository() {
         super(ROW_MAPPER, ROW_UNMAPPER, "reviews", "review_id");

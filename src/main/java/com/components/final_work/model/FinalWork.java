@@ -2,7 +2,6 @@ package com.components.final_work.model;
 
 
 public class FinalWork {
-
     private Long id;
     private String title;
     private String annotation;

@@ -3,14 +3,10 @@ package com.components.academic.service;
 import com.components.academic.model.Academic;
 import com.components.academic.repository.AcademicRepository;
 import com.components.academic.repository.model.AcademicDb;
-import com.components.student.model.Student;
-import com.components.user.model.User;
-import com.components.user.repository.UserDb;
 import com.components.utils.exception.DataNotFoundException;
 import com.components.utils.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +14,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class AcademicService {
-
 
     private BCryptPasswordEncoder encoder;
 
@@ -38,7 +32,7 @@ public class AcademicService {
     }
 
     @Transactional
-    public Academic createAcademic (Academic academic) throws ValidationException {
+    public Academic createAcademic(Academic academic) throws ValidationException {
         AcademicDb userByUsername = repository.getAcademicByUsername(academic.getUsername());
         if (userByUsername != null) {
             throw new ValidationException("username", "already exists");
@@ -81,7 +75,6 @@ public class AcademicService {
         repository.delete(id);
     }
 
-
     private static Academic mapToAcademic(AcademicDb db) {
         Academic api = new Academic();
         api.setId(db.getId());
@@ -107,5 +100,4 @@ public class AcademicService {
     private static AcademicDb mapToAcademicDb(Academic api) {
         return mapToAcademicDb(api.getId(), api);
     }
-
 }

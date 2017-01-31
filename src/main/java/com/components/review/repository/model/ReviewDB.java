@@ -2,8 +2,7 @@ package com.components.review.repository.model;
 
 import com.components.utils.repository.model.DbModel;
 
-
-public class ReviewDB extends DbModel{
+public class ReviewDB extends DbModel {
 
     private Long id;
     private String evaluation;

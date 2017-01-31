@@ -38,7 +38,7 @@ public class AcademicRepository extends BaseRepository<AcademicDb> {
             "academic_title", academicDb.getTitle()
     );
 
-    public AcademicRepository () {
+    public AcademicRepository() {
         super(ROW_MAPPER, ROW_UNMAPPER, "teachers", "teacher_id");
     }
 

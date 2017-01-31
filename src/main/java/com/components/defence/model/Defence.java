@@ -3,7 +3,6 @@ package com.components.defence.model;
 import org.joda.time.DateTime;
 
 public class Defence {
-
     private Long id;
     private String evaluation;
     private DateTime date;

@@ -1,7 +1,5 @@
 package com.components.review.service;
 
-
-import com.components.final_work.model.FinalWork;
 import com.components.final_work.repository.FinalWorkRepository;
 import com.components.final_work.repository.model.FinalWorkDb;
 import com.components.review.model.Review;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 public class ReviewService {
@@ -24,30 +21,27 @@ public class ReviewService {
     @Autowired
     FinalWorkRepository finalWorkRepository;
 
-
-
     @Transactional
     public Review createReview(Review review) throws ValidationException {
         ReviewDB reviewDB = repository.create(mapToReviewDb(review));
         FinalWorkDb finalWorkDb = finalWorkRepository.findOne(review.getFinalWorkId());
-        if(finalWorkDb.getPromotorId() == review.getReviewerId()){
-                finalWorkRepository.updatePromotorReviewID(reviewDB.getId(),finalWorkDb.getId());
-        }else if(finalWorkDb.getReviewerId() == review.getReviewerId()){
-                finalWorkRepository.updateReviewerReviewID(reviewDB.getId(),finalWorkDb.getId());
-        }else{
+        if (finalWorkDb.getPromotorId() == review.getReviewerId()) {
+            finalWorkRepository.updatePromotorReviewID(reviewDB.getId(), finalWorkDb.getId());
+        } else if (finalWorkDb.getReviewerId() == review.getReviewerId()) {
+            finalWorkRepository.updateReviewerReviewID(reviewDB.getId(), finalWorkDb.getId());
+        } else {
             throw new BusinessException("Reviev alredy exists or revier id is incorrect");
         }
         changeFinalWorkStatusToFORDefence(review.getFinalWorkId());
         return mapToReview(reviewDB);
     }
 
-    private void changeFinalWorkStatusToFORDefence(Long finalWorkId){
+    private void changeFinalWorkStatusToFORDefence(Long finalWorkId) {
         FinalWorkDb finalWorkDb = finalWorkRepository.findOne(finalWorkId);
-        if(finalWorkDb.getReviewerReviewId() != 0 && finalWorkDb.getPromotorReviewId() != 0){
+        if (finalWorkDb.getReviewerReviewId() != 0 && finalWorkDb.getPromotorReviewId() != 0) {
             finalWorkRepository.updateFinalWorkStatusForDefence(finalWorkId);
         }
     }
-
 
     private static Review mapToReview(ReviewDB db) {
         Review api = new Review();
@@ -72,6 +66,4 @@ public class ReviewService {
     private static ReviewDB mapToReviewDb(Review api) {
         return mapToReviewDb(api.getId(), api);
     }
-
-
 }

@@ -1,7 +1,5 @@
 package com.components.upload.controller;
 
-
-
 import com.components.upload.storage.StorageFileNotFoundException;
 import com.components.upload.storage.StorageService;
 import com.components.upload.storage.UploadService;
@@ -34,7 +32,7 @@ public class FileUploadController {
         Resource file = storageService.loadAsResource(filename);
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
+                /*.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")*/
                 .body(file);
     }
 

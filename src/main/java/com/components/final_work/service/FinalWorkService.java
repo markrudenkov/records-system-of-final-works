@@ -1,11 +1,9 @@
 package com.components.final_work.service;
 
-import com.components.academic.model.Academic;
 import com.components.academic.repository.AcademicRepository;
 import com.components.academic.repository.model.AcademicDb;
 import com.components.defence.model.Defence;
 import com.components.defence.repository.DefenceRepository;
-import com.components.defence.repository.model.DefenceDb;
 import com.components.defence.service.DefenceService;
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.model.FinalWorkStatus;
@@ -20,10 +18,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,17 +41,14 @@ public class FinalWorkService {
     @Autowired
     DefenceRepository defenceRepository;
 
-
-
-
     @Transactional
     public FinalWork updateFinalWorkStatusByStudent(Long studentId, FinalWork finalWork) {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
         if (EnumUtils.isValidEnum(FinalWorkStatus.StudentTrigeredStatuses.class, finalWork.getStatus())) {
             repository.updateFinalWorkStatus(finalWork.getId(), finalWork.getStatus().toString());
-            if(FinalWorkStatus.StudentTrigeredStatuses.RESERVED.toString().equals(finalWork.getStatus())){
+            if (FinalWorkStatus.StudentTrigeredStatuses.RESERVED.toString().equals(finalWork.getStatus())) {
                 studentRepository.updateStudentFinalWorkID(studentId, finalWork.getId());
-            }else{
+            } else {
                 studentRepository.updateStudentFinalWorkID(studentId, null);
             }
             finalWorkDb = repository.findOne(finalWork.getId());
@@ -68,7 +62,7 @@ public class FinalWorkService {
     public String getFinalWorksAndDefencesOfAcademic(Long id) {
         List<Defence> defences = defenceRepository.getDefencesByPromotorId(id).stream().map(DefenceService::mapToDefence).collect(Collectors.toList());
         List<JSONObject> defenceRelatedFinalWorks = new ArrayList<>();
-        for (Defence defence: defences) {
+        for (Defence defence : defences) {
             defenceRelatedFinalWorks.add(mapToJSONObject(defence));
         }
         List<JSONObject> finalWorks = repository.getFinalWorksRelatedToAcademic(id).stream().map(FinalWorkService::mapFinalWorkDbToJSONObject).collect(Collectors.toList());
@@ -77,16 +71,16 @@ public class FinalWorkService {
     }
 
 
-    private static JSONObject mapFinalWorkDbToJSONObject(FinalWorkDb db){
+    private static JSONObject mapFinalWorkDbToJSONObject(FinalWorkDb db) {
         return new JSONObject(db);
     }
 
 
     @Transactional(readOnly = true)
-    private  JSONObject mapToJSONObject (Defence defence){
+    private JSONObject mapToJSONObject(Defence defence) {
         FinalWork finalWorkDb = mapToFinalWork(repository.findOne(defence.getFinalWorkId()));
         JSONObject jsonObject = new JSONObject(finalWorkDb);
-        jsonObject.put("defence",defence);
+        jsonObject.put("defence", defence);
         return jsonObject;
     }
 
@@ -98,8 +92,8 @@ public class FinalWorkService {
         AcademicDb reviewer = academicRepository.findOne(finalWork.getReviewerId());
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("finalWork", new JSONObject(finalWork));
-        jsonObject.put("promotor",new JSONObject(promotor));
-        jsonObject.put("reviewer",new JSONObject(reviewer));
+        jsonObject.put("promotor", new JSONObject(promotor));
+        jsonObject.put("reviewer", new JSONObject(reviewer));
         return jsonObject.toString();
     }
 
@@ -172,7 +166,6 @@ public class FinalWorkService {
     private static FinalWorkDb mapToFinalWorkDb(FinalWork api) {
         return mapToFinalWorkDb(api.getId(), api);
     }
-
 
 
 }

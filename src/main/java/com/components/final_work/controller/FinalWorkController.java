@@ -2,13 +2,11 @@ package com.components.final_work.controller;
 
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.service.FinalWorkService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,12 +18,12 @@ public class FinalWorkController {
 
     // Teacher could create final work
     @RequestMapping(method = RequestMethod.POST, path = "/api/finalwork")
-    public FinalWork createFinalWork(@RequestBody  @Valid FinalWork finalWork) throws ValidationException {
+    public FinalWork createFinalWork(@RequestBody @Valid FinalWork finalWork) throws ValidationException {
         return service.createFinalWork(finalWork);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/api/finalwork/{id}")
-    public FinalWork  updateFinalWorkStatus(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
+    public FinalWork updateFinalWorkStatus(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
         return service.updateFinalWorkStatus(id, finalWork);
     }
 
@@ -45,7 +43,7 @@ public class FinalWorkController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/api/student/finalwork/{id}")  // Student id as param
-    public FinalWork  updateFinalWorkStatusByStudent(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
+    public FinalWork updateFinalWorkStatusByStudent(@PathVariable Long id, @Valid @RequestBody FinalWork finalWork) {
         return service.updateFinalWorkStatusByStudent(id, finalWork);
     }
 

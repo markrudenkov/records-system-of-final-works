@@ -30,7 +30,7 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
         return db;
     };
 
-    private static  final RowUnmapper<DefenceDb> ROW_UNMAPPER = defenceDb -> mapOf(
+    private static final RowUnmapper<DefenceDb> ROW_UNMAPPER = defenceDb -> mapOf(
             "defense_id", defenceDb.getId(),
             "evaluation", defenceDb.getEvaluation(),
             "date", new Timestamp(defenceDb.getDate().getMillis()),
@@ -44,7 +44,7 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
     }
 
     public List<DefenceDb> getDefencesByPromotorId(Long promotorId) {
-        List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_PROMOTOR_ID,new Object[]{promotorId}, ROW_MAPPER);
-        return  defenceDbList;
+        List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_PROMOTOR_ID, new Object[]{promotorId}, ROW_MAPPER);
+        return defenceDbList;
     }
 }

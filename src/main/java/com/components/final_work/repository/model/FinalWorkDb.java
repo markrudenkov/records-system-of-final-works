@@ -2,9 +2,7 @@ package com.components.final_work.repository.model;
 
 import com.components.utils.repository.model.DbModel;
 
-
 public class FinalWorkDb extends DbModel {
-
     private Long id;
     private String title;
     private String annotation;
@@ -14,7 +12,6 @@ public class FinalWorkDb extends DbModel {
     private Long ReviewerId;
     private Long PromotorId;
     private String filePath;
-
 
     @Override
     public Long getId() {

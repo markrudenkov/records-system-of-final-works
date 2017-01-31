@@ -4,7 +4,6 @@ import com.components.utils.repository.model.DbModel;
 import org.joda.time.DateTime;
 
 public class DefenceDb extends DbModel {
-
     private Long id;
     private String evaluation;
     private DateTime date;

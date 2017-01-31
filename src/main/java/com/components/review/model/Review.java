@@ -1,6 +1,5 @@
 package com.components.review.model;
 
-
 public class Review {
 
     private Long id;

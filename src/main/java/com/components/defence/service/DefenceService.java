@@ -8,16 +8,11 @@ import java.awt.*;
 
 @Service
 public class DefenceService {
-
-
-
-
     public Defence createDefence(Defence defence) {
-
         return null;
     }
 
-    public   static Defence mapToDefence(DefenceDb db){
+    public static Defence mapToDefence(DefenceDb db) {
         Defence api = new Defence();
         api.setId(db.getId());
         api.setDate(db.getDate());
@@ -26,7 +21,8 @@ public class DefenceService {
         api.setPromotorId(db.getPromotorId());
         return api;
     }
-    public static DefenceDb mapToDefenceDb(Long id, Defence api){
+
+    public static DefenceDb mapToDefenceDb(Long id, Defence api) {
         DefenceDb db = new DefenceDb();
         db.setId(id);
         db.setDate(api.getDate());
@@ -37,6 +33,8 @@ public class DefenceService {
         return db;
     }
 
-    private static DefenceDb mapToDefenceDb(Defence api){return mapToDefenceDb(api.getId(),api);}
+    private static DefenceDb mapToDefenceDb(Defence api) {
+        return mapToDefenceDb(api.getId(), api);
+    }
 
 }
