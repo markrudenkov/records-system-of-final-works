@@ -29,9 +29,11 @@ function apiReq(url, req, successCallback, errorCalback) {
         const state = getState();
         const { token, token_type } = state.session.user;
 
-        req.headers['Authorization'] = token_type+' '+token;
+        if (req.headers === undefined) {
+            req.headers = {};
+        }
+        req.headers.Authorization = token_type+' '+token;
 
-        console.log(req);
         dispatch(fetchReq(url, req, successCallback, errorCalback));
     }
 }

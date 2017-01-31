@@ -1,5 +1,5 @@
 const { showNotification } = require('notificationActions');
-const { apiReq } = require('fetchActions');
+const { apiReq, fetchReq } = require('fetchActions');
 
 function receiveDiplomas(data) {
     const action = () => {
@@ -98,10 +98,10 @@ function uploadDiploma(data, id) {
     const req = {
         credentials: 'include',
         method: 'POST',
-        headers: {
-             'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
-             'Content-Disposition': 'form-data; name="file"; filename=""'
-        },
+        // headers: {
+        //      'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+        //      'Content-Disposition': 'form-data; name="file"; filename=""'
+        // },
         body: data
     };
     return (dispatch) => {

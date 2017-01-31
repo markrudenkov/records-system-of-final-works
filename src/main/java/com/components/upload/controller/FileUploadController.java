@@ -45,7 +45,7 @@ public class FileUploadController {
         storageService.store(file);
         uploadService.updateFilePath(id,file.getOriginalFilename());
         file.getOriginalFilename();
-        return "Uploaded";
+        return "{\"Message\":\"Uploaded\"}";
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

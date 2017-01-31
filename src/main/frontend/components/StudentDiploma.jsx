@@ -15,23 +15,21 @@ const { connect } = require('react-redux');
 const { getFullDiploma, rejectDiploma, uploadDiploma } = require('../actions/studentActions');
 
 
-const fetch = require('isomorphic-fetch');
-
-
 class StudentDiplomaList extends Component {
 
     constructor(props) {
         super(props);
         this.discardDiploma = this.discardDiploma.bind(this);
         this.uploadDiploma = this.uploadDiploma.bind(this);
-        this.state = {diploma: {}, recenzent: {}, promotor: {}};
+        this.state = {diploma: {}, recenzent: {}, promotor: {}, showDiscard: true};
     }
 
     componentWillMount() {
         const { finalWorkID } = this.props.studentFiles;
         if (finalWorkID != 0) {
             this.props.getFullDiploma(finalWorkID, (data) => {
-                this.setState({diploma: data.finalWork, recenzent: data.reviewer, promotor: data.promotor});
+                let showDiscard = data.finalWork.filePath ? false : true;
+                this.setState({diploma: data.finalWork, recenzent: data.reviewer, promotor: data.promotor, showDiscard: showDiscard});
                 return {
                     type: 'NOTYPE'
                 };
@@ -52,30 +50,24 @@ class StudentDiplomaList extends Component {
     uploadDiploma() {
         let data = new FormData();
         data.append('file', this.refs.file.files[0]);
-        const req = {
-            method: 'POST',
-            // headers: {
-            //      'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
-            //      'Content-Disposition': 'form-data; name="file"; filename=""'
-            // },
-            body: data
-        };
-        fetch('api/student/finalwork/upload/'+1, req).then((res) =>{
-            console.log(res.status);
-        })
-        //this.props.uploadDiploma(data, this.state.diploma.id);
+        this.props.uploadDiploma(data, this.state.diploma.id);
+
+        this.setState({diploma: {filePath: this.refs.file.files[0].name}, showDiscard: false});
     }
 
     render() {
-        const { title, annotation } = this.state.diploma;
+        const { title, annotation, filePath } = this.state.diploma;
         const { finalWorkID } = this.props.studentFiles;
 
-        //if not chosen show nothing
+        let discard = this.state.showDiscard ?
+            <button className={styleButtons.buttonDanger} onClick={this.discardDiploma}>Give up diploma work</button>
+            : <a href={`http://localhost:8080/files/${filePath}`}>{filePath}</a>
+
         let diploma = finalWorkID != 0 ? (
             <div>
                 <DiplomaInfo title={title} annotation={annotation} promotor={this.state.promotor} recenzent={this.state.recenzent} />
                 <div className={style.center} >
-                    <button className={styleButtons.buttonDanger} onClick={this.discardDiploma}>Give up diploma work</button>
+                    { discard }
                     <div className={style.row} >
                         <input type='file' ref='file' title='upload file' />
                         <button className={styleButtons.buttonSuccess} onClick={this.uploadDiploma} >Upload file</button>
