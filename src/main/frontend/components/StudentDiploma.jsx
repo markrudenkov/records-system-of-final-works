@@ -61,7 +61,7 @@ class StudentDiplomaList extends Component {
 
         let discard = this.state.showDiscard ?
             <button className={styleButtons.buttonDanger} onClick={this.discardDiploma}>Give up diploma work</button>
-            : <a href={`http://localhost:8080/files/${filePath}`}>{filePath}</a>
+            : <a target='_blank' href={`http://localhost:8080/files/${filePath}`}>{filePath}</a>
 
         let diploma = finalWorkID != 0 ? (
             <div>
