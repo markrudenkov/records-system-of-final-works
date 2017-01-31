@@ -621,3 +621,4 @@ databaseChangeLog:
                 name: promotor_id
                 value: 1
             tableName: work_defenses
+

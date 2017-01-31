@@ -37,9 +37,17 @@ public class ReviewService {
         }else{
             throw new BusinessException("Reviev alredy exists or revier id is incorrect");
         }
-
+        changeFinalWorkStatusToFORDefence(review.getFinalWorkId());
         return mapToReview(reviewDB);
     }
+
+    private void changeFinalWorkStatusToFORDefence(Long finalWorkId){
+        FinalWorkDb finalWorkDb = finalWorkRepository.findOne(finalWorkId);
+        if(finalWorkDb.getReviewerReviewId() != 0 && finalWorkDb.getPromotorReviewId() != 0){
+            finalWorkRepository.updateFinalWorkStatusForDefence(finalWorkId);
+        }
+    }
+
 
     private static Review mapToReview(ReviewDB db) {
         Review api = new Review();
