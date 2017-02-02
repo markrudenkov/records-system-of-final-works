@@ -6,7 +6,8 @@ const initialState = {
     token: '',
     refresh_token: '',
     token_type: '',
-    studentFiles: {}
+    studentFiles: {},
+    academicFiles: {}
 };
 
 
@@ -42,6 +43,9 @@ function userReducer(state=initialState, action) {
         break;
         case 'REICEIVE_STUDENT_INFO':
             state = Object.assign({}, state, { studentFiles: action.data });
+        break;
+        case 'REICEIVE_ACADEMIC_INFO':
+            state = Object.assign({}, state, { academicFiles: action.data });
         break;
         case 'LOGOUT':
             state = Object.assign({}, initialState);

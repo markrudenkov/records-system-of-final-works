@@ -7,6 +7,7 @@ const style = require('../scss/main.scss');
 const styleButtons = require('../scss/_buttons.scss');
 
 const { getStudent } = require('../actions/studentActions');
+const { getAcademic } = require('../actions/academicActions');
 
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
@@ -24,6 +25,8 @@ class HomePage extends Component {
     loggedIn() {
         if (this.props.permission === 'STUDENT') {
             this.props.getStudent(this.props.username);
+        } else if (this.props.permission === 'ACADEMIC') {
+            this.props.getAcademic(this.props.username);
         }
         return (
             <div className={style.row}>
@@ -61,7 +64,8 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        getStudent: getStudent
+        getStudent: getStudent,
+        getAcademic: getAcademic
     }, dispatch);
 }
 
