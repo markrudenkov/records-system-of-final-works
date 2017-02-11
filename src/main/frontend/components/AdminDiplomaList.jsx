@@ -27,8 +27,11 @@ class AdminDiplomaList extends Component {
                 <tbody>
                     <tr>
                         <th>Title</th>
+                        <th>Student</th>
+                        <th>Promotor</th>
+                        <th>Reviewer</th>
                         <th>Status</th>
-                        <th>Option</th>
+                        <th>Options</th>
                     </tr>
                     {diplomas.map((dip) => {
                         let buttons;
@@ -40,9 +43,14 @@ class AdminDiplomaList extends Component {
                         } else {
                             buttons = <td>(no options)</td>
                         }
+                        const { promotor, reviever, student } = dip;
+                        let studentName = student ? `${student.name} ${student.surname}` : '';
                         return (
                             <tr key={dip.id}>
                                 <td>{dip.title}</td>
+                                <td>{studentName}</td>
+                                <td>{`${promotor.title} ${promotor.name} ${promotor.surname}`}</td>
+                                <td>{`${reviever.title} ${reviever.name} ${reviever.surname}`}</td>
                                 <td>{dip.status}</td>
                                 {buttons}
                             </tr>

@@ -49,10 +49,10 @@ function writeRecension(data) {
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
         },
-        body: data
+        body: JSON.stringify(data)
     };
     return (dispatch) => {
-        dispatch(apiReq('api/academic/review/', req, receiveDiplomas));
+        dispatch(apiReq('api/academic/review/', req));
         dispatch(changeRecensionState(data));
     };
 }
