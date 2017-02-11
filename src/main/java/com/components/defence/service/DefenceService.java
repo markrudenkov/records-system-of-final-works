@@ -3,16 +3,19 @@ package com.components.defence.service;
 import com.components.defence.model.Defence;
 import com.components.defence.repository.DefenceRepository;
 import com.components.defence.repository.model.DefenceDb;
+import com.components.final_work.model.FinalWorkStatus;
+import com.components.final_work.repository.FinalWorkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.awt.*;
 
 @Service
 public class DefenceService {
 
     @Autowired
     DefenceRepository defenceRepository;
+
+    @Autowired
+    FinalWorkRepository finalWorkRepository;
 
     public Defence createDefence(Defence defence) {
         DefenceDb defenceDb = defenceRepository.create(mapToDefenceDb(defence));
@@ -44,8 +47,14 @@ public class DefenceService {
         return mapToDefenceDb(api.getId(), api);
     }
 
-    public Defence updateDefenceEvluation(Defence defence) {
-        DefenceDb defenceDb = defenceRepository.create(mapToDefenceDb(defence));
-        return mapToDefence(defenceDb);
+    public String updateDefenceEvluation(Defence defence) {
+        defenceRepository.updateDefenceEvluation(defence.getId(), defence.getEvaluation());
+        Defence updatedDefence = mapToDefence(defenceRepository.findOne(defence.getId()));
+        if (updatedDefence.getEvaluation().intValue() < 3) {
+            finalWorkRepository.updateFinalWorkStatus(updatedDefence.getId(), FinalWorkStatus.Statuses.NOT_DEFENDED.toString());
+        } else {
+            finalWorkRepository.updateFinalWorkStatus(updatedDefence.getId(), FinalWorkStatus.Statuses.DEFENDED.toString());
+        }
+        return "{'message' : 'defence evaluation updated'}";
     }
 }

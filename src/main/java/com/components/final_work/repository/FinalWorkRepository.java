@@ -20,6 +20,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
     public static final String SELECT_FINAL_WORKS_FOR_REVIEW = "SELECT * FROM final_works WHERE reviewer_id = ? AND status = 'FOR_RECENSION' ";
     public static final String SELECT_RESERVED_FINAL_WORKS_CREATED_BY_PROMOTOR = "SELECT * FROM final_works WHERE promotor_id = ? ";
     public static final String UPDATE_FILE_PATH = "UPDATE final_works  SET file = ?, status = 'FOR_RECENSION' WHERE final_work_id = ?";
+    public static final String UPDATE_FINAL_WORK_STATUS = "UPDATE final_works  SET  status = ? WHERE final_work_id = ?";
     public static final String UPDATE_FINAL_WORK_STATUS_FOR_DEFENCE = "UPDATE final_works  SET  status = 'FOR_DEFENCE' WHERE final_work_id = ?";
     public static final String SELECT_FINAL_WORKS_RELATED_TO_ACADEMIC = "SELECT * FROM final_works" +
             " LEFT JOIN work_defenses ON final_works.final_work_id=work_defenses.final_work_id" +
@@ -97,5 +98,9 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
 
     public void updateFinalWorkStatusForDefence(Long finalWorkID) {
         template.update(UPDATE_FINAL_WORK_STATUS_FOR_DEFENCE, new Object[]{finalWorkID});
+    }
+
+    public void updateFinalWorkStatuse(Long finalWorkID, String status) {
+        template.update(UPDATE_FINAL_WORK_STATUS, new Object[]{status,finalWorkID});
     }
 }

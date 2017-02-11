@@ -2,9 +2,11 @@ package com.components.defence.model;
 
 import org.joda.time.DateTime;
 
+import java.math.BigDecimal;
+
 public class Defence {
     private Long id;
-    private String evaluation;
+    private BigDecimal evaluation;
     private DateTime date;
     private Long finalWorkId;
     private Long chairmanId;
@@ -17,11 +19,11 @@ public class Defence {
         this.id = id;
     }
 
-    public String getEvaluation() {
+    public BigDecimal getEvaluation() {
         return evaluation;
     }
 
-    public void setEvaluation(String evaluation) {
+    public void setEvaluation(BigDecimal evaluation) {
         this.evaluation = evaluation;
     }
 
