@@ -1,3 +1,4 @@
+const { receiveDiplomas } = require('./adminActions');
 const { showNotification } = require('notificationActions');
 const { apiReq } = require('fetchActions');
 
@@ -14,6 +15,19 @@ function getAcademic(username) {
     };
 }
 
+function getDiplomas(academicId) {
+    const req = {
+        credentials: 'include',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+    };
+    return (dispatch) => {
+        dispatch(apiReq('api/academic/finalworks/'+academicId, req, receiveDiplomas));
+    };
+}
+
 function receiveAcademic(data) {
     return {
         type: 'REICEIVE_ACADEMIC_INFO',
@@ -23,5 +37,6 @@ function receiveAcademic(data) {
 
 
 module.exports = {
-    getAcademic
+    getAcademic,
+    getDiplomas,
 };

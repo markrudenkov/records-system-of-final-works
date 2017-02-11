@@ -16,6 +16,7 @@ const NotFound = require('../components/NotFound');
 const RegisterUser = require('../components/RegisterUser');
 const RegisterDiploma = require('../components/RegisterDiploma');
 const AdminDiplomaList = require('../components/AdminDiplomaList');
+const AcademicDiplomaList = require('../components/AcademicDiplomaList');
 const StudentDiplomaList = require('../components/StudentDiplomaList');
 const StudentDiploma = require('../components/StudentDiploma');
 const UserList = require('../components/UserList');
@@ -37,7 +38,7 @@ ReactDOM.render(
                 <IndexRoute component={HomePage} />
                 <Route path='login' component={Login} />
                 <Route path='about' component={About} />
-                <Route path='diploma_list' component={StudentDiplomaList} />
+                <Route path='diploma_list' component={AcademicDiplomaList} />
                 <Route path='my_diploma' component={StudentDiploma} />
                 <Route path='admin' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'ADMIN')}}>
                     <Route path='diploma_list' component={AdminDiplomaList} />
@@ -50,7 +51,7 @@ ReactDOM.render(
                 </Route>
                 <Route path='academic' onEnter={(nextState, pushState)=>{checkPermission(nextState, pushState, 'ACADEMIC')}}>
                     <Route path='register_diploma' component={RegisterDiploma} />
-                    <Route path='diploma_list' component={Login} />
+                    <Route path='diploma_list' component={AcademicDiplomaList} />
                 </Route>
                 <Route path='logout' onEnter={() => store.dispatch(logout())} />
                 <Route path='*' component={NotFound} />

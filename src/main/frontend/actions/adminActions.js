@@ -104,5 +104,6 @@ module.exports = {
     registerStudent,
     confirmDiploma,
     declineDiploma,
-    getDiplomas
+    getDiplomas,
+    receiveDiplomas
 };

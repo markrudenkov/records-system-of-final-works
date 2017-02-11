@@ -40,6 +40,10 @@ const academicLinks = defaultLinks.concat([{
         url: 'academic/register_diploma'
     },
     {
+        title: 'Diploma list',
+        url: 'academic/diploma_list'
+    },
+    {
         title: 'Logout',
         url: 'logout',
         alignRight: true
