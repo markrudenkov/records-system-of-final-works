@@ -1,15 +1,22 @@
 package com.components.defence.service;
 
 import com.components.defence.model.Defence;
+import com.components.defence.repository.DefenceRepository;
 import com.components.defence.repository.model.DefenceDb;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
 
 @Service
 public class DefenceService {
+
+    @Autowired
+    DefenceRepository defenceRepository;
+
     public Defence createDefence(Defence defence) {
-        return null;
+        DefenceDb defenceDb = defenceRepository.create(mapToDefenceDb(defence));
+        return mapToDefence(defenceDb);
     }
 
     public static Defence mapToDefence(DefenceDb db) {

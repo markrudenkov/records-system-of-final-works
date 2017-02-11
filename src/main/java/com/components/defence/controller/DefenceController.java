@@ -17,8 +17,10 @@ public class DefenceController {
     @Autowired
     DefenceService service;
 
-    @RequestMapping(method = RequestMethod.POST, path = "/api/defence")
+    @RequestMapping(method = RequestMethod.POST, path = "/api/admin/defence")
     public Defence createDefence(@RequestBody @Valid Defence defence) throws ValidationException {
         return service.createDefence(defence);
     }
+
+   
 }
