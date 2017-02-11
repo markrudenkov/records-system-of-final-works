@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
     private static final RowMapper<DefenceDb> ROW_MAPPER = (rs, rowNum) -> {
         DefenceDb db = new DefenceDb();
         db.setId(rs.getLong("defense_id"));
-        db.setEvaluation(rs.getString("evaluation"));
+        db.setEvaluation(rs.getBigDecimal("evaluation"));
         db.setDate(new DateTime(rs.getDate("date")));
         db.setFinalWorkId(rs.getLong("final_work_id"));
         db.setChairmanId(rs.getLong("chairman_id"));
@@ -49,7 +50,7 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
         return defenceDbList;
     }
 
-    public void updateDefenceEvluation(Long id, String evaluation) {
+    public void updateDefenceEvluation(Long id, BigDecimal evaluation) {
         template.update(UPDATE_DEFENCE_EVALUATION, new Object[]{evaluation, id});
     }
 }
