@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public class DefenceRepository extends BaseRepository<DefenceDb> {
 
-    public static final String SELECT_DEFENCES_BY_PROMOTOR_ID = "SELECT * FROM work_defenses WHERE promotor_id = ?";
+    public static final String SELECT_DEFENCES_BY_CHAIRMAN_ID = "SELECT * FROM work_defenses WHERE chairman_id = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -26,7 +26,7 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
         db.setEvaluation(rs.getString("evaluation"));
         db.setDate(new DateTime(rs.getDate("date")));
         db.setFinalWorkId(rs.getLong("final_work_id"));
-        db.setPromotorId(rs.getLong("promotor_id"));
+        db.setChairmanId(rs.getLong("chairman_id"));
         return db;
     };
 
@@ -35,7 +35,7 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
             "evaluation", defenceDb.getEvaluation(),
             "date", new Timestamp(defenceDb.getDate().getMillis()),
             "final_work_id", defenceDb.getFinalWorkId(),
-            "promotor_id", defenceDb.getPromotorId()
+            "chairman_id", defenceDb.getChairmanId()
     );
 
 
@@ -43,8 +43,8 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
         super(ROW_MAPPER, ROW_UNMAPPER, "work_defenses", "defense_id");
     }
 
-    public List<DefenceDb> getDefencesByPromotorId(Long promotorId) {
-        List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_PROMOTOR_ID,new Object[]{promotorId}, ROW_MAPPER);
+    public List<DefenceDb> getDefencesByChairmanID(Long chairmanId) {
+        List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_CHAIRMAN_ID,new Object[]{chairmanId}, ROW_MAPPER);
         return  defenceDbList;
     }
 }

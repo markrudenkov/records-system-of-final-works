@@ -8,7 +8,7 @@ public class Defence {
     private String evaluation;
     private DateTime date;
     private Long finalWorkId;
-    private Long promotorId;
+    private Long chairmanId;
 
     public Long getId() {
         return id;
@@ -42,12 +42,12 @@ public class Defence {
         this.finalWorkId = finalWorkId;
     }
 
-    public Long getPromotorId() {
-        return promotorId;
+    public Long getChairmanId() {
+        return chairmanId;
     }
 
-    public void setPromotorId(Long promotorId) {
-        this.promotorId = promotorId;
+    public void setChairmanId(Long chairmanId) {
+        this.chairmanId = chairmanId;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Defence {
                 ", evaluation='" + evaluation + '\'' +
                 ", date=" + date +
                 ", finalWorkId=" + finalWorkId +
-                ", promotorId=" + promotorId +
+                ", chairmanId=" + chairmanId +
                 '}';
     }
 }

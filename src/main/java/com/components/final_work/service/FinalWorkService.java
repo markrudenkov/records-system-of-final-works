@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,9 +55,9 @@ public class FinalWorkService {
         FinalWorkDb finalWorkDb = new FinalWorkDb();
         if (EnumUtils.isValidEnum(FinalWorkStatus.StudentTrigeredStatuses.class, finalWork.getStatus())) {
             repository.updateFinalWorkStatus(finalWork.getId(), finalWork.getStatus().toString());
-            if(FinalWorkStatus.StudentTrigeredStatuses.RESERVED.toString().equals(finalWork.getStatus())){
+            if (FinalWorkStatus.StudentTrigeredStatuses.RESERVED.toString().equals(finalWork.getStatus())) {
                 studentRepository.updateStudentFinalWorkID(studentId, finalWork.getId());
-            }else{
+            } else {
                 studentRepository.updateStudentFinalWorkID(studentId, null);
             }
             finalWorkDb = repository.findOne(finalWork.getId());
@@ -68,9 +69,9 @@ public class FinalWorkService {
 
     @Transactional(readOnly = true)
     public String getFinalWorksAndDefencesOfAcademic(Long id) throws JsonProcessingException {
-        List<Defence> defences = defenceRepository.getDefencesByPromotorId(id).stream().map(DefenceService::mapToDefence).collect(Collectors.toList());
+        List<Defence> defences = defenceRepository.getDefencesByChairmanID(id).stream().map(DefenceService::mapToDefence).collect(Collectors.toList());
         List<JSONObject> defenceRelatedFinalWorks = new ArrayList<>();
-        for (Defence defence: defences) {
+        for (Defence defence : defences) {
             defenceRelatedFinalWorks.add(mapToJSONObject(defence));
         }
         List<JSONObject> finalWorks = repository.getFinalWorksRelatedToAcademic(id).stream().map(FinalWorkService::mapFinalWorkDbToJSONObject).collect(Collectors.toList());
@@ -78,24 +79,22 @@ public class FinalWorkService {
         return defenceRelatedFinalWorks.toString();
     }
 
-
-    private static JSONObject mapFinalWorkDbToJSONObject(FinalWorkDb db){
+    private static JSONObject mapFinalWorkDbToJSONObject(FinalWorkDb db) {
         return new JSONObject(db);
     }
 
-
-    @Transactional (readOnly = true)
-    public  JSONObject mapToJSONObject (Defence defence) throws JsonProcessingException {
+    @Transactional(readOnly = true)
+    private JSONObject mapToJSONObject(Defence defence) throws JsonProcessingException {
         FinalWork finalWork = mapToFinalWork(repository.findOne(defence.getFinalWorkId()));
         JSONObject finalWorkJSONObject = new JSONObject(finalWork);
         JSONObject defenceJsonObject = new JSONObject();
-        defenceJsonObject.put("id",defence.getId());
-        defenceJsonObject.put("evaluation",defence.getEvaluation());
-        defenceJsonObject.put("date",defence.getDate());
-        defenceJsonObject.put("finalWorkId",defence.getFinalWorkId());
-        defenceJsonObject.put("promotorId",defence.getPromotorId());
+        defenceJsonObject.put("id", defence.getId());
+        defenceJsonObject.put("evaluation", defence.getEvaluation());
+        defenceJsonObject.put("date", defence.getDate());
+        defenceJsonObject.put("finalWorkId", defence.getFinalWorkId());
+        defenceJsonObject.put("chairmanId", defence.getChairmanId());
         JSONArray arrayElementOneArray = new JSONArray();
-        finalWorkJSONObject.put("defence",arrayElementOneArray.put(defenceJsonObject));
+        finalWorkJSONObject.put("defence", arrayElementOneArray.put(defenceJsonObject));
         return finalWorkJSONObject;
     }
 
@@ -107,8 +106,8 @@ public class FinalWorkService {
         AcademicDb reviewer = academicRepository.findOne(finalWork.getReviewerId());
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("finalWork", new JSONObject(finalWork));
-        jsonObject.put("promotor",new JSONObject(promotor));
-        jsonObject.put("reviewer",new JSONObject(reviewer));
+        jsonObject.put("promotor", new JSONObject(promotor));
+        jsonObject.put("reviewer", new JSONObject(reviewer));
         return jsonObject.toString();
     }
 
@@ -183,7 +182,6 @@ public class FinalWorkService {
     private static FinalWorkDb mapToFinalWorkDb(FinalWork api) {
         return mapToFinalWorkDb(api.getId(), api);
     }
-
 
 
 }
