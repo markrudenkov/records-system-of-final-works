@@ -4,7 +4,7 @@ const React = require('react');
 const {Component, PropTypes} = React;
 
 const Modal = require('Modal');
-const DiplomaInfo = require('DiplomaInfo');
+const DynamicForm = require('DynamicForm');
 
 const style = require('../scss/main.scss');
 const styleButtons = require('../scss/_buttons.scss');
@@ -13,17 +13,17 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { getDiplomas } = require('../actions/academicActions');
+const { getDiplomas, writeRecension } = require('../actions/academicActions');
 
 class AcademicDiplomaList extends Component {
 
     constructor(props) {
         super(props);
-        this.showModal = this.showModal.bind(this);
+        this.sendRecension = this.sendRecension.bind(this);
         this.buttonMode = this.buttonMode.bind(this);
         this.writeRecension = this.writeRecension.bind(this);
         this.writeDefenceMark = this.writeDefenceMark.bind(this);
-        this.state = {showModal: false};
+        this.state = {showModal: false, currentDiploma: {}, modalContent: null};
     }
 
     componentWillMount() {
@@ -31,28 +31,59 @@ class AcademicDiplomaList extends Component {
     }
 
     buttonMode(diploma) {
-        if (diploma.status === 'FOR_RECENSION') {
+        const { id } = this.props.academicFiles;
+
+        if (diploma.status === 'FOR_RECENSION' && ((diploma.promotorId === id && diploma.promotorReviewId === 0) || (diploma.reviewerId === id && diploma.reviewerReviewId === 0))) {
             return <button className={styleButtons.buttonPrimary} onClick={() => {this.writeRecension(diploma)}}>Write recension</button>
         } else if (diploma.status === 'FOR_DEFENCE') {
             return <button className={styleButtons.buttonPrimary} onClick={() => {this.writeDefenceMark(diploma)}}>Write defense mark</button>
+        } else {
+            return <span>(no options)</span>
         }
     }
 
     writeRecension(diploma) {
-        console.log('Write recension');
+        //modalContent
+        let formData = [{
+                type: 'input',
+                props: {
+                    type: 'text',
+                    placeholder: 'Enter evaluation mark',
+                    ref: 'evaluation'
+                },
+                label: 'Mark',
+                validate: (text) => {
+                    return '';
+                }
+            },
+            {
+                type: 'textarea',
+                props: {
+                    type: 'text',
+                    placeholder: 'Enter Recension',
+                    ref: 'description'
+                },
+                label: 'Recension',
+                validate: (text) => {
+                    if (text.length < 5) {
+                        return 'recension is too short';
+                    } else return '';
+                }
+        }];
+        let content = <DynamicForm formData={formData} buttonLabel='Save recension' legend='Write recension' onClick={this.sendRecension} />;
+        //set diploma to state
+        this.setState({currentDiploma: diploma, showModal: true, modalContent: content});
+    }
+    sendRecension(recension) {
+        const { id } = this.props.academicFiles;
+        const { currentDiploma } = this.state;
+        recension.finalWorkId = currentDiploma.id;
+        recension.reviewerId = id;
+        this.props.writeRecension(recension);
+        this.setState({showModal: false});
     }
     writeDefenceMark(diploma) {
         console.log('Write defense mark');
-    }
-
-    showModal(diploma) {
-        // const { academics } = this.props;
-        // this.props.getFullDiploma(diploma.id, (data) => {
-        //     this.setState({showModal: true, diploma: data.finalWork, recenzent: data.reviewer, promotor: data.promotor});
-        //     return {
-        //         type: 'NOTYPE'
-        //     };
-        // });
     }
 
     render() {
@@ -66,7 +97,7 @@ class AcademicDiplomaList extends Component {
                         <th>Title</th>
                         <th>Status</th>
                         <th>Link</th>
-                        <th>Option</th>
+                        <th>Options</th>
                     </tr>
                     {diplomas.map((dip) => {
                         return (
@@ -81,10 +112,10 @@ class AcademicDiplomaList extends Component {
                 </tbody>
                 </table>
                 <Modal show={this.state.showModal} onHide={()=>{this.setState({showModal: false})}} >
+                    {this.state.modalContent}
                 </Modal>
             </div>
         );
-                    //<DiplomaInfo title={title} annotation={annotation} promotor={this.state.promotor} recenzent={this.state.recenzent} />
     }
 }
 
@@ -99,6 +130,7 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getDiplomas: getDiplomas,
+        writeRecension: writeRecension
     }, dispatch);
 }
 

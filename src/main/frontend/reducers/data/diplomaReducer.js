@@ -12,6 +12,16 @@ function diplomaReducer(state=initialState, action) {
                 }
             }
         break;
+        case 'RECENSION_SENT':
+            state = Object.assign([], state);
+            for (var i = 0; i < state.length; i++) {
+                if (state[i].id == action.data.finalWorkId) {
+                    state[i].promotorReviewId = 'xxx';
+                    state[i].reviewerReviewId = 'xxx';
+                    break;
+                }
+            }
+        break;
         case 'RECEIVE_DIPLOMAS':
             state = Object.assign([], initialState, action.data);
         break;
