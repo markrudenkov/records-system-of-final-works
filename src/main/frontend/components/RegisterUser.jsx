@@ -28,7 +28,7 @@ class RegisterUser extends React.Component {
         if (this.state.isStudentOn) {
             this.props.registerStudent(data);
         } else {
-            this.props.registerAcademic(data)
+            this.props.registerAcademic(data);
         }
     }
 

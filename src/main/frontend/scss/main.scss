@@ -13,4 +13,21 @@
     .slim {
         max-width: 800px;
     }
+    .table {
+        margin-left: 40px;
+        border-collapse: collapse;
+        width: 100%;
+
+        th, td {
+            flex-grow: 1;
+            flex-direction: column;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover{background-color:#f5f5f5}
+    }
+
+
 }

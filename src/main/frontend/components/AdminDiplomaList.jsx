@@ -23,25 +23,33 @@ class AdminDiplomaList extends Component {
         return (
             <div className={style.center}>
                 <h2>Diploma list</h2>
-                {diplomas.map((dip) => {
-                    let buttons = <span />;
-                    if (dip.status === 'REGISTERED') {
-                        buttons = ( <div>
-                            <button className={`${styleButtons.buttonSuccess} ${styleListItem.editButton}`} onClick={() => {this.props.confirmDiploma(dip.id)}}>Confirm</button>
-                            <button className={styleButtons.buttonDanger} onClick={() => {this.props.declineDiploma(dip.id)}}>Decline</button>
-                        </div>);
-                    } else {
-                        buttons = <span className={styleListItem.itemText}></span>
-                    }
-                    return (
-                        <div key={dip.id} className={styleListItem.wrapper}>
-                            <p className={styleListItem.itemText}>{dip.id}</p>
-                            <p className={styleListItem.itemText}>{dip.title}</p>
-                            <p className={styleListItem.itemText}>{dip.status}</p>
-                            {buttons}
-                        </div>
-                    )
-                })}
+                <table className={style.table}>
+                <tbody>
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Option</th>
+                    </tr>
+                    {diplomas.map((dip) => {
+                        let buttons;
+                        if (dip.status === 'REGISTERED') {
+                            buttons = ( <td>
+                                <button className={`${styleButtons.buttonSuccess} ${styleListItem.editButton}`} onClick={() => {this.props.confirmDiploma(dip.id)}}>Confirm</button>
+                                <button className={styleButtons.buttonDanger} onClick={() => {this.props.declineDiploma(dip.id)}}>Decline</button>
+                            </td>);
+                        } else {
+                            buttons = <td className={styleListItem.itemText}></td>
+                        }
+                        return (
+                            <tr key={dip.id}>
+                                <td>{dip.title}</td>
+                                <td>{dip.status}</td>
+                                {buttons}
+                            </tr>
+                        )
+                    })}
+                </tbody>
+                </table>
             </div>
         );
     }

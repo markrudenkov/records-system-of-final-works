@@ -42,30 +42,29 @@ class UserListItem extends Component {
 
         if (this.state.showForm) {
             return (
-                <div className={styleListItem.formWrapper}>
+
+                    <div className={style.center}>
                     <DynamicListForm user={user} formData={userForm} legend={`Edit ${user.name} ${user.surname}`} buttonLabel={'Save'} onClick={this.saveClick} cancelClick={this.switchMode} />
-                </div>
+                    </div>
+
             );
         } else {
             return (
-                <div className={styleListItem.wrapper}>
-                    <p className={styleListItem.itemText}>{user.id}</p>
-                    <p className={styleListItem.itemText}>{user.username}</p>
-                    <p className={styleListItem.itemText}>{user.name}</p>
-                    <p className={styleListItem.itemText}>{user.surname}</p>
-                    <button className={`${styleButtons.buttonPrimary} ${styleListItem.editButton}`} onClick={this.switchMode}>Edit</button>
-                    <button className={styleButtons.buttonDanger} onClick={this.deleteClick}>Delete</button>
-                </div>
+                <tr>
+                    <td>{user.username}</td>
+                    <td>{user.name}</td>
+                    <td>{user.surname}</td>
+                    <td>
+                        <button className={`${styleButtons.buttonPrimary} ${styleListItem.editButton}`} onClick={this.switchMode}>Edit</button>
+                        <button className={styleButtons.buttonDanger} onClick={this.deleteClick}>Delete</button>
+                    </td>
+                </tr>
             );
         }
     }
 
     render() {
-        return (
-            <div className={style.center}>
-                {this.mode()}
-            </div>
-        );
+        return this.mode();
     }
 }
 

@@ -2,6 +2,8 @@
 
 const React = require('react');
 
+const style = require('../scss/main.scss');
+
 const UserListItem = require('UserListItem');
 const Switch = require('./Switch');
 
@@ -43,14 +45,21 @@ class UserList extends React.Component {
         return (
             <div>
                 <Switch switchChange={this.switchOnChange}/>
-                {
-                    list.map((user) => {
+                <table className={style.table}>
+                <tbody>
+                    <tr>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Options</th>
+                    </tr>
+                    {list.map((user) => {
                         return (
                             <UserListItem key={user.id} userForm={formData} user={user} url={url} />
                         )
-                    })
-                }
-
+                    })}
+                </tbody>
+                </table>
             </div>
         );
     }
