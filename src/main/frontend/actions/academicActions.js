@@ -35,8 +35,31 @@ function receiveAcademic(data) {
     };
 }
 
+function changeRecensionState(data) {
+    return {
+        type: 'RECENSION_SENT',
+        data: data
+    };
+}
+
+function writeRecension(data) {
+    const req = {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: data
+    };
+    return (dispatch) => {
+        dispatch(apiReq('api/academic/review/', req, receiveDiplomas));
+        dispatch(changeRecensionState(data));
+    };
+}
+
 
 module.exports = {
     getAcademic,
     getDiplomas,
+    writeRecension
 };

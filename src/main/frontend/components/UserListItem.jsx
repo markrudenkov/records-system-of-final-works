@@ -42,11 +42,11 @@ class UserListItem extends Component {
 
         if (this.state.showForm) {
             return (
-
+                <tr><td>
                     <div className={style.center}>
                     <DynamicListForm user={user} formData={userForm} legend={`Edit ${user.name} ${user.surname}`} buttonLabel={'Save'} onClick={this.saveClick} cancelClick={this.switchMode} />
                     </div>
-
+                </td></tr>
             );
         } else {
             return (
