@@ -24,7 +24,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
     public static final String SELECT_FINAL_WORKS_RELATED_TO_ACADEMIC = "SELECT * FROM final_works" +
             " LEFT JOIN work_defenses ON final_works.final_work_id=work_defenses.final_work_id" +
             " WHERE (final_works.reviewer_id = ? OR final_works.promotor_id = ?)" +
-            " AND  work_defenses.final_work_id IS NULL ";
+            " AND  (work_defenses.final_work_id IS NULL OR work_defenses.final_work_id != ?) ";
 
     @Autowired
     private JdbcTemplate template;
@@ -87,7 +87,7 @@ public class FinalWorkRepository extends BaseRepository<FinalWorkDb> {
     }
 
     public List<FinalWorkDb> getFinalWorksRelatedToAcademic(Long promotorId) {
-        List<FinalWorkDb> finalWorkDbs = template.query(SELECT_FINAL_WORKS_RELATED_TO_ACADEMIC, new Object[]{promotorId, promotorId}, ROW_MAPPER);
+        List<FinalWorkDb> finalWorkDbs = template.query(SELECT_FINAL_WORKS_RELATED_TO_ACADEMIC, new Object[]{promotorId, promotorId,promotorId}, ROW_MAPPER);
         return finalWorkDbs;
     }
 
