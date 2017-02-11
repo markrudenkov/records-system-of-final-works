@@ -2,7 +2,10 @@
 
 const React = require('react');
 const {Component, PropTypes} = React;
-const DynamicListForm = require('DynamicListForm');
+
+const DefenceForm = require('./DefenceForm');
+const Modal = require('./Modal');
+
 const style = require('../scss/main.scss');
 const styleButtons = require('../scss/_buttons.scss');
 const styleListItem = require('../scss/userListItem.scss');
@@ -14,8 +17,25 @@ const { declineDiploma, confirmDiploma, getDiplomas } = require('../actions/admi
 
 class AdminDiplomaList extends Component {
 
+    constructor(props) {
+        super(props);
+        this.createDefense = this.createDefense.bind(this);
+        this.sendDefense = this.sendDefense.bind(this);
+        this.state = {showModal: false, currentDiploma: {}};
+    }
+
     componentWillMount() {
         this.props.getDiplomas();
+    }
+
+    createDefense(diplomaId) {
+        this.setState({currentDiploma: diplomaId, showModal: true});
+    }
+    sendDefense(data) {
+        data.finalWorkId = this.state.currentDiploma;
+        console.log(data);
+        //this.props.createDefense(data);
+        this.setState({showModal: false});
     }
 
     render() {
@@ -40,6 +60,10 @@ class AdminDiplomaList extends Component {
                                 <button className={`${styleButtons.buttonSuccess} ${styleListItem.editButton}`} onClick={() => {this.props.confirmDiploma(dip.id)}}>Confirm</button>
                                 <button className={styleButtons.buttonDanger} onClick={() => {this.props.declineDiploma(dip.id)}}>Decline</button>
                             </td>);
+                        } else if (dip.status === 'FOR_DEFENCE') {
+                            buttons = ( <td>
+                                <button className={styleButtons.buttonSuccess} onClick={() => {this.createDefense(dip.id)}}>Create defense</button>
+                            </td>);
                         } else {
                             buttons = <td>(no options)</td>
                         }
@@ -58,6 +82,9 @@ class AdminDiplomaList extends Component {
                     })}
                 </tbody>
                 </table>
+                <Modal show={this.state.showModal} onHide={()=>{this.setState({showModal: false})}} >
+                    <DefenceForm onClick={this.sendDefense} />
+                </Modal>
             </div>
         );
     }
