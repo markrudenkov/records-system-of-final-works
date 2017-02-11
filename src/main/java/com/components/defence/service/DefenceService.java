@@ -44,8 +44,8 @@ public class DefenceService {
         return mapToDefenceDb(api.getId(), api);
     }
 
-    public Defence updateDefenceEvluation(Defence defence) {
-        DefenceDb defenceDb = defenceRepository.create(mapToDefenceDb(defence));
-        return mapToDefence(defenceDb);
+    public String updateDefenceEvluation(Defence defence) {
+        defenceRepository.updateDefenceEvluation(defence.getId(), defence.getEvaluation());
+        return "{'message' : 'defence evaluation updated'}";
     }
 }

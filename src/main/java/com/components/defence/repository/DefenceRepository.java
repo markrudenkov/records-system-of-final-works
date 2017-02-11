@@ -16,6 +16,7 @@ import java.util.List;
 public class DefenceRepository extends BaseRepository<DefenceDb> {
 
     public static final String SELECT_DEFENCES_BY_CHAIRMAN_ID = "SELECT * FROM work_defenses WHERE chairman_id = ?";
+    private static final String UPDATE_DEFENCE_EVALUATION = "UPDATE work_defenses  SET evaluation = ? WHERE defense_id = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -44,7 +45,11 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
     }
 
     public List<DefenceDb> getDefencesByChairmanID(Long chairmanId) {
-        List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_CHAIRMAN_ID,new Object[]{chairmanId}, ROW_MAPPER);
-        return  defenceDbList;
+        List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_CHAIRMAN_ID, new Object[]{chairmanId}, ROW_MAPPER);
+        return defenceDbList;
+    }
+
+    public void updateDefenceEvluation(Long id, String evaluation) {
+        template.update(UPDATE_DEFENCE_EVALUATION, new Object[]{evaluation, id});
     }
 }
