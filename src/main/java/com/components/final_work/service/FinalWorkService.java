@@ -9,16 +9,14 @@ import com.components.final_work.model.FinalWork;
 import com.components.final_work.model.FinalWorkStatus;
 import com.components.final_work.repository.FinalWorkRepository;
 import com.components.final_work.repository.model.FinalWorkDb;
+import com.components.student.model.Student;
 import com.components.student.repository.StudentRepository;
 import com.components.student.repository.model.StudentDb;
 import com.components.utils.exception.BusinessException;
 import com.components.utils.exception.ValidationException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.EnumUtils;
-import org.codehaus.jackson.annotate.JsonWriteNullProperties;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,22 +62,44 @@ public class FinalWorkService {
     }
 
     @Transactional(readOnly = true)
+    public String getAllFinalWorks() throws JsonProcessingException {
+        List<JSONObject> finalWorksWithRelatedObjects = repository.findAll().stream().map(FinalWorkService::mapToJSONObject).collect(Collectors.toList());
+        for (JSONObject finalWork : finalWorksWithRelatedObjects) {
+            addToFinalWorkRelatedObjects(finalWork);
+        }
+        return finalWorksWithRelatedObjects.toString();
+    }
+
+    private static JSONObject mapToJSONObject(Object obj) {
+        return new JSONObject(obj);
+    }
+
+    @Transactional(readOnly = true)
+    private void addToFinalWorkRelatedObjects(JSONObject finalWork) throws JsonProcessingException {
+        AcademicDb promotor = academicRepository.findOne(finalWork.getLong("promotorId"));
+        AcademicDb reviever = academicRepository.findOne(finalWork.getLong("reviewerId"));
+        addStudentToFinalWork(finalWork);
+        finalWork.put("promotor", new JSONObject(promotor));
+        finalWork.put("reviever", new JSONObject(reviever));
+    }
+
+    @Transactional(readOnly = true)
     public String getFinalWorksAndDefencesOfAcademic(Long id) throws JsonProcessingException {
         List<Defence> defences = defenceRepository.getDefencesByChairmanID(id).stream().map(DefenceService::mapToDefence).collect(Collectors.toList());
         List<JSONObject> defenceRelatedFinalWorks = new ArrayList<>();
         for (Defence defence : defences) {
-            defenceRelatedFinalWorks.add(mapToJSONObject(defence));
+            defenceRelatedFinalWorks.add(createFinalWorkAndAddDefence(defence));
         }
-        List<JSONObject> finalWorks = repository.getFinalWorksRelatedToAcademic(id).stream().map(FinalWorkService::mapFinalWorkDbToJSONObject).collect(Collectors.toList());
+        List<JSONObject> finalWorks = repository.getFinalWorksRelatedToAcademic(id).stream().map(FinalWorkService::mapToJSONObject).collect(Collectors.toList());
+        for (JSONObject finalWork : finalWorks) {
+            addStudentToFinalWork(finalWork);
+        }
         defenceRelatedFinalWorks.addAll(finalWorks);
         return defenceRelatedFinalWorks.toString();
     }
-    private static JSONObject mapFinalWorkDbToJSONObject(FinalWorkDb db) {
-        return new JSONObject(db);
-    }
 
     @Transactional(readOnly = true)
-    private JSONObject mapToJSONObject(Defence defence) throws JsonProcessingException {
+    private JSONObject createFinalWorkAndAddDefence(Defence defence) throws JsonProcessingException {
         FinalWork finalWork = mapToFinalWork(repository.findOne(defence.getFinalWorkId()));
         JSONObject finalWorkJSONObject = new JSONObject(finalWork);
         JSONObject defenceJsonObject = new JSONObject();
@@ -88,11 +108,18 @@ public class FinalWorkService {
         defenceJsonObject.put("date", defence.getDate());
         defenceJsonObject.put("finalWorkId", defence.getFinalWorkId());
         defenceJsonObject.put("chairmanId", defence.getChairmanId());
-        JSONArray arrayElementOneArray = new JSONArray();
-        finalWorkJSONObject.put("defence", arrayElementOneArray.put(defenceJsonObject));
+        finalWorkJSONObject.put("defence", defenceJsonObject);
+        addStudentToFinalWork(finalWorkJSONObject);
         return finalWorkJSONObject;
     }
 
+    @Transactional(readOnly = true)
+    private void addStudentToFinalWork(JSONObject finalWork) throws JsonProcessingException {
+        StudentDb student = studentRepository.getStudentByFinalWork(finalWork.getLong("id"));
+        if (student != null) {
+            finalWork.put("student", new JSONObject(student));
+        }
+    }
 
     @Transactional(readOnly = true)
     public String getFinalWorkOfStudent(Long finalworkId) {
@@ -116,7 +143,6 @@ public class FinalWorkService {
         return repository.getFinalWorksForReview(reviewerId).stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
     }
 
-
     @Transactional
     public List<FinalWork> getAllConfirmedFinalWorks() {
         return repository.getAllConfirmedFinalWorks().stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
@@ -132,11 +158,6 @@ public class FinalWorkService {
             throw new BusinessException("Incorrect status of final work");
         }
         return mapToFinalWork(finalWorkDb);
-    }
-
-    @Transactional
-    public List<FinalWork> getAllFinalWorks() {
-        return repository.findAll().stream().map(FinalWorkService::mapToFinalWork).collect(Collectors.toList());
     }
 
     @Transactional

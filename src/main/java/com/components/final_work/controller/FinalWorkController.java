@@ -29,8 +29,8 @@ public class FinalWorkController {
         return service.updateFinalWorkStatus(id, finalWork);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/api/finalwork")
-    public List<FinalWork> getAllFinalWorks() {
+    @RequestMapping(method = RequestMethod.GET, path = "/api/admin/finalwork")
+    public String getAllFinalWorks() throws JsonProcessingException {
         return service.getAllFinalWorks();
     }
 
