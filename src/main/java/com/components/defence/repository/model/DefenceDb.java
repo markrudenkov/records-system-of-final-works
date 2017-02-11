@@ -8,7 +8,7 @@ public class DefenceDb extends DbModel {
     private String evaluation;
     private DateTime date;
     private Long finalWorkId;
-    private Long promotorId;
+    private Long chairmanId;
 
     @Override
     public Long getId() {
@@ -44,11 +44,11 @@ public class DefenceDb extends DbModel {
         this.finalWorkId = finalWorkId;
     }
 
-    public Long getPromotorId() {
-        return promotorId;
+    public Long getChairmanId() {
+        return chairmanId;
     }
 
-    public void setPromotorId(Long promotorId) {
-        this.promotorId = promotorId;
+    public void setChairmanId(Long chairmanId) {
+        this.chairmanId = chairmanId;
     }
 }

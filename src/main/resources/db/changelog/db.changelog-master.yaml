@@ -161,7 +161,7 @@ databaseChangeLog:
                   name: final_work_id
                   type: int
               - column:
-                  name: promotor_id
+                  name: chairman_id
                   type: int
 
         - addForeignKeyConstraint:
@@ -172,7 +172,7 @@ databaseChangeLog:
             referencedTableName:  final_works
 
         - addForeignKeyConstraint:
-            baseColumnNames: promotor_id
+            baseColumnNames: chairman_id
             baseTableName: work_defenses
             constraintName: fk_promotor_id_teacher_id
             referencedColumnNames: teacher_id
@@ -517,9 +517,6 @@ databaseChangeLog:
                 name: annotation
                 value: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged'
             - column:
-                name: status
-                value: 'REGISTERED'
-            - column:
                 name: promotor_id
                 value: 1
             - column:
@@ -618,7 +615,30 @@ databaseChangeLog:
                 name: final_work_id
                 value: 1
             - column:
-                name: promotor_id
+                name: chairman_id
                 value: 1
             tableName: work_defenses
+
+  - changeSet:
+      id: 25
+      author: Mark
+      changes:
+        - insert:
+            columns:
+            - column:
+                name: title
+                value: 'data science'
+            - column:
+                name: status
+                value: 'REGISTERED'
+            - column:
+                name: annotation
+                value: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged'
+            - column:
+                name: promotor_id
+                value: 1
+            - column:
+                name: reviewer_id
+                value: 2
+            tableName: final_works
 

@@ -2,6 +2,8 @@ package com.components.final_work.controller;
 
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.service.FinalWorkService;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +60,7 @@ public class FinalWorkController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/academic/finalworks/{id}")
-    public String getFinalWorksAndDefencesOfAcademic(@PathVariable Long id) {
+    public String getFinalWorksAndDefencesOfAcademic(@PathVariable Long id) throws JsonProcessingException {
         return service.getFinalWorksAndDefencesOfAcademic(id);
     }
 }

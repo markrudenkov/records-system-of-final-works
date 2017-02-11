@@ -18,7 +18,7 @@ public class DefenceService {
         api.setDate(db.getDate());
         api.setFinalWorkId(db.getFinalWorkId());
         api.setEvaluation(db.getEvaluation());
-        api.setPromotorId(db.getPromotorId());
+        api.setChairmanId(db.getChairmanId());
         return api;
     }
 
@@ -29,7 +29,7 @@ public class DefenceService {
         db.setFinalWorkId(api.getFinalWorkId());
         db.setEvaluation(api.getEvaluation());
         db.setEvaluation(api.getEvaluation());
-        db.setPromotorId(api.getPromotorId());
+        db.setChairmanId(api.getChairmanId());
         return db;
     }
 
