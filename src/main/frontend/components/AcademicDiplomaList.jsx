@@ -35,7 +35,7 @@ class AcademicDiplomaList extends Component {
 
         if (diploma.status === 'FOR_RECENSION' && ((diploma.promotorId === id && diploma.promotorReviewId === 0) || (diploma.reviewerId === id && diploma.reviewerReviewId === 0))) {
             return <button className={styleButtons.buttonPrimary} onClick={() => {this.writeRecension(diploma)}}>Write recension</button>
-        } else if (diploma.status === 'FOR_DEFENCE') {
+        } else if (diploma.status === 'FOR_DEFENCE' && diploma.defense) {
             return <button className={styleButtons.buttonPrimary} onClick={() => {this.writeDefenceMark(diploma)}}>Write defense mark</button>
         } else {
             return <span>(no options)</span>
