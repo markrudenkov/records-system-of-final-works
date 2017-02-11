@@ -95,16 +95,19 @@ class AcademicDiplomaList extends Component {
                 <tbody>
                     <tr>
                         <th>Title</th>
-                        <th>Status</th>
+                        <th>Student</th>
                         <th>Link</th>
+                        <th>Status</th>
                         <th>Options</th>
                     </tr>
                     {diplomas.map((dip) => {
+                        let student = dip.student ? `${dip.student.name} ${dip.student.surname}` : '';
                         return (
                             <tr key={dip.id}>
                                 <td>{dip.title}</td>
-                                <td>{dip.status}</td>
+                                <td>{student}</td>
                                 <td><a target='_blank' href={`http://localhost:8080/files/${dip.filePath}`}>{dip.filePath}</a></td>
+                                <td>{dip.status}</td>
                                 <td>{this.buttonMode(dip)}</td>
                             </tr>
                         )

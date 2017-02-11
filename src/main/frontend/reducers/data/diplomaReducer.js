@@ -18,6 +18,7 @@ function diplomaReducer(state=initialState, action) {
                 if (state[i].id == action.data.finalWorkId) {
                     state[i].promotorReviewId = 'xxx';
                     state[i].reviewerReviewId = 'xxx';
+                    state[i].defense = {};
                     break;
                 }
             }
