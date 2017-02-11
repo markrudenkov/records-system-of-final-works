@@ -95,7 +95,7 @@ function getDiplomas() {
     };
     return (dispatch) => {
         dispatch(showNotification('Loading diplomas...', 'info'));
-        dispatch(apiReq('api/finalwork/', req, receiveDiplomas));
+        dispatch(apiReq('api/admin/finalwork/', req, receiveDiplomas));
     };
 }
 

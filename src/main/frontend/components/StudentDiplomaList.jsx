@@ -61,9 +61,10 @@ class StudentDiplomaList extends Component {
                 {diplomas.map((dip) => {
                     return (
                         <div key={dip.id} className={styleListItem.wrapper}>
-                            <p className={styleListItem.itemText}>{dip.id}</p>
                             <p className={styleListItem.itemText}>{dip.title}</p>
-                            <button className={styleButtons.buttonPrimary} onClick={() => {this.showModal(dip)}}>Details</button>
+                            <p className={styleListItem.itemText}>
+                                <button className={styleButtons.buttonPrimary} onClick={() => {this.showModal(dip)}}>Details</button>
+                            </p>
                         </div>
                     )
                 })}

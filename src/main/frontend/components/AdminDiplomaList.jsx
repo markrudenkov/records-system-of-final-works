@@ -38,7 +38,7 @@ class AdminDiplomaList extends Component {
                                 <button className={styleButtons.buttonDanger} onClick={() => {this.props.declineDiploma(dip.id)}}>Decline</button>
                             </td>);
                         } else {
-                            buttons = <td className={styleListItem.itemText}></td>
+                            buttons = <td>(no options)</td>
                         }
                         return (
                             <tr key={dip.id}>
