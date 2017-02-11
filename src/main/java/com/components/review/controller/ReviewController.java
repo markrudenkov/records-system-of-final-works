@@ -16,7 +16,7 @@ public class ReviewController {
     @Autowired
     ReviewService service;
 
-    @RequestMapping (method = RequestMethod.POST, path = "/api/review")
+    @RequestMapping (method = RequestMethod.POST, path = "/api/academic/review")
     public Review createReview (@RequestBody Review review) throws ValidationException{
         return service.createReview(review);
     }

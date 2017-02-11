@@ -16,7 +16,7 @@ public class StudentRepository extends BaseRepository<StudentDb> {
 
     public static final String SELECT_BY_USERNAME = "SELECT * FROM students where username = ?";
     public static final String UPDATE_FINALWORK_ID = "UPDATE students  SET final_work_id = ? WHERE student_id = ?";
-
+    public static final String SELECT_BY_FINAL_WORK = "SELECT * FROM students where final_work_id = ?";
     @Autowired
     private JdbcTemplate template;
 
@@ -46,6 +46,14 @@ public class StudentRepository extends BaseRepository<StudentDb> {
 
     public StudentDb getStudentsByUsername(String username) {
         List<StudentDb> students = template.query(SELECT_BY_USERNAME, new Object[]{username}, ROW_MAPPER);
+        if (students.isEmpty()) {
+            return null;
+        }
+        return students.get(0);
+    }
+
+    public StudentDb getStudentByFinalWork(Long finalWorkId) {
+        List<StudentDb> students = template.query(SELECT_BY_FINAL_WORK, new Object[]{finalWorkId}, ROW_MAPPER);
         if (students.isEmpty()) {
             return null;
         }
