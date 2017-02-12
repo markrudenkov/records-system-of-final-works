@@ -13,7 +13,7 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { declineDiploma, confirmDiploma, getDiplomas } = require('../actions/adminActions');
+const { declineDiploma, confirmDiploma, getDiplomas, createDefense } = require('../actions/adminActions');
 
 class AdminDiplomaList extends Component {
 
@@ -34,7 +34,7 @@ class AdminDiplomaList extends Component {
     sendDefense(data) {
         data.finalWorkId = this.state.currentDiploma;
         console.log(data);
-        //this.props.createDefense(data);
+        this.props.createDefense(data);
         this.setState({showModal: false});
     }
 
@@ -100,7 +100,8 @@ function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         declineDiploma: declineDiploma,
         confirmDiploma: confirmDiploma,
-        getDiplomas: getDiplomas
+        getDiplomas: getDiplomas,
+        createDefense: createDefense
     }, dispatch);
 }
 

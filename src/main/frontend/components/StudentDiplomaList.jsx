@@ -63,7 +63,7 @@ class StudentDiplomaList extends Component {
                         <div key={dip.id} className={styleListItem.wrapper}>
                             <p className={styleListItem.itemText}>{dip.title}</p>
                             <p className={styleListItem.itemText}>
-                                <button className={styleButtons.buttonPrimary} onClick={() => {this.showModal(dip)}}>Details</button>
+                                <button className={`${styleButtons.buttonPrimary} ${styleListItem.rightButon}`} onClick={() => {this.showModal(dip)}}>Details</button>
                             </p>
                         </div>
                     )
