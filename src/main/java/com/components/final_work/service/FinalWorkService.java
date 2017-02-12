@@ -4,6 +4,7 @@ import com.components.academic.repository.AcademicRepository;
 import com.components.academic.repository.model.AcademicDb;
 import com.components.defence.model.Defence;
 import com.components.defence.repository.DefenceRepository;
+import com.components.defence.repository.model.DefenceDb;
 import com.components.defence.service.DefenceService;
 import com.components.final_work.model.FinalWork;
 import com.components.final_work.model.FinalWorkStatus;
@@ -79,6 +80,12 @@ public class FinalWorkService {
         AcademicDb promotor = academicRepository.findOne(finalWork.getLong("promotorId"));
         AcademicDb reviever = academicRepository.findOne(finalWork.getLong("reviewerId"));
         addStudentToFinalWork(finalWork);
+        DefenceDb defenceDb = defenceRepository.getDefencesByFinalWorkID(finalWork.getLong("id"));
+        if (defenceDb == null) {
+            finalWork.put("defenceExists", false);
+        } else {
+            finalWork.put("defenceExists", true);
+        }
         finalWork.put("promotor", new JSONObject(promotor));
         finalWork.put("reviever", new JSONObject(reviever));
     }

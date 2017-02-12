@@ -163,6 +163,12 @@ databaseChangeLog:
               - column:
                   name: chairman_id
                   type: int
+        - addAutoIncrement:
+              columnDataType: int
+              columnName: defense_id
+              incrementBy: 1
+              startWith: 1
+              tableName: work_defenses
 
         - addForeignKeyConstraint:
             baseColumnNames: final_work_id

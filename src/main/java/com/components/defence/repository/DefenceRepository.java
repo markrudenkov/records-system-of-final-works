@@ -18,6 +18,7 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
 
     public static final String SELECT_DEFENCES_BY_CHAIRMAN_ID = "SELECT * FROM work_defenses WHERE chairman_id = ?";
     private static final String UPDATE_DEFENCE_EVALUATION = "UPDATE work_defenses  SET evaluation = ? WHERE defense_id = ?";
+    public static final String SELECT_DEFENCES_BY_FINALWORK_ID = "SELECT * FROM work_defenses WHERE final_work_id = ?";
 
     @Autowired
     private JdbcTemplate template;
@@ -48,6 +49,15 @@ public class DefenceRepository extends BaseRepository<DefenceDb> {
     public List<DefenceDb> getDefencesByChairmanID(Long chairmanId) {
         List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_CHAIRMAN_ID, new Object[]{chairmanId}, ROW_MAPPER);
         return defenceDbList;
+    }
+
+    public DefenceDb getDefencesByFinalWorkID(Long finalworkId) {
+        List<DefenceDb> defenceDbList = template.query(SELECT_DEFENCES_BY_FINALWORK_ID, new Object[]{finalworkId}, ROW_MAPPER);
+        if (defenceDbList.isEmpty()) {
+            return null;
+        } else {
+            return defenceDbList.get(0);
+        }
     }
 
     public void updateDefenceEvluation(Long id, BigDecimal evaluation) {
