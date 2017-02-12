@@ -55,7 +55,7 @@ class DefenceForm extends React.Component {
                 <legend><h3>Create defense</h3></legend>
                 <div className={fStyle.formRow}>
                     <label><b>Date</b></label>
-                    <input className={fStyle.inputStyle} ref='date' placeholder='Date' />
+                    <input type='date' className={fStyle.inputStyle} ref='date' placeholder='Date' />
                 </div>
                 <div className={fStyle.formRow}>
                     <label><b>Chairman</b></label>

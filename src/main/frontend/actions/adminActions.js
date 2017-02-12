@@ -99,6 +99,13 @@ function getDiplomas() {
     };
 }
 
+function defenceCreated(data) {
+    return {
+        type: 'DEFENSE_CREATED',
+        data: data
+    };
+}
+
 function createDefense(data) {
     const req = {
         credentials: 'include',
@@ -111,6 +118,7 @@ function createDefense(data) {
 
     return (dispatch) => {
         dispatch(apiReq('/api/admin/defence', req));
+        dispatch(defenceCreated(data));
     };
 }
 

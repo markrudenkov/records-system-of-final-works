@@ -57,9 +57,32 @@ function writeRecension(data) {
     };
 }
 
+function defenseMark(data) {
+    return {
+        type: 'SET_DEFENCE_MARK',
+        data: data
+    };
+}
+
+function writeDefenseMark(data) {
+    const req = {
+        credentials: 'include',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(data)
+    };
+    return (dispatch) => {
+        dispatch(apiReq('/api/academic/defence/', req));
+        dispatch(defenseMark(data));
+    };
+}
+
 
 module.exports = {
     getAcademic,
     getDiplomas,
-    writeRecension
+    writeRecension,
+    writeDefenseMark
 };

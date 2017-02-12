@@ -23,6 +23,24 @@ function diplomaReducer(state=initialState, action) {
                 }
             }
         break;
+        case 'DEFENSE_CREATED':
+            state = Object.assign([], state);
+            for (var i = 0; i < state.length; i++) {
+                if (state[i].id == action.data.finalWorkId) {
+                    state[i].defenceExists = true;
+                    break;
+                }
+            }
+        break;
+        case 'SET_DEFENCE_MARK':
+            state = Object.assign([], state);
+            for (var i = 0; i < state.length; i++) {
+                if (state[i].id == action.data.id) {
+                    state[i].defence.evaluation = action.data.evaluation;
+                    break;
+                }
+            }
+        break;
         case 'RECEIVE_DIPLOMAS':
             state = Object.assign([], initialState, action.data);
         break;

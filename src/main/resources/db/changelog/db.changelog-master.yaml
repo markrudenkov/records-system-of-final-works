@@ -604,29 +604,8 @@ databaseChangeLog:
                 name: academic_title
                 value: 'professor'
             tableName: teachers
-
   - changeSet:
       id: 24
-      author: Mark
-      changes:
-        - insert:
-            columns:
-            - column:
-                name: defense_id
-                value: 1
-            - column:
-                name: evaluation
-                value: 5
-            - column:
-                name: final_work_id
-                value: 1
-            - column:
-                name: chairman_id
-                value: 1
-            tableName: work_defenses
-
-  - changeSet:
-      id: 25
       author: Mark
       changes:
         - insert:

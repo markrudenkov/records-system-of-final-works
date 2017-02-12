@@ -60,7 +60,7 @@ class AdminDiplomaList extends Component {
                                 <button className={`${styleButtons.buttonSuccess} ${styleListItem.editButton}`} onClick={() => {this.props.confirmDiploma(dip.id)}}>Confirm</button>
                                 <button className={styleButtons.buttonDanger} onClick={() => {this.props.declineDiploma(dip.id)}}>Decline</button>
                             </td>);
-                        } else if (dip.status === 'FOR_DEFENCE') {
+                        } else if (dip.status === 'FOR_DEFENCE' && !dip.defenceExists) {
                             buttons = ( <td>
                                 <button className={styleButtons.buttonSuccess} onClick={() => {this.createDefense(dip.id)}}>Create defense</button>
                             </td>);

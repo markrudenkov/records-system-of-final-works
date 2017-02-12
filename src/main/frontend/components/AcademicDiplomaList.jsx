@@ -13,7 +13,7 @@ const styleListItem = require('../scss/userListItem.scss');
 const { bindActionCreators } = require('redux');
 const { connect } = require('react-redux');
 
-const { getDiplomas, writeRecension } = require('../actions/academicActions');
+const { getDiplomas, writeRecension, writeDefenseMark } = require('../actions/academicActions');
 
 class AcademicDiplomaList extends Component {
 
@@ -23,6 +23,7 @@ class AcademicDiplomaList extends Component {
         this.buttonMode = this.buttonMode.bind(this);
         this.writeRecension = this.writeRecension.bind(this);
         this.writeDefenceMark = this.writeDefenceMark.bind(this);
+        this.sendDefenseMark = this.sendDefenseMark.bind(this);
         this.state = {showModal: false, currentDiploma: {}, modalContent: null};
     }
 
@@ -35,7 +36,7 @@ class AcademicDiplomaList extends Component {
 
         if (diploma.status === 'FOR_RECENSION' && ((diploma.promotorId === id && diploma.promotorReviewId === 0) || (diploma.reviewerId === id && diploma.reviewerReviewId === 0))) {
             return <button className={styleButtons.buttonPrimary} onClick={() => {this.writeRecension(diploma)}}>Write recension</button>
-        } else if (diploma.status === 'FOR_DEFENCE' && diploma.defense) {
+        } else if (diploma.status === 'FOR_DEFENCE' && diploma.defence && !diploma.defence.evaluation) {
             return <button className={styleButtons.buttonPrimary} onClick={() => {this.writeDefenceMark(diploma)}}>Write defense mark</button>
         } else {
             return <span>(no options)</span>
@@ -83,7 +84,27 @@ class AcademicDiplomaList extends Component {
         this.setState({showModal: false});
     }
     writeDefenceMark(diploma) {
-        console.log('Write defense mark');
+        let formData = [{
+                type: 'input',
+                props: {
+                    type: 'text',
+                    placeholder: 'Enter evaluation mark',
+                    ref: 'evaluation'
+                },
+                label: '',
+                validate: (text) => {
+                    return '';
+                }
+        }];
+        let content = <DynamicForm formData={formData} buttonLabel='Save defense mark' legend='Write defense mark' onClick={this.sendDefenseMark} />;
+        //set diploma to state
+        this.setState({currentDiploma: diploma, showModal: true, modalContent: content});
+    }
+    sendDefenseMark(data) {
+        const { currentDiploma } = this.state;
+        data.id = currentDiploma.defence.id;
+        this.props.writeDefenseMark(data);
+        this.setState({showModal: false});
     }
 
     render() {
@@ -133,7 +154,8 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getDiplomas: getDiplomas,
-        writeRecension: writeRecension
+        writeRecension: writeRecension,
+        writeDefenseMark: writeDefenseMark
     }, dispatch);
 }
 

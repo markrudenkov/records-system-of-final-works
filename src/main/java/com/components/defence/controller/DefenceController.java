@@ -22,7 +22,7 @@ public class DefenceController {
         return service.createDefence(defence);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, path = "/api/academic/defence/{id}")
+    @RequestMapping(method = RequestMethod.PUT, path = "/api/academic/defence")
     public String updateDefenceEvluation(@RequestBody @Valid Defence defence) throws ValidationException {
         return service.updateDefenceEvluation(defence);
     }
