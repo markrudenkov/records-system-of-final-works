@@ -99,11 +99,27 @@ function getDiplomas() {
     };
 }
 
+function createDefense(data) {
+    const req = {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(data)
+    };
+
+    return (dispatch) => {
+        dispatch(apiReq('/api/admin/defence', req));
+    };
+}
+
 module.exports = {
     registerAcademic,
     registerStudent,
     confirmDiploma,
     declineDiploma,
     getDiplomas,
-    receiveDiplomas
+    receiveDiplomas,
+    createDefense
 };

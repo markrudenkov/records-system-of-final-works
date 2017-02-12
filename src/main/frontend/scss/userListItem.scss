@@ -9,7 +9,7 @@
     .formWrapper {
         margin: 10px;
         padding: 5px;
-        width: 800px;
+        width: 500px;
         box-shadow: 0 3px 0 #e8e8e8;
     }
     .itemText {
@@ -17,6 +17,9 @@
         margin: 0;
         flex-grow: 1;
         max-width: 400px;
+    }
+    .rightButon {
+        float: right;
     }
     .editButton {
         margin-right: 10px;
