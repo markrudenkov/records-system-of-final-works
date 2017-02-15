@@ -53,7 +53,7 @@ public class DefenceService {
         if (updatedDefence.getEvaluation().intValue() < 3) {
             finalWorkRepository.updateFinalWorkStatus(updatedDefence.getId(), FinalWorkStatus.Statuses.NOT_DEFENDED.toString());
         } else {
-            finalWorkRepository.updateFinalWorkStatus(updatedDefence.getId(), FinalWorkStatus.Statuses.DEFENDED.toString());
+            finalWorkRepository.updateFinalWorkStatus(updatedDefence.getFinalWorkId(), FinalWorkStatus.Statuses.DEFENDED.toString());
         }
         return "{'message' : 'defence evaluation updated'}";
     }
