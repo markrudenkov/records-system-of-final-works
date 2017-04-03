@@ -36,7 +36,8 @@ function diplomaReducer(state=initialState, action) {
             state = Object.assign([], state);
             for (var i = 0; i < state.length; i++) {
                 if (state[i].id == action.data.id) {
-                    state[i].defence.evaluation = action.data.evaluation;
+                    state[i].defense = {};
+                    state[i].defence = {};
                     break;
                 }
             }
