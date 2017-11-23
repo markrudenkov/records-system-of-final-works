@@ -17,7 +17,7 @@ This application is dedicated for recording of final works. The main users of th
 * Jaroslav Siroic – fronend development
 * Mark Rudenkov – backend development
 
-
+## laged
 
 
 
